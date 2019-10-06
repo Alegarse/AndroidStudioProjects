@@ -43,25 +43,4 @@
             android:text="Registrar" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/loginBoton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Entrar" />
-
-        <Button
-            android:id="@+id/registroBoton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Registrar" />
-    </LinearLayout>
-
-
 </LinearLayout>
