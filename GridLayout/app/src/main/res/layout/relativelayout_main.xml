@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/first"
         android:layout_width="80dp"
-        android:layout_height="160dp"
+        android:layout_height="200dp"
         android:gravity="center"
         android:text="1st"
         android:textSize="25dp"
@@ -30,7 +30,7 @@
     <TextView
         android:id="@+id/third"
         android:layout_width="80dp"
-        android:layout_height="160dp"
+        android:layout_height="200dp"
         android:gravity="center"
         android:text="3rd"
         android:textSize="25dp"
@@ -43,7 +43,7 @@
     <TextView
         android:id="@+id/fourth"
         android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         android:gravity="center"
         android:text="4th"
         android:textSize="25dp"
@@ -55,7 +55,7 @@
     <TextView
         android:id="@+id/fifth"
         android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         android:gravity="center"
         android:text="5th"
         android:textSize="25dp"
@@ -69,10 +69,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="5th"
+        android:text="6th"
         android:textSize="25dp"
         android:textStyle="bold"
-        android:background="#9C27B0"
+        android:background="#8C4E9C"
         android:layout_above="@id/second"
         android:layout_toRightOf="@+id/first"
         android:layout_toLeftOf="@+id/fifth">
