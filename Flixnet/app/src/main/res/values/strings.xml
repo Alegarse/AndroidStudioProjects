@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">flixnet</string>
+    <string name="app_name" translatable="false">Flixnet</string>
     <string name="hint_email" translatable="false">email@email.com</string>
     <string name="hint_password">Password</string>
 </resources>
