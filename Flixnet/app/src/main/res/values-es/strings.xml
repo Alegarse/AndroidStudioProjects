@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hint_password">Contraseña</string>
+    <string name="label_login">Entrar</string>
+    <string name="label_register">Registrar</string>
+    <string name="reg_name">Nombre</string>
+    <string name="reg_ape">Apellidos</string>
+    <string name="res_passC">Confirmar Contraseña</string>
 </resources>
