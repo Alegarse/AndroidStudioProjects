@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
 
-    <!-- CAMPO NOMBRE -->
 
-    <!-- CAMPO APELLIDOS -->
     <ImageView
         android:id="@+id/imageLogo"
         android:layout_width="320dp"
@@ -22,6 +25,7 @@
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <!-- CAMPO NOMBRE -->
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/userNameLayout"
@@ -43,6 +47,7 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- CAMPO APELLIDOS -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/userApeLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -124,7 +129,7 @@
 
     <!-- BOTON DE REGISTRO -->
 
-    <!-- Spinner para la nacionalidad -->
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnRegister"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
@@ -136,7 +141,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userPass2Layout" />
-
+    <!-- Spinner para la nacionalidad -->
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="300dp"
@@ -148,5 +153,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userPass2Layout" />
 
+    //Boton Cancel
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnCancel"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnRegister" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>

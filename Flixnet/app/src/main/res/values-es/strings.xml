@@ -6,4 +6,6 @@
     <string name="reg_name">Nombre</string>
     <string name="reg_ape">Apellidos</string>
     <string name="res_passC">Confirmar Contraseña</string>
+    <string name="cancel">Cancelar</string>
+    <string name="label_ok">Aceptar</string>
 </resources>

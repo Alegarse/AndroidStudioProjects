@@ -19,5 +19,7 @@
         <item>Alemania</item>
         <item>Estados Unidos</item>
     </string-array>
+    <string name="cancel">Cancel</string>
+    <string name="label_ok">Ok</string>
 
 </resources>
