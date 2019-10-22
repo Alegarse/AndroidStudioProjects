@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "81334153298",
+    "firebase_url": "https://flixnet-f2aa2.firebaseio.com",
+    "project_id": "flixnet-f2aa2",
+    "storage_bucket": "flixnet-f2aa2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:81334153298:android:a5b2addd1682c19ebf6f8b",
+        "android_client_info": {
+          "package_name": "com.ags.flixnet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "81334153298-4457mkcemh6cfh4mi1rpahvcp53b17e1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ags.flixnet",
+            "certificate_hash": "75033d205d444f3bce2c8a4dafbd7fcb6594395a"
+          }
+        },
+        {
+          "client_id": "81334153298-fd9mqehtiamdgoll2qfttjorav5l14qs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDG_sLaTcSOJJiHEVcKVaGFsrGlgLA_lBg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "81334153298-fd9mqehtiamdgoll2qfttjorav5l14qs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
