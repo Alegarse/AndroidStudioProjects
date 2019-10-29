@@ -6,9 +6,13 @@
  */
 package com.ags.flixnet;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.ags.flixnet.api.apiClient;
@@ -19,26 +23,25 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity {
 
     private TextView texto;
+
     private FirebaseAuth fbauth;
-    private ApiService api;
+    private ApiService apiService;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        fbauth = FirebaseAuth.getInstance();
+        // obtenemos la instancia a FirebaseAuth
+        fbauth = FirebaseAuth.getInstance() ;
 
-        api = apiClient.getService("https://ajsb.000webhostapp.com/public/");
+        // obtenemos la instancia del servicio Retrofit
+             apiService = apiClient.getService("https://ajsb.000webhostapp.com/public") ;
 
-        api.getShow(2);
+        // instanciamos los elementos del layout
+        texto = findViewById(R.id.textoPrueba) ;
 
-        /**
-         * API, CODIGO 28/10/2019
-         */
-
-        // Instanciamos los elementos del layout
-        //texto = findViewById(R.id.textoPrueba) ;
 
         // obtenemos los EXTRAS almacenados en la intención accediendo,
         // en primer a la intención y seguidamente a la información
@@ -50,5 +53,45 @@ public class MainActivity extends AppCompatActivity {
 
         // saludamos al usuario (temporal)
         texto.setText("Bienvenido/a, " + usuario.getNombre() + " " + usuario.getApellidos()) ;
+    }
+
+    /**
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater() ;
+        inflater.inflate(R.menu.menu_principal, menu) ;
+        //
+        return true ;
+    }
+
+    /**
+     * @param item
+     * @return
+     */
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.mnuLogout :
+
+                // cerramos la sesión en FireBase
+                fbauth.signOut() ;
+
+                // cerrar la sesión en la API!!!!!!!
+                // ....
+
+                // volvemos a la actividad principal
+                setResult(0) ;
+                finish() ;
+
+                return true ;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

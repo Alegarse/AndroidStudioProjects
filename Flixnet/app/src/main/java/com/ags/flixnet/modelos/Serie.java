@@ -7,16 +7,38 @@
 package com.ags.flixnet.modelos;
 
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Serie
 {
+    @Expose
+    @SerializedName("idSer")
+    private int idSer ;
 
-private int idSer ;
-private String titulo ;
-private String genero ;
-private String sinopsis ;
-private String cartel ;
-private float punt_imdb ;
-private String fecha_estreno ;
+    @Expose
+    @SerializedName("titulo")
+    private String titulo ;
+
+    @Expose
+    @SerializedName("genero")
+    private String genero ;
+
+    @Expose
+    @SerializedName("sinopsis")
+    private String sinopsis ;
+
+    @Expose
+    @SerializedName("cartel")
+    private String cartel ;
+
+    @Expose
+    @SerializedName("punt_imdb")
+    private float punt_imdb ;
+
+    @Expose
+    @SerializedName("fecha_estreno")
+    private String fecha_estreno ;
 
     /**
      */

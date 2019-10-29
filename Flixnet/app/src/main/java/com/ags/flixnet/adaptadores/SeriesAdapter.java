@@ -14,10 +14,10 @@ import com.ags.flixnet.modelos.Serie;
 
 import java.util.List;
 
-public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesHolder> {
+/*public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesHolder> {
 
     private List<Serie> series;
-    private Context contexto;
+    //private Context contexto;
 
     public SeriesAdapter(Context List<Serie> list) {
         series = list;
@@ -53,6 +53,8 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesHold
      *
      * @return el numero de items que tiene la lista
      */
+
+/*
     @Override
     public int getItemCount()
     {
@@ -78,3 +80,4 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesHold
         }
     }
 }
+*/

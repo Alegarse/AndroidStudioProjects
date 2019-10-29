@@ -17,4 +17,6 @@
     <string name="label_OkRegister">Registro</string>
     <string name="label_register">Registro</string>
     <string name="err_empty" translatable="false">Error. No se pueden dejar campos vacios</string>
+    <string name="RegOk">¡El registro ha finalizado con éxito!</string>
+    <string name="noReg">¡El registro se ha cancelado!</string>
 </resources>

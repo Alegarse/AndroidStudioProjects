@@ -19,7 +19,7 @@
     <string name="app_name" translatable="false">FlixNet</string>
     <string name="err_empty">Error. Empty flieds</string>
     <string name="err_pass">Passwords is not equals</string>
-    <string name="err_register">errorRegistro</string>
+    <string name="err_register">Register Error</string>
 
 
     <!-- Nacionalidad -->
@@ -29,6 +29,8 @@
         <item>Francia</item>
         <item>Reino Unido</item>
     </string-array>
+    <string name="RegOk">Registered!</string>
+    <string name="noReg">Register cancelled!</string>
 
 
 </resources>

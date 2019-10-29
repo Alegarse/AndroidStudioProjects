@@ -102,7 +102,11 @@ public class LoginActivity extends AppCompatActivity
                                     // Error en el Login
                                     Toast.makeText(getApplicationContext(), "Se ha producido un error en el login.", Toast.LENGTH_LONG).show();
                                 else
-                                { // LOGIN COMPLETADO
+                                {   // Toast de prueba para si logea bien
+                                    Toast.makeText(getApplicationContext(), "Logeado correctamente!", Toast.LENGTH_LONG).show();
+
+
+                                    // LOGIN COMPLETADO
                                     // obtener el UID del usuario logueado
                                     String uid = fbauth.getCurrentUser().getUid() ;
 
@@ -135,7 +139,7 @@ public class LoginActivity extends AppCompatActivity
                                                 //intent.putExtra("apellidos", usuario.getApellidos()) ;
 
                                                 // lanzamos la intención
-                                                startActivity(intent) ;
+                                                startActivity(intent);
                                             }
 
                                         }
@@ -179,7 +183,7 @@ public class LoginActivity extends AppCompatActivity
         btnReg.setOnClickListener(new View.OnClickListener()
         {
             /**
-             * @param view
+             * @param v
              */
             @Override
             public void onClick(View v)
@@ -207,9 +211,9 @@ public class LoginActivity extends AppCompatActivity
         if (requestCode==COD_REGISTRO)
         {
             if (resultCode == RESULT_OK)
-                Snackbar.make(btnLog, "El registro ha finalizado con éxito.", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(btnLog, R.string.RegOk, Snackbar.LENGTH_LONG).show();
             else
-                Snackbar.make(btnLog, "El registro se ha cancelado.", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(btnLog, R.string.noReg, Snackbar.LENGTH_LONG).show();
         }
 
         //
