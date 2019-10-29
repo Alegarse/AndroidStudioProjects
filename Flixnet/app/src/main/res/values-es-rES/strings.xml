@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="err_pass">Las contraseñas no conciden</string>
+    <string name="err_register">Error de registro</string>
+    <string name="cancel">Cancelar</string>
+    <string name="reg_ape">Apellidos</string>
+    <string name="reg_name">Nombre</string>
+    <string name="reg_passC">Confirmar Contraseña</string>
+    <string name="label_cancelar">Cancelar</string>
+    <string name="hint_apellidos">Apellidos</string>
+    <string name="name">Nombre</string>
+    <string name="hint_confiPassword">Confirmar contraseña</string>
+    <string name="hint_nombre">Nombre</string>
+    <string name="hint_password">Contraseña</string>
+    <string name="label_login">Entrar</string>
+    <string name="label_logout">Salir</string>
+    <string name="label_OkRegister">Registro</string>
+    <string name="label_register">Registro</string>
+    <string name="err_empty" translatable="false">Error. No se pueden dejar campos vacios</string>
+</resources>

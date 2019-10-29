@@ -1,25 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Flixnet</string>
-    <string name="hint_email" translatable="false">Email</string>
-    <string name="hint_password">Password</string>
-    <string name="label_login">Login</string>
-    <string name="label_register">Register</string>
-    <string name="reg_name">Name</string>
+    <string name="cancel">Cancel</string>
     <string name="reg_ape">Surname</string>
-    <string name="res_passC">Password Confirmation</string>
+    <string name="reg_name">Name</string>
+    <string name="reg_passC">Password Confirmation</string>
+    <string name="name">Name</string>
+    <string name="hint_apellidos">Surname</string>
+    <string name="hint_confiPassword">Password Confirmation</string>
+    <string name="hint_email" translatable="false">E-mail</string>
+    <string name="hint_nombre">Name</string>
+    <string name="hint_password">Password</string>
+    <string name="label_cancelar">Cancel</string>
+    <string name="label_login">Enter</string>
+    <string name="label_logout">Logout</string>
+    <string name="label_ok" translatable="false">Ok!</string>
+    <string name="label_OkRegister">Register</string>
+    <string name="label_register">Register</string>
+    <string name="app_name" translatable="false">FlixNet</string>
+    <string name="err_empty">Error. Empty flieds</string>
+    <string name="err_pass">Passwords is not equals</string>
+    <string name="err_register">errorRegistro</string>
 
-    <!-- Nacionalidades -->
+
+    <!-- Nacionalidad -->
 
     <string-array name="arr_paises">
         <item>España</item>
         <item>Francia</item>
         <item>Reino Unido</item>
-        <item>Italia</item>
-        <item>Alemania</item>
-        <item>Estados Unidos</item>
     </string-array>
-    <string name="cancel">Cancel</string>
-    <string name="label_ok">Ok</string>
+
 
 </resources>
