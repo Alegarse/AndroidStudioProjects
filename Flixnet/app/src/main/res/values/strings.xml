@@ -25,12 +25,18 @@
     <!-- Nacionalidad -->
 
     <string-array name="arr_paises">
-        <item>España</item>
-        <item>Francia</item>
-        <item>Reino Unido</item>
+        <item>Spain</item>
+        <item>France</item>
+        <item>United Kingdom</item>
+        <item>Italy</item>
+        <item>Germany</item>
+        <item>United States</item>
     </string-array>
+
     <string name="RegOk">Registered!</string>
     <string name="noReg">Register cancelled!</string>
+    <string name="log_ok">Correct login!</string>
+    <string name="log_nok">Incorrect login</string>
 
 
 </resources>

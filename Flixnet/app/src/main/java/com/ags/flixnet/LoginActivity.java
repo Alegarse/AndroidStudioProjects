@@ -53,12 +53,13 @@ public class LoginActivity extends AppCompatActivity
         super.onCreate(savedInstanceState) ;
         setContentView(R.layout.activity_login) ;
 
-        // mostramos el icono de la aplicación
+        /*
+        // mostramos el icono de la aplicación (Quitado porque queda mal esteticamente)
         //API<25
-        getSupportActionBar().setIcon(R.mipmap.ic_launcher); ;
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
         // API>=25
-        //getSupportActionBar().setDisplayShowHomeEnabled(true);
-        //getSupportActionBar().setIcon(R.mipmap.icono);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher);*/
 
 
         // obtenemos una instancia de FirebaseAuth
@@ -67,15 +68,15 @@ public class LoginActivity extends AppCompatActivity
         // obtener una referencia a cada componente
         btnLog = findViewById(R.id.btnLogin) ;
         btnReg = findViewById(R.id.btnRegister) ;
-        email  = findViewById(R.id.username) ;
-        pass   = findViewById(R.id.password) ;
+        email  = findViewById(R.id.emailLogin) ;
+        pass   = findViewById(R.id.passwordLogin) ;
 
 
-        // TEMPORAL
+        // TEMPORAL PARA LOGEO RAPIDO
         email.setText("aleboy80@gmail.com");
         pass.setText("123456") ;
 
-        //##########################################################################################
+        //################################   LOGIN       ##########################################
 
         // definimos escuchador para el botón LOGIN
         btnLog.setOnClickListener(new View.OnClickListener()
@@ -100,10 +101,10 @@ public class LoginActivity extends AppCompatActivity
                             {
                                 if (!task.isSuccessful())
                                     // Error en el Login
-                                    Toast.makeText(getApplicationContext(), "Se ha producido un error en el login.", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), R.string.log_nok, Toast.LENGTH_LONG).show();
                                 else
                                 {   // Toast de prueba para si logea bien
-                                    Toast.makeText(getApplicationContext(), "Logeado correctamente!", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), R.string.log_ok, Toast.LENGTH_LONG).show();
 
 
                                     // LOGIN COMPLETADO
@@ -115,6 +116,8 @@ public class LoginActivity extends AppCompatActivity
 
                                     // obtener una referencia al usuario logueado
                                     DatabaseReference userRef = fbdatabase.getReference().child("usuarios/" + uid) ;
+
+//##############################    CREO QUE O AQUI NO ENTRA , FALLO EN M AIN 14O HAY FALLO EN LA BASE DE DATOS    #######################################
                                     userRef.addListenerForSingleValueEvent(new ValueEventListener()
                                     {
                                         @Override
@@ -125,6 +128,7 @@ public class LoginActivity extends AppCompatActivity
                                             {
                                                 // obtenemos datos del usuario logueado
                                                 Usuario usuario = dataSnapshot.getValue(Usuario.class) ;
+
 
                                                 // creamos un diccionario
                                                 Bundle bundle = new Bundle() ;

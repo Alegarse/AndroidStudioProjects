@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="err_pass">Las contraseñas no conciden</string>
+    <string name="err_pass">Las contraseñas no coinciden</string>
     <string name="err_register">Error de registro</string>
     <string name="cancel">Cancelar</string>
     <string name="reg_ape">Apellidos</string>
@@ -16,7 +16,9 @@
     <string name="label_logout">Salir</string>
     <string name="label_OkRegister">Registro</string>
     <string name="label_register">Registro</string>
-    <string name="err_empty" translatable="false">Error. No se pueden dejar campos vacios</string>
+    <string name="err_empty">Error. No se pueden dejar campos vacios</string>
     <string name="RegOk">¡El registro ha finalizado con éxito!</string>
     <string name="noReg">¡El registro se ha cancelado!</string>
+    <string name="log_ok">Logeado correctamente</string>
+    <string name="log_nok">El Login no se ha producido</string>
 </resources>

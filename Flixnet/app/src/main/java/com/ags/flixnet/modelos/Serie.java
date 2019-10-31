@@ -34,15 +34,17 @@ public class Serie
 
     @Expose
     @SerializedName("punt_imdb")
-    private float punt_imdb ;
+    private float puntuacion ;
 
     @Expose
     @SerializedName("fecha_estreno")
-    private String fecha_estreno ;
+    private String estreno ;
 
     /**
      */
     public Serie() { }
+
+    public Serie(String tit) { titulo = tit ; }
 
     /**
      * @return
@@ -66,10 +68,10 @@ public class Serie
     }
 
     /**
-     * @param titulo
+     * @param tit
      */
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public void setTitulo(String tit) {
+        this.titulo = tit;
     }
 
     /**
@@ -117,28 +119,36 @@ public class Serie
     /**
      * @return
      */
-    public float getPunt_imdb() {
-        return punt_imdb;
+    public float getPuntuacion() {
+        return puntuacion;
     }
 
     /**
-     * @param punt_imdb
+     * @param puntuacion
      */
-    public void setPunt_imdb(float punt_imdb) {
-        this.punt_imdb = punt_imdb;
+    public void setPuntuacion(float puntuacion) {
+        this.puntuacion = puntuacion;
     }
 
     /**
      * @return
      */
-    public String getFecha_estreno() {
-        return fecha_estreno;
+    public String getEstreno() {
+        return estreno;
     }
 
     /**
-     * @param fecha_estreno
+     * @param estreno
      */
-    public void setFecha_estreno(String fecha_estreno) {
-        this.fecha_estreno = fecha_estreno;
+    public void setEstreno(String estreno) {
+        this.estreno = estreno;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "Serie: " +  titulo ;
     }
 }

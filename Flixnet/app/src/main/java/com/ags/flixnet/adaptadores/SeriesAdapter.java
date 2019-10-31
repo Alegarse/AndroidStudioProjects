@@ -1,5 +1,6 @@
 package com.ags.flixnet.adaptadores;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,73 +12,102 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ags.flixnet.R;
 import com.ags.flixnet.modelos.Serie;
+import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
-/*public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesHolder> {
+public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.listaHolder>
+{
+    private List<Serie> lista ;
+    private Context contexto ;
 
-    private List<Serie> series;
-    //private Context contexto;
+    /**
+     * @param ctx
+     */
+public SeriesAdapter(Context ctx)
+        {
+        lista   = new ArrayList<>() ;
+        contexto = ctx ;
+        }
 
-    public SeriesAdapter(Context List<Serie> list) {
-        series = list;
-    } // Guardo lo que me pasan
+/**
+ * seteamos la lista de datos y le notificamos el cambio
+ * @param datos
+ */
+public void setLista(List<Serie> datos)
+        {
+        lista = datos ;
+        notifyDataSetChanged() ;
+        }
 
-
-
-    @NonNull
-    @Override
-    //Este es el contenedor que necesitaremos
-    public SeriesHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
-    {
-        // Inflamos el layout que vamos a utilizar para item
+/**
+ * @param parent
+ * @param viewType
+ * @return
+ */
+@NonNull
+@Override
+public listaHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+        {
+        // inflamos el layout que vamos a utilizar para ítem
         View vista = LayoutInflater.from(contexto)
-                                    .inflate(R.layout.item_layout,parent,false);
+        .inflate(R.layout.item_layout, parent, false) ;
 
-        // Creo objeto de tuipo SeriesHolder y le indico el layout a usar para mostrar los elementos de la lista
+        // creamos el contenedor y le indicamos qué layout debe utilizar
+        // para mostrar los elementos de la lista.
+        return new listaHolder(vista) ;
+        }
 
-        SeriesHolder sh = new SeriesHolder(vista)
+/**
+ * @param holder
+ * @param position
+ */
+@Override
+public void onBindViewHolder(@NonNull listaHolder holder, int position)
+        {
+        holder.BindHolder(lista.get(position)) ;
+        }
 
-        return null;
-    }
+/**
+ * @return
+ */
+@Override
+public int getItemCount()
+        {
+        return lista.size() ;
+        }
 
+public class listaHolder extends RecyclerView.ViewHolder
+{
+    private TextView titulo ;
+    private ImageView poster ;
 
-
-    @Override
-    public void onBindViewHolder(@NonNull SeriesHolder holder, int position)
+    /**
+     * @param itemView
+     */
+    public listaHolder(@NonNull View itemView)
     {
+        super(itemView) ;
 
+        titulo = itemView.findViewById(R.id.itemTitle) ;
+        poster = itemView.findViewById(R.id.itemPoster) ;
     }
 
     /**
-     *
-     * @return el numero de items que tiene la lista
+     * @param item
      */
-
-/*
-    @Override
-    public int getItemCount()
+    public void BindHolder(Serie item)
     {
-        return series.size();
-    }
+        // Mostramos el título de la serie
+        titulo.setText(item.getTitulo()) ;
 
-    public class SeriesHolder extends RecyclerView.ViewHolder{
-
-        private TextView titulo;
-        private ImageView poster;
-
-        public SeriesHolder(@NonNull View itemView)
-        {
-            super(itemView);
-
-            titulo = itemView.findViewById(R.id.itemTitle);
-            poster = itemView.findViewById(R.id.itemPoster);
-        }
-
-        public void BindHolder (Serie item)
-        {
-            titulo.setText(item.getTitulo());
-        }
+        // mostramos el póster de la serie
+        Picasso.get()
+                .load(item.getCartel())
+                .resize(300, 444)
+                .into(poster) ;
     }
 }
-*/
+
+}

@@ -35,29 +35,29 @@ public class RegisterActivity extends AppCompatActivity {
 
     //Declaramos las variables con la herramienta BindView
 
-    @BindView(R.id.username)
-    public EditText userName;
+    @BindView(R.id.regEmail)
+    public EditText email ;
 
-    @BindView(R.id.apellidos)
-    public EditText apellidos;
+    @BindView(R.id.regName)
+    public EditText nombre ;
 
-    @BindView(R.id.email)
-    public EditText email;
+    @BindView(R.id.regSurname)
+    public EditText apellidos ;
 
-    @BindView(R.id.password)
-    public EditText passWord;
+    @BindView(R.id.regPassword)
+    public EditText pass ;
 
-    @BindView(R.id.passwordA)
-    public EditText confiPassWord;
+    @BindView(R.id.regPassConfirm)
+    public EditText conf_pass ;
 
-    @BindView(R.id.spinner)
-    public Spinner pais;
+    @BindView(R.id.regBtnRegister)
+    public Button btnReg ;
 
-    @BindView(R.id.btnRegister)
-    public Button btnOkRegister;
+    @BindView(R.id.regBtnCancel)
+    public Button btnCancel ;
 
-    @BindView(R.id.btnCancel)
-    public Button btnCancel;
+    @BindView(R.id.regNacionalidad)
+    public Spinner pais ;
 
     //FB
     private FirebaseAuth fbauth ;
@@ -99,6 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
             add("Reino Unido") ;
             add("Alemania") ;
             add("Francia") ;
+            add("Portugal") ;
         }}   ;
 
 
@@ -139,18 +140,19 @@ public class RegisterActivity extends AppCompatActivity {
         });//Fin escuchador btn Cancel
 
         //Escuchador botón okRegister
-        btnOkRegister.setOnClickListener(new View.OnClickListener() {
+        btnReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
                 //Obtenemos el valor de los campos del formulario
 
-                final String nom = getField(userName) ;
+                final String ema = getField(email) ;
+                final String nom = getField(nombre) ;
                 final String ape = getField(apellidos) ;
-                final String ema = getField(email);
                 final String pai = pais.getSelectedItem().toString() ;
 
-                String pwd = getField(passWord) ;
-                String con = getField(confiPassWord) ;
+                //
+                String pwd = getField(pass) ;
+                String con = getField(conf_pass) ;
 
                 // comprobamos si los campos tienen información
                 if (ema.isEmpty() || nom.isEmpty() || ape.isEmpty() ||
@@ -188,7 +190,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     String uid = fbauth.getUid() ;
 
                                     // en primer lugar, creamos un usuario.
-                                    Usuario usuario = new Usuario(ema, nom, ape, pai) ;
+                                    Usuario usuario = new Usuario(nom, ape, ema, pai) ;
 
                                     // obtener una referencia al documento USUARIOS en FB
                                     DatabaseReference dbref = fbdatabase.getReference("usuarios") ;

@@ -9,26 +9,36 @@ package com.ags.flixnet.interfaces;
 
 import com.ags.flixnet.modelos.Capitulo;
 import com.ags.flixnet.modelos.Serie;
+import com.ags.flixnet.modelos.Usuario;
+
+import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
-public interface ApiService
+public interface apiService
 {
-    //Que tipo de protocolo y su estructura
-    @GET("api/serie")
-    //Complementa el id con el idSer
-    Call<Serie> getAllShows(@Query("id") int id);
+    @GET("api/series")
+    Call<List<Serie>> getAllShows() ;
 
     @GET("api/serie")
-    Call<Serie> getShow(@Query("id") int id);
+    Call<Serie> getShow(@Query("id") int id) ;
 
     @GET("api/capitulo")
-    Call<Capitulo>getChapter(@Query("id")int id);
+    Call<Capitulo> getChapter(@Query("id") int id) ;
 
-    //@POST("api/login")
-    //Call<Usuario> doLogin();
+    /*@POST("api/login")
+    @FormUrlEncoded
+    Call<Usuario> doLogin(
+       @Header("Authorization") String token,
+       @Field("email")    String ema,
+       @Field("password") String pas
+    ) ;*/
 
 }
+

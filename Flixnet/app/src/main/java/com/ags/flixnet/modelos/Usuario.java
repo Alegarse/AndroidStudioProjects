@@ -12,17 +12,33 @@ import java.io.Serializable;
 public class Usuario implements Serializable {
     private String nombre;
     private String apellidos;
-    private String avatar;
     private String nacionalidad;
+    private String email;
 
     // Constructor vacio para FB
     public Usuario() {  }
 
-    public Usuario(String nombre, String apellidos, String avatar, String nacionalidad) {
+    /**
+     *
+     * @param nombre
+     * @param apellidos
+     * @param nacionalidad
+     */
+    public Usuario(String nombre, String apellidos, String email, String nacionalidad) {
         this.nombre = nombre;
         this.apellidos = apellidos;
-        this.avatar = avatar;
         this.nacionalidad = nacionalidad;
+        this.email = email;
+    }
+
+    /**
+     * @param nombre
+     * @param apellidos
+     */
+    public Usuario(String nombre, String apellidos)
+    {
+        this.nombre = nombre;
+        this.apellidos = apellidos;
     }
 
     public String getNombre() {
@@ -41,20 +57,20 @@ public class Usuario implements Serializable {
         this.apellidos = apellidos;
     }
 
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
     public String getNacionalidad() {
         return nacionalidad;
     }
 
     public void setNacionalidad(String nacionalidad) {
         this.nacionalidad = nacionalidad;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
