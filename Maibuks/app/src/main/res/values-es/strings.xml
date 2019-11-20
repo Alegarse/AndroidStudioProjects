@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="login_password">Contraseña</string>
+    <string name="loginLabel">Entrar</string>
+    <string name="RegisterLabel">Registrarse</string>
+    <string name="userName">Nombre</string>
+    <string name="userApe">Apellidos</string>
+    <string name="regPass">Contraseña</string>
+    <string name="regConfPass">Introduzca la contraseña de nuevo</string>
+    <string name="cancel">Cancelar</string>
+    <string name="RegText">Por favor, rellene todos los campos</string>
+    <string name="e_empty">Error. Por favor rellena todos los campos</string>
+    <string name="e_pass">Error. Las contraseñas no coinciden</string>
+    <string name="e_register">¡Error en el registro!</string>
+    <string name="log_nok">Error en el login</string>
+</resources>

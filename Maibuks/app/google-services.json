@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "782590101955",
+    "firebase_url": "https://maibuks.firebaseio.com",
+    "project_id": "maibuks",
+    "storage_bucket": "maibuks.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:782590101955:android:79f9adf34f1cd179f85576",
+        "android_client_info": {
+          "package_name": "com.ags.maibuks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "782590101955-4n5o32rqs7jo16l0km8h2e04vm1kb6d3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ags.maibuks",
+            "certificate_hash": "75033d205d444f3bce2c8a4dafbd7fcb6594395a"
+          }
+        },
+        {
+          "client_id": "782590101955-elquubehqnke9fmcvnochg35ni5aeid0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5ItEqIWiGwn6EM6I06LEAvzsYdtrczDw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "782590101955-elquubehqnke9fmcvnochg35ni5aeid0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
