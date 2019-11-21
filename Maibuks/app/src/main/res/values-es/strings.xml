@@ -13,4 +13,8 @@
     <string name="e_pass">Error. Las contraseñas no coinciden</string>
     <string name="e_register">¡Error en el registro!</string>
     <string name="log_nok">Error en el login</string>
+    <string name="ok_register">Registrado correctamente!</string>
+    <string name="log_ok">¡Login correcto!</string>
+    <string name="label_logout">Desconectarse</string>
+    <string name="noReg">Registro cancelado</string>
 </resources>

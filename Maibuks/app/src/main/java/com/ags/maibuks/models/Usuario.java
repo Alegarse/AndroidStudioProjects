@@ -8,15 +8,17 @@ public class Usuario implements Serializable {
     private String nombre;
     private String apellidos;
     private String email;
+    private String contrasena;
 
     // Contructor vacío para Firebase
     public Usuario (){}
 
     // Constructor
-    public Usuario(String nombre, String apellidos, String email) {
+    public Usuario(String nombre, String apellidos, String email, String contra) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.email = email;
+        this.contrasena =  contra;
     }
 
     // Getters y Setters
@@ -44,6 +46,15 @@ public class Usuario implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
 
     // ToString
 

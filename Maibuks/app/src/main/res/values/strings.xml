@@ -14,4 +14,8 @@
     <string name="e_pass">Error. Passwords is not equals</string>
     <string name="e_register">Register error!</string>
     <string name="log_nok">Login error!</string>
+    <string name="ok_register">Registered!</string>
+    <string name="log_ok">Correct login!</string>
+    <string name="label_logout">Logout</string>
+    <string name="noReg">Register cancelled</string>
 </resources>

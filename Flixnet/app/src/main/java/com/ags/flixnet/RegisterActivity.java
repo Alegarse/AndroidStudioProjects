@@ -139,7 +139,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });//Fin escuchador btn Cancel
 
-        //Escuchador botón okRegister
+        //Escuchador botón Register
         btnReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {

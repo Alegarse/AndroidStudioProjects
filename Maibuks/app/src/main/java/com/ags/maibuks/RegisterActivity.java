@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,6 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseDatabase fbdatabase ;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
         btnReg = findViewById(R.id.regBtnRegister);
         nombre= findViewById(R.id.regName);
         apellidos = findViewById(R.id.regSurname);
+        email = findViewById(R.id.regEmail);
         pass = findViewById(R.id.regPassword);
         conf_pass = findViewById(R.id.regPassConfirm);
 
@@ -46,7 +49,8 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         //Obtenemos la instancia de FirebaseDatabase
-        fbdatabase =  FirebaseDatabase.getInstance() ;
+        fbdatabase =  FirebaseDatabase.getInstance();
+
 
         // Escuchador para el botón Cancelar
         btnCan.setOnClickListener(new View.OnClickListener() {
@@ -67,10 +71,11 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(final View v) {
 
                 // Cogemos el valor de los campos del formulario de registro
-                final String ema = getField(email);
+
                 final String nom = getField(nombre);
                 final String ape = getField(apellidos);
-                String pwd = getField(pass);
+                final String ema = getField(email);
+                final String pwd = getField(pass);
                 String cpwd = getField(conf_pass);
 
                 // Verificamos que se han introducido todos los campos
@@ -100,7 +105,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     String uid = mAuth.getUid();
 
                                     // 2. Creamos el usuario
-                                    Usuario usuario = new Usuario(nom,ape,ema);
+                                    Usuario usuario = new Usuario(nom,ape,ema,pwd);
 
                                     // 3. Obtenemos referencia al documento de usuarios en FB
                                     DatabaseReference dbref = fbdatabase.getReference("usuarios");
@@ -111,8 +116,11 @@ public class RegisterActivity extends AppCompatActivity {
                                     // 5. Salimos de la aplicación
                                     mAuth.signOut();
                                     setResult(RESULT_OK);
+                                    // Aviso de registro por pantalla
+                                    Snackbar.make(v, getResources().getText(R.string.ok_register), Snackbar.LENGTH_LONG).show();
                                     finish();
                                     return;
+
                                 } else {  // Usuario no se registra correctamente
                                     // Aviso de error por pantalla
                                     Snackbar.make(v, getResources().getText(R.string.e_register), Snackbar.LENGTH_LONG).show();

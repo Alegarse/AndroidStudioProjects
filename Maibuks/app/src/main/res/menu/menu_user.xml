@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/mnuLogout" android:title="@string/label_logout"></item>
+
+    <item android:title="SubMenu" >
+        <menu >
+            <item android:title="Prueba1" />
+            <item android:title="Prueba2" />
+        </menu>
+    </item>
+
+</menu>
