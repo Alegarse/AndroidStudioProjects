@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name" translatable="false">Maipets</string>
+    <string name="start">Start</string>
+    <string name="login_email" translatable="false">Email</string>
+    <string name="login_password">Password</string>
+    <string name="loginLabel">Login</string>
+    <string name="RegisterLabel">Register</string>
+    <string name="userName">Name</string>
+    <string name="userApe">Surname</string>
+    <string name="regPass">Password</string>
+    <string name="regConfPass">Password again</string>
+    <string name="cancel">Cancel</string>
+    <string name="RegText">Please, fill all the fields</string>
+    <string name="e_empty">Error. Please fill al the fields</string>
+    <string name="e_pass">Error. Passwords is not equals</string>
+    <string name="e_register">Register error!</string>
+    <string name="log_nok">Login error!</string>
+    <string name="ok_register">Registered!</string>
+    <string name="log_ok">Correct login!</string>
+    <string name="label_logout">Logout</string>
+    <string name="noReg">Register cancelled</string>
+</resources>
