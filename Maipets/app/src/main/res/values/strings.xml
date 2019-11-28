@@ -19,4 +19,12 @@
     <string name="log_ok">Correct login!</string>
     <string name="label_logout">Logout</string>
     <string name="noReg">Register cancelled</string>
+    <string name="mascName">Pet\'s Name</string>
+    <string name="mascTipo">Pet\'s Type</string>
+    <string name="mascRaza">Pet\'s Race</string>
+    <string name="mascCol" translatable="false">Pet\'s Color</string>
+    <string name="mascFec">Pet\'s birthdate</string>
+    <string name="add">Add pet</string>
+    <string name="ok_addMasc">Pet added!</string>
+    <string name="noAddMasc">Adding pet cancelled!</string>
 </resources>

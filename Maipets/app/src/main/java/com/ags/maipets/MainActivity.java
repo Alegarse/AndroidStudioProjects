@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         // TEMPORAL PARA LOGEO RAPIDO
         email.setText("aleboy80@gmail.com");
-        pass.setText("123456") ;
+        pass.setText("123456");
 
 
 

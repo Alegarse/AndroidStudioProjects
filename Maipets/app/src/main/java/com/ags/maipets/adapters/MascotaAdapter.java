@@ -5,6 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.ags.maipets.R;
 import com.ags.maipets.models.mascota;
@@ -12,15 +14,40 @@ import java.util.List;
 
 public class MascotaAdapter extends RecyclerView.Adapter<MascotaAdapter.MascotaViewHolder> {
 
-    private List<mascota> items;
+    private List<mascota> mascotas;
+
+    public MascotaAdapter(List<mascota> mascotas) {
+        this.mascotas = mascotas;
+    }
+
+    @NonNull
+    @Override
+    public MascotaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.mascota_card, parent, false);
+        MascotaViewHolder holder = new MascotaViewHolder(v);
+        return holder;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull MascotaViewHolder holder, int position) {
+        mascota mascota = mascotas.get(position);
+        //holder.imagen.setImageDrawable(mascota.getImagen());
+        holder.nombre.setText(mascota.getNombre());
+        holder.tipo.setText(mascota.getTipo());
+        holder.raza.setText(mascota.getRaza());
+        holder.color.setText(mascota.getColor());
+        holder.fechaNac.setText(mascota.getFechaNac());
+    }
+
+    @Override
+    public int getItemCount() {
+        return mascotas.size();
+    }
 
     public static class MascotaViewHolder extends RecyclerView.ViewHolder{
         public ImageView imagen;
-        public TextView nombre;
-        public TextView tipo;
-        public TextView raza;
-        public TextView color;
-        public TextView fechaNac;
+        public TextView nombre, tipo, raza, color, fechaNac;
+
 
         public MascotaViewHolder(View v){
             super(v);
@@ -33,30 +60,6 @@ public class MascotaAdapter extends RecyclerView.Adapter<MascotaAdapter.MascotaV
         }
     }
 
-    public MascotaAdapter(List<mascota> items){
-        this.items = items;
-    }
 
-    @Override
-    public int getItemCount() {
-        return items.size();
-    }
-
-    @Override
-    public MascotaViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.mascota_card, viewGroup, false);
-        return new MascotaViewHolder(v);
-    }
-
-    @Override
-    public void onBindViewHolder(MascotaViewHolder viewHolder, int i) {
-        viewHolder.imagen.setImageResource(items.get(i).getImagen());
-        viewHolder.nombre.setText(items.get(i).getNombre());
-        viewHolder.tipo.setText(items.get(i).getTipo());
-        viewHolder.raza.setText(items.get(i).getRaza());
-        viewHolder.color.setText(items.get(i).getColor());
-        viewHolder.fechaNac.setText(items.get(i).getFechaNac());
-    }
 
 }

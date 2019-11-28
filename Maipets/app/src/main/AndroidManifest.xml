@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ags.maipets">
-
     <!-- Permiso para poder acceder a internet -->
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -12,14 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".InsertActivity"></activity>
         <!-- Actividad de usuario -->
-        <activity android:name=".UserActivity"></activity>
-        <!-- Actividad de registro -->
-        <activity android:name=".RegisterActivity" />
-        <!-- Actividad de Login -->
-        <activity android:name=".MainActivity" />
-
-        <!-- Actividad Inicial -->
+        <activity android:name=".UserActivity" /> <!-- Actividad de registro -->
+        <activity android:name=".RegisterActivity" /> <!-- Actividad de Login -->
+        <activity android:name=".MainActivity" /> <!-- Actividad Inicial -->
         <activity android:name=".IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

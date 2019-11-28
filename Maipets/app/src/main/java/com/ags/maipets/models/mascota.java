@@ -2,7 +2,7 @@ package com.ags.maipets.models;
 
 public class mascota {
 
-    private int imagen;
+    //private int imagen;
     private String nombre;
     private String tipo;
     private String raza;
@@ -13,7 +13,7 @@ public class mascota {
     }
 
     public mascota(int imagen, String nombre, String tipo, String raza, String color, String fechaNac) {
-        this.imagen = imagen;
+        //this.imagen = imagen;
         this.nombre = nombre;
         this.tipo = tipo;
         this.raza = raza;
@@ -21,13 +21,13 @@ public class mascota {
         this.fechaNac = fechaNac;
     }
 
-    public int getImagen() {
+    /*public int getImagen() {
         return imagen;
     }
 
     public void setImagen(int imagen) {
         this.imagen = imagen;
-    }
+    }*/
 
     public String getNombre() {
         return nombre;
