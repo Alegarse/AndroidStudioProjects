@@ -1,5 +1,12 @@
+/**
+ * Alejandro García Serrano
+ * Proyecto FlixNet de Android Studio
+ * Asignatura Programación Multimedia y de Dispositivos Móviles ;Programación de Servicios y Procesos
+ *
+ */
 package com.ags.maipets;
 
+import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -71,11 +78,21 @@ public class UserActivity extends AppCompatActivity {
 
                 // cerramos la sesión en FireBase
                 mAuth.signOut() ;
-
                 // volvemos a la actividad principal
                 setResult(0) ;
                 finish() ;
                 return true ;
+
+            case R.id.action_search:
+                openSearch();
+                return true;
+
+            case R.id.mShare:
+                Intent share = new Intent(android.content.Intent.ACTION_SEND);
+                share.setType("text/plain");
+                share.putExtra(android.content.Intent.EXTRA_TEXT,"https://www.linkedin.com/in/alegarse/");
+                startActivity(Intent.createChooser(share,"Compartir via"));
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -95,6 +112,11 @@ public class UserActivity extends AppCompatActivity {
 
         //
         super.onActivityResult(requestCode, resultCode, data) ;
+
+    }
+
+    private void openSearch(){
+        startActivity(new Intent(SearchManager.INTENT_ACTION_GLOBAL_SEARCH));
 
     }
 }

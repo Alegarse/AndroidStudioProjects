@@ -1,3 +1,9 @@
+/**
+ * Alejandro García Serrano
+ * Proyecto FlixNet de Android Studio
+ * Asignatura Programación Multimedia y de Dispositivos Móviles ;Programación de Servicios y Procesos
+ *
+ */
 package com.ags.maipets;
 
 import androidx.annotation.NonNull;

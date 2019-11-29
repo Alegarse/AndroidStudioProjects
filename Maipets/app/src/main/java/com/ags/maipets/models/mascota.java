@@ -12,7 +12,7 @@ public class mascota {
     public mascota() {
     }
 
-    public mascota(int imagen, String nombre, String tipo, String raza, String color, String fechaNac) {
+    public mascota(String nombre, String tipo, String raza, String color, String fechaNac) {
         //this.imagen = imagen;
         this.nombre = nombre;
         this.tipo = tipo;

@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/mnuLogout" android:title="@string/label_logout"></item>
+    <item
+        android:id="@+id/mnuLogout"
+        android:title="@string/label_logout">
+    </item>
+
+    <!-- Busqueda y compartir; aparece como boton de accion -->
+    <item
+        android:id="@+id/mShare"
+        android:title="@string/share"
+        android:icon="@drawable/share"
+        app:showAsAction="always" />
+    <item android:id="@+id/action_search"
+        android:icon="@drawable/search"
+        android:title="@string/action_s"
+        app:showAsAction="always"  />
+
+
 
 </menu>

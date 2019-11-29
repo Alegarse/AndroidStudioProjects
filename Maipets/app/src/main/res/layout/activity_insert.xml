@@ -35,7 +35,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/regName"
+            android:id="@+id/addName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text" />
@@ -177,7 +177,6 @@
 
     <!-- Botón para añadir -->
 
-    <!-- Boton para cancelar -->
     <Button
         android:id="@+id/addBtn"
         android:layout_width="wrap_content"
@@ -190,6 +189,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fecMasc" />
 
+    <!-- Boton para cancelar -->
     <Button
         android:id="@+id/cancAddBtn"
         android:layout_width="wrap_content"
