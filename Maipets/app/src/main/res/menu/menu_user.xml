@@ -7,16 +7,13 @@
         android:title="@string/label_logout">
     </item>
 
-    <!-- Busqueda y compartir; aparece como boton de accion -->
+    <!-- Compartir: parece como boton de accion -->
     <item
         android:id="@+id/mShare"
         android:title="@string/share"
         android:icon="@drawable/share"
         app:showAsAction="always" />
-    <item android:id="@+id/action_search"
-        android:icon="@drawable/search"
-        android:title="@string/action_s"
-        app:showAsAction="always"  />
+
 
 
 

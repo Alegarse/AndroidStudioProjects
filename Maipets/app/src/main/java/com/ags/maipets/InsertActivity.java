@@ -38,6 +38,7 @@ public class InsertActivity extends AppCompatActivity {
     private EditText fecha;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +49,9 @@ public class InsertActivity extends AppCompatActivity {
 
         //Obtenemos la instancia de FirebaseDatabase
         fbdatabase =  FirebaseDatabase.getInstance() ;
+
+
+        String uid = fbauth.getCurrentUser().getUid();
 
         // Inicializamos los botones y campos
         cancAdd = findViewById(R.id.cancAddBtn);
@@ -75,6 +79,7 @@ public class InsertActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                 // Sacamos el valor de los campos
+                final String aUid = uid.trim();
                 final String aNombre = nombre.getText().toString().trim();
                 final String aTipo = tipo.getText().toString().trim();
                 final String aRaza = raza.getText().toString().trim();
@@ -92,7 +97,7 @@ public class InsertActivity extends AppCompatActivity {
                     String uid = UUID.randomUUID().toString();
                     mascota masc = new mascota(aNombre,aTipo,aRaza,aColor,aFecha);
 
-                    DatabaseReference dbref = fbdatabase.getReference("mascotas");
+                    DatabaseReference dbref = fbdatabase.getReference("mascotas/"+aUid);
 
                     dbref.child(uid).setValue(masc) ;
 

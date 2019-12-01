@@ -30,13 +30,13 @@ public class MascotaAdapter extends RecyclerView.Adapter<MascotaAdapter.MascotaV
 
     @Override
     public void onBindViewHolder(@NonNull MascotaViewHolder holder, int position) {
-        mascota mascota = mascotas.get(position);
-        //holder.imagen.setImageDrawable(mascota.getImagen());
-        holder.nombre.setText(mascota.getNombre());
-        holder.tipo.setText(mascota.getTipo());
-        holder.raza.setText(mascota.getRaza());
-        holder.color.setText(mascota.getColor());
-        holder.fechaNac.setText(mascota.getFechaNac());
+        mascota masc = mascotas.get(position);
+        //holder.imagen.setImageDrawable(masc.getImagen());
+        holder.nombre.setText(masc.getNombre());
+        holder.tipo.setText(masc.getTipo());
+        holder.raza.setText(masc.getRaza());
+        holder.color.setText(masc.getColor());
+        holder.fechaNac.setText(masc.getFechaNac());
     }
 
     @Override
@@ -45,13 +45,13 @@ public class MascotaAdapter extends RecyclerView.Adapter<MascotaAdapter.MascotaV
     }
 
     public static class MascotaViewHolder extends RecyclerView.ViewHolder{
-        public ImageView imagen;
+        //public ImageView imagen;
         public TextView nombre, tipo, raza, color, fechaNac;
 
 
         public MascotaViewHolder(View v){
             super(v);
-            imagen = (ImageView) v.findViewById(R.id.aniImg);
+            //imagen = (ImageView) v.findViewById(R.id.aniImg);
             nombre = (TextView) v.findViewById(R.id.nombre);
             tipo = (TextView) v.findViewById(R.id.tipo);
             raza = (TextView) v.findViewById(R.id.raza);
