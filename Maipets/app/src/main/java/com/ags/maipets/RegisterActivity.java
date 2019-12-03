@@ -6,7 +6,6 @@
  */
 package com.ags.maipets;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -15,10 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.ags.maipets.models.Usuario;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -100,36 +96,32 @@ public class RegisterActivity extends AppCompatActivity {
 
                 // Pasamos a registrar en el sistema de autentificación
                 mAuth.createUserWithEmailAndPassword(ema,pwd)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>()
-                        {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful())  // Usuario se registra correctamente
-                                {
-                                    // 1.Obtenemos UID del usuario registrado
-                                    String uid = mAuth.getUid();
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful())  // Usuario se registra correctamente
+                            {
+                                // 1.Obtenemos UID del usuario registrado
+                                String uid = mAuth.getUid();
 
-                                    // 2. Creamos el usuario
-                                    Usuario usuario = new Usuario(nom,ape,ema,pwd);
+                                // 2. Creamos el usuario
+                                Usuario usuario = new Usuario(nom,ape,ema,pwd);
 
-                                    // 3. Obtenemos referencia al documento de usuarios en FB
-                                    DatabaseReference dbref = fbdatabase.getReference("usuarios");
+                                // 3. Obtenemos referencia al documento de usuarios en FB
+                                DatabaseReference dbref = fbdatabase.getReference("usuarios");
 
-                                    // 4. Guardamos la información en RealTime Database
-                                    dbref.child(uid).setValue(usuario) ;
+                                // 4. Guardamos la información en RealTime Database
+                                dbref.child(uid).setValue(usuario) ;
 
-                                    // 5. Salimos de la aplicación
-                                    mAuth.signOut();
-                                    setResult(RESULT_OK);
-                                    // Aviso de registro por pantalla
-                                    Snackbar.make(v, getResources().getText(R.string.ok_register), Snackbar.LENGTH_LONG).show();
-                                    finish();
-                                    return;
+                                // 5. Salimos de la aplicación
+                                mAuth.signOut();
+                                setResult(RESULT_OK);
+                                // Aviso de registro por pantalla
+                                Snackbar.make(v, getResources().getText(R.string.ok_register), Snackbar.LENGTH_LONG).show();
+                                finish();
+                                return;
 
-                                } else {  // Usuario no se registra correctamente
-                                    // Aviso de error por pantalla
-                                    Snackbar.make(v, getResources().getText(R.string.e_register), Snackbar.LENGTH_LONG).show();
-                                }
+                            } else {  // Usuario no se registra correctamente
+                                // Aviso de error por pantalla
+                                Snackbar.make(v, getResources().getText(R.string.e_register), Snackbar.LENGTH_LONG).show();
                             }
                         });
             }

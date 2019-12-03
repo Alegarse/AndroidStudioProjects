@@ -7,6 +7,10 @@
         android:title="@string/label_logout">
     </item>
 
+    <item
+        android:id="@+id/usrInfo"
+        android:title="@string/perf"/>
+
     <!-- Compartir: parece como boton de accion -->
     <item
         android:id="@+id/mShare"

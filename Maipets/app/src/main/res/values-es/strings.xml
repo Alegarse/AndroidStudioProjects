@@ -29,4 +29,12 @@
     <string name="action_c">Compartir</string>
     <string name="action_s">Buscar</string>
     <string name="share">Compartir</string>
+    <string name="no_add">Mascota no añadida</string>
+    <string name="edit_masc">Editar</string>
+    <string name="del_masc">Eliminar</string>
+    <string name="perf">Perfil de usuario</string>
+    <string name="textPet">Mascotas</string>
+    <string name="del_prof">Borrar cuenta</string>
+    <string name="ed_prof">Guardar perfil</string>
+    <string name="save_ok">Guardado!</string>
 </resources>

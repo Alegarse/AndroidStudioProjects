@@ -21,6 +21,11 @@ public class Usuario implements Serializable {
         this.contrasena =  contra;
     }
 
+    public Usuario(String nombre, String apellidos, String email) {
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.email = email;
+    }
     // Getters y Setters
 
     public String getNombre() {

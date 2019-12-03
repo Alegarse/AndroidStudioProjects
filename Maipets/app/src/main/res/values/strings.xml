@@ -30,4 +30,12 @@
     <string name="action_c">Share</string>
     <string name="action_s">Search</string>
     <string name="share">Share</string>
+    <string name="no_add">Pet not added</string>
+    <string name="edit_masc">Edit</string>
+    <string name="del_masc">Delete</string>
+    <string name="perf">User info</string>
+    <string name="textPet">Pets</string>
+    <string name="del_prof">Delete profile</string>
+    <string name="ed_prof">Save profile</string>
+    <string name="save_ok">Saved!</string>
 </resources>
