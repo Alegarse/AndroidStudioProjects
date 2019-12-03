@@ -34,6 +34,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 
 public class UserActivity extends AppCompatActivity {
@@ -50,6 +51,8 @@ public class UserActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     MascotaAdapter mascotaAdapter;
 
+    mascota mascotaelegida;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +61,12 @@ public class UserActivity extends AppCompatActivity {
 
         btnAdd = findViewById(R.id.addMasc);
 
+
         //Obtenemos la instancia de FirebaseAuth
         fbauth = FirebaseAuth.getInstance() ;
 
         String uid = fbauth.getCurrentUser().getUid();
+
 
 
         //Obtenemos la instancia de FirebaseDatabase
@@ -119,6 +124,9 @@ public class UserActivity extends AppCompatActivity {
             // Empezar la intención
             startActivityForResult(add, COD_REGISTRO);
         });
+
+
+
     }
 
     // Menú de action bar
@@ -146,6 +154,11 @@ public class UserActivity extends AppCompatActivity {
                 finish();
                 return true;
 
+            case R.id.vetInfo:
+                Intent vet = new Intent (UserActivity.this, IVetActivity.class);
+                startActivity(vet);
+                break;
+
             case R.id.usrInfo:
                 Intent info = new Intent(UserActivity.this, InfoUser.class) ;
                 startActivity(info);
@@ -161,6 +174,8 @@ public class UserActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 
     // Menú contextual
 
@@ -181,6 +196,11 @@ public class UserActivity extends AppCompatActivity {
                 break;
 
             case R.id.secDel:
+                View v;
+                String uid = fbauth.getCurrentUser().getUid();
+                String UUID = ref.child("mascotas").child(uid).push().getKey();
+
+                ref.child("mascotas").child(uid).child(UUID).removeValue();
 
                 Toast.makeText(this, "Eliminado ", Toast.LENGTH_LONG).show();
                 break;

@@ -11,6 +11,10 @@
         android:id="@+id/usrInfo"
         android:title="@string/perf"/>
 
+    <item
+        android:id="@+id/vetInfo"
+        android:title="@string/vetCart"/>
+
     <!-- Compartir: parece como boton de accion -->
     <item
         android:id="@+id/mShare"

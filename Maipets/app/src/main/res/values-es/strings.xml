@@ -37,4 +37,9 @@
     <string name="del_prof">Borrar cuenta</string>
     <string name="ed_prof">Guardar perfil</string>
     <string name="save_ok">Guardado!</string>
+    <string name="vetName">Nombre veterinario</string>
+    <string name="vetDir">Direccion</string>
+    <string name="vetCiu">Ciudad</string>
+    <string name="vetTel">Teléfono</string>
+    <string name="vetCart">Veterinario</string>
 </resources>

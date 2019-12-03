@@ -76,6 +76,7 @@
             android:layout_marginLeft="10dp"
             android:id="@+id/fechaNac"/>
 
+
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

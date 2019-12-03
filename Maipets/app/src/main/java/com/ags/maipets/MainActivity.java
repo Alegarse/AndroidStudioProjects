@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         pass = findViewById(R.id.userPassLogin);
 
         // TEMPORAL PARA LOGEO RAPIDO
-        email.setText("aleboy80@gmail.com");
+        email.setText("mariajogs81@gmail.com");
         pass.setText("123456");
 
 

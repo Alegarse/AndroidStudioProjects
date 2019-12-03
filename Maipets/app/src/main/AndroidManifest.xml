@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".InfoUser"></activity>
+        <activity android:name=".IVetActivity"></activity>
+        <activity android:name=".InfoUser" />
         <activity android:name=".InsertActivity" /> <!-- Actividad de usuario -->
         <activity android:name=".UserActivity" /> <!-- Actividad de registro -->
         <activity android:name=".RegisterActivity" /> <!-- Actividad de Login -->
