@@ -7,4 +7,7 @@
     <string name="nameR">Escribe el nombre</string>
     <string name="player">Jugador:</string>
     <string name="reset">Reiniciar</string>
+    <string name="p1win">¡¡ Gana el jugador 1 !!</string>
+    <string name="p2win">¡¡ Gana el jugador 2 !!</string>
+    <string name="draw">¡¡ Tablas !!</string>
 </resources>

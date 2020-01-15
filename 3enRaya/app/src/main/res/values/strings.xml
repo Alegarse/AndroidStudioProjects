@@ -7,4 +7,7 @@
     <string name="nameR">Name required</string>
     <string name="player">Player:</string>
     <string name="reset">Reset</string>
+    <string name="p1win">Player 1 Win!!</string>
+    <string name="p2win">Player 2 win!!</string>
+    <string name="draw">Tables !!</string>
 </resources>

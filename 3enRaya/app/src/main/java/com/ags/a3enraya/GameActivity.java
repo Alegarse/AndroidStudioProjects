@@ -3,11 +3,13 @@ package com.ags.a3enraya;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class GameActivity extends AppCompatActivity {
@@ -41,6 +43,23 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
+        Intent intent = getIntent();
+        String Player1 = intent.getStringExtra("nom1");
+        String Player2 = intent.getStringExtra("nom2");
+
+        final TextView P1 = (TextView) findViewById(R.id.Pl1);
+        final TextView P2 = (TextView) findViewById(R.id.Pl2);
+
+        P1.setText(Player1);
+        P2.setText(Player2);
+
+        if (player1Turn) {
+            P1.setTextColor(Color.YELLOW);
+        } else {
+            P2.setTextColor(Color.YELLOW);
+        }
+
+
         celda1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,7 +72,10 @@ public class GameActivity extends AppCompatActivity {
                     turnos++;
                     celda1.setImageResource(R.drawable.c);
                 }
+                celda1.setEnabled(false);
+                checkWin();
             }
+
         });
 
         celda2.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +90,8 @@ public class GameActivity extends AppCompatActivity {
                     turnos++;
                     celda2.setImageResource(R.drawable.c);
                 }
+                celda2.setEnabled(false);
+                checkWin();
             }
         });
 
@@ -83,6 +107,8 @@ public class GameActivity extends AppCompatActivity {
                     turnos++;
                     celda3.setImageResource(R.drawable.c);
                 }
+                celda3.setEnabled(false);
+                checkWin();
             }
         });
 
@@ -98,6 +124,8 @@ public class GameActivity extends AppCompatActivity {
                     turnos++;
                     celda4.setImageResource(R.drawable.c);
                 }
+                celda4.setEnabled(false);
+                checkWin();
             }
         });
 
@@ -113,6 +141,8 @@ public class GameActivity extends AppCompatActivity {
                     turnos++;
                     celda5.setImageResource(R.drawable.c);
                 }
+                celda5.setEnabled(false);
+                checkWin();
             }
         });
 
@@ -128,6 +158,8 @@ public class GameActivity extends AppCompatActivity {
                     turnos++;
                     celda6.setImageResource(R.drawable.c);
                 }
+                celda6.setEnabled(false);
+                checkWin();
             }
         });
 
@@ -143,6 +175,8 @@ public class GameActivity extends AppCompatActivity {
                     turnos++;
                     celda7.setImageResource(R.drawable.c);
                 }
+                celda7.setEnabled(false);
+                checkWin();
             }
         });
 
@@ -158,6 +192,8 @@ public class GameActivity extends AppCompatActivity {
                     turnos++;
                     celda8.setImageResource(R.drawable.c);
                 }
+                celda8.setEnabled(false);
+                checkWin();
             }
         });
 
@@ -173,25 +209,121 @@ public class GameActivity extends AppCompatActivity {
                     turnos++;
                     celda9.setImageResource(R.drawable.c);
                 }
+                celda9.setEnabled(false);
+                checkWin();
             }
         });
 
-        Intent intent = getIntent();
-        String Player1 = intent.getStringExtra("nom1");
-        String Player2 = intent.getStringExtra("nom2");
 
-        TextView P1 = (TextView) findViewById(R.id.Pl1);
-        TextView P2 = (TextView) findViewById(R.id.Pl2);
+        if (checkWin()) {
+            if (player1Turn) {
+                winP1();
+            } else {
+                winP2();
+            }
+        } else if (turnos == 9) {
+            tables();
+        } else {
+            player1Turn = !player1Turn;
+        }
 
-        P1.setText(Player1);
-        P2.setText(Player2);
     }
-
-
 
     private void reset() {
 
+        celda1.setImageResource(R.drawable.v);
+        celda1.setEnabled(true);
+        celda2.setImageResource(R.drawable.v);
+        celda2.setEnabled(true);
+        celda3.setImageResource(R.drawable.v);
+        celda3.setEnabled(true);
+        celda4.setImageResource(R.drawable.v);
+        celda4.setEnabled(true);
+        celda5.setImageResource(R.drawable.v);
+        celda5.setEnabled(true);
+        celda6.setImageResource(R.drawable.v);
+        celda6.setEnabled(true);
+        celda7.setImageResource(R.drawable.v);
+        celda7.setEnabled(true);
+        celda8.setImageResource(R.drawable.v);
+        celda8.setEnabled(true);
+        celda9.setImageResource(R.drawable.v);
+        celda9.setEnabled(true);
+
+        player1Turn = true;
         turnos = 0;
+    }
+
+    private boolean checkWin() {
+
+        /* Checking circle */
+
+        if (celda1.getDrawable().equals(R.drawable.c) && celda2.getDrawable().equals(R.drawable.c) && celda3.getDrawable().equals(R.drawable.c) ) {
+            return true;
+        }
+        if (celda4.getDrawable().equals(R.drawable.c) && celda5.getDrawable().equals(R.drawable.c) && celda6.getDrawable().equals(R.drawable.c) ) {
+            return true;
+        }
+        if (celda7.getDrawable().equals(R.drawable.c) && celda8.getDrawable().equals(R.drawable.c) && celda9.getDrawable().equals(R.drawable.c) ) {
+            return true;
+        }
+        if (celda1.getDrawable().equals(R.drawable.c) && celda4.getDrawable().equals(R.drawable.c) && celda7.getDrawable().equals(R.drawable.c) ) {
+            return true;
+        }
+        if (celda2.getDrawable().equals(R.drawable.c) && celda5.getDrawable().equals(R.drawable.c) && celda8.getDrawable().equals(R.drawable.c) ) {
+            return true;
+        }
+        if (celda3.getDrawable().equals(R.drawable.c) && celda6.getDrawable().equals(R.drawable.c) && celda9.getDrawable().equals(R.drawable.c) ) {
+            return true;
+        }
+        if (celda1.getDrawable().equals(R.drawable.c) && celda5.getDrawable().equals(R.drawable.c) && celda9.getDrawable().equals(R.drawable.c) ) {
+            return true;
+        }
+        if (celda3.getDrawable().equals(R.drawable.c) && celda5.getDrawable().equals(R.drawable.c) && celda7.getDrawable().equals(R.drawable.c) ) {
+            return true;
+        }
+
+        /* Checking equis */
+
+        if (celda1.getDrawable().equals(R.drawable.x) && celda2.getDrawable().equals(R.drawable.x) && celda3.getDrawable().equals(R.drawable.x) ) {
+            return true;
+        }
+        if (celda4.getDrawable().equals(R.drawable.x) && celda5.getDrawable().equals(R.drawable.x) && celda6.getDrawable().equals(R.drawable.x) ) {
+            return true;
+        }
+        if (celda7.getDrawable().equals(R.drawable.x) && celda8.getDrawable().equals(R.drawable.x) && celda9.getDrawable().equals(R.drawable.x) ) {
+            return true;
+        }
+        if (celda1.getDrawable().equals(R.drawable.x) && celda4.getDrawable().equals(R.drawable.x) && celda7.getDrawable().equals(R.drawable.x) ) {
+            return true;
+        }
+        if (celda2.getDrawable().equals(R.drawable.x) && celda5.getDrawable().equals(R.drawable.x) && celda8.getDrawable().equals(R.drawable.x) ) {
+            return true;
+        }
+        if (celda3.getDrawable().equals(R.drawable.x) && celda6.getDrawable().equals(R.drawable.x) && celda9.getDrawable().equals(R.drawable.x) ) {
+            return true;
+        }
+        if (celda1.getDrawable().equals(R.drawable.x) && celda5.getDrawable().equals(R.drawable.x) && celda9.getDrawable().equals(R.drawable.x) ) {
+            return true;
+        }
+        if (celda3.getDrawable().equals(R.drawable.x) && celda5.getDrawable().equals(R.drawable.x) && celda7.getDrawable().equals(R.drawable.x) ) {
+            return true;
+        }
+
+        /* No win */
+        return false;
+    }
+
+    private void winP1(){
+        Toast.makeText(getApplicationContext(), R.string.p1win, Toast.LENGTH_LONG).show();
+    }
+
+    private void winP2(){
+        Toast.makeText(getApplicationContext(), R.string.p2win, Toast.LENGTH_LONG).show();
+    }
+
+    private void tables(){
+        Toast.makeText(getApplicationContext(), R.string.draw, Toast.LENGTH_LONG).show();
     }
 
 
