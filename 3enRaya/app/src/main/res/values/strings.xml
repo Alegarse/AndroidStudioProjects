@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name" translatable="false">3enRaya</string>
+    <string name="game">TIC TAC TOE</string>
+    <string name="init">Play game</string>
+    <string name="player1">Player 1</string>
+    <string name="player2">Player 2</string>
+    <string name="nameR">Name required</string>
+    <string name="player">Player:</string>
+    <string name="reset">Reset</string>
+</resources>

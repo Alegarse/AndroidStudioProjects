@@ -33,6 +33,7 @@ dependencies {
     // Linea para que funcione Material Design + SnackBar
     implementation 'com.google.android.material:material:1.2.0-alpha02'
 
+
     // Incluimos Firebase
     implementation 'com.google.firebase:firebase-auth:19.2.0'
     implementation 'com.google.firebase:firebase-database:19.2.0'

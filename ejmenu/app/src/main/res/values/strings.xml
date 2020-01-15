@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ejmenu</string>
+    <string name="menu_add">Añadir</string>
+    <string name="menu_del">Borrar</string>
+    <string name="menu_logout">Salir</string>
+
+</resources>

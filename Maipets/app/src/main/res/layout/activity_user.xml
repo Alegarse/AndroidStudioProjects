@@ -10,7 +10,7 @@
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:paddingTop="10dp"
-    android:backgroundTint="#FEA532"
+    android:background="#fea532"
     tools:context=".UserActivity">
 
     <androidx.recyclerview.widget.RecyclerView

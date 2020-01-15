@@ -9,7 +9,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:colorAccent">#66222422</item>
         <!-- Personalize background -->
-        <!--<item name="android:windowBackground">@drawable/app_background</item>-->
+        <item name="android:windowBackground">@drawable/app_background</item>
     </style>
 
 </resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="game">3 EN RAYA</string>
+    <string name="init">Iniciar juego</string>
+    <string name="player1">Jugador 1</string>
+    <string name="player2">Jugador 2</string>
+    <string name="nameR">Escribe el nombre</string>
+    <string name="player">Jugador:</string>
+    <string name="reset">Reiniciar</string>
+</resources>

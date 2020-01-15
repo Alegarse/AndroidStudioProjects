@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item   android:id="@+id/uno"
+            android:icon="@drawable/ic_one_24dp"
+            android:title="Opción 1" />
+    <item   android:id="@+id/dos"
+            android:icon="@drawable/ic_two_24dp"
+            android:title="Opción 2" />
+    <item   android:id="@+id/tres"
+            android:icon="@drawable/ic_three_24dp"
+            android:title="Opción 3" />
+</menu>

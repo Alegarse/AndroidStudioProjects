@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00BCD4"
+    tools:context=".GameActivity">
+
+    <TextView
+        android:id="@+id/gameName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="@string/game"
+        android:textColor="#000000"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/Pl1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Player1"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.079"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gameName" />
+
+    <TextView
+        android:id="@+id/Pl2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Player2"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.434"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gameName" />
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:orientation="vertical"
+        android:rowCount="3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gameName">
+
+
+        <!-- FILA UNO -->
+        <ImageView
+            android:id="@+id/celda1"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_margin="2dp"
+            android:background="#BFAAAAAA"
+            app:srcCompat="@drawable/v"
+            tools:layout_editor_absoluteX="157dp"
+            tools:layout_editor_absoluteY="455dp" />
+
+        <ImageView
+            android:id="@+id/celda2"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_margin="2dp"
+            android:background="#BFAAAAAA"
+            app:srcCompat="@drawable/v"
+            tools:layout_editor_absoluteX="157dp"
+            tools:layout_editor_absoluteY="455dp" />
+
+        <ImageView
+            android:id="@+id/celda3"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_row="0"
+            android:layout_column="2"
+            android:layout_margin="2dp"
+            android:background="#BFAAAAAA"
+            app:srcCompat="@drawable/v"
+            tools:layout_editor_absoluteX="157dp"
+            tools:layout_editor_absoluteY="455dp" />
+
+        <!-- FILA DOS -->
+        <ImageView
+            android:id="@+id/celda4"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:layout_margin="2dp"
+            android:background="#BFAAAAAA"
+            app:srcCompat="@drawable/v"
+            tools:layout_editor_absoluteX="157dp"
+            tools:layout_editor_absoluteY="455dp" />
+
+        <ImageView
+            android:id="@+id/celda5"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:layout_margin="2dp"
+            android:background="#BFAAAAAA"
+            app:srcCompat="@drawable/v"
+            tools:layout_editor_absoluteX="157dp"
+            tools:layout_editor_absoluteY="455dp" />
+
+        <ImageView
+            android:id="@+id/celda6"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_row="1"
+            android:layout_column="2"
+            android:layout_margin="2dp"
+            android:background="#BFAAAAAA"
+            app:srcCompat="@drawable/v"
+            tools:layout_editor_absoluteX="157dp"
+            tools:layout_editor_absoluteY="455dp" />
+
+        <!-- FILA TRES -->
+        <ImageView
+            android:id="@+id/celda7"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:layout_margin="2dp"
+            android:background="#BFAAAAAA"
+            app:srcCompat="@drawable/v"
+            tools:layout_editor_absoluteX="157dp"
+            tools:layout_editor_absoluteY="455dp" />
+
+        <ImageView
+            android:id="@+id/celda8"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_row="2"
+            android:layout_column="1"
+            android:layout_margin="2dp"
+            android:background="#BFAAAAAA"
+            app:srcCompat="@drawable/v"
+            tools:layout_editor_absoluteX="157dp"
+            tools:layout_editor_absoluteY="455dp" />
+
+        <ImageView
+            android:id="@+id/celda9"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_row="2"
+            android:layout_column="2"
+            android:layout_margin="2dp"
+            android:background="#BFAAAAAA"
+            app:srcCompat="@drawable/v"
+            tools:layout_editor_absoluteX="157dp"
+            tools:layout_editor_absoluteY="455dp" />
+
+
+    </GridLayout>
+
+    <Button
+        android:id="@+id/reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="88dp"
+        android:backgroundTint="#308094"
+        android:text="@string/reset"
+        android:textColor="#AD0E0E"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.894"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
