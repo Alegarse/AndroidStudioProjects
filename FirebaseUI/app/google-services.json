@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "322058485839",
+    "firebase_url": "https://pruelogi.firebaseio.com",
+    "project_id": "pruelogi",
+    "storage_bucket": "pruelogi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:322058485839:android:48e4f976dcfa7013a26a3a",
+        "android_client_info": {
+          "package_name": "com.example.firebaseui"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "322058485839-lgme35ba167vb3lnh4rg2b46m3fg1ege.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.firebaseui",
+            "certificate_hash": "ab11447774888604fa330ccdd6c2af558a7f1b11"
+          }
+        },
+        {
+          "client_id": "322058485839-0uc83dja6d54s2hg1rnmmhns5jmbqjs4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpcfbFkuygXpYiDA3nvANUefxLhk9o9Z8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "322058485839-0uc83dja6d54s2hg1rnmmhns5jmbqjs4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

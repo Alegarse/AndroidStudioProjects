@@ -3,10 +3,12 @@ package com.ags.a3enraya;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 
@@ -16,11 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private Button enter;
     private EditText player1;
     private EditText player2;
-
     private String nomP1,nomP2;
-
-   /* public static final String nom1 = "";
-    public static final String nom2 = "";*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +29,14 @@ public class MainActivity extends AppCompatActivity {
         player1 = findViewById(R.id.player1);
         player2 = findViewById(R.id.player2);
 
+        /* ANIMATED IMAGE */
+        ImageView gif = findViewById(R.id.imageView) ;
+        gif.setBackgroundResource(R.drawable.loading);
+        AnimationDrawable frameAnimation = (AnimationDrawable) gif.getBackground();
+        frameAnimation.start();
+
+
+        /* ESCUCHADOR BOTON JUGAR */
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,9 +51,7 @@ public class MainActivity extends AppCompatActivity {
                     initiate.putExtra("nom2", nomP2);
                     startActivity(initiate);
                 }
-
             }
         });
     }
-
 }

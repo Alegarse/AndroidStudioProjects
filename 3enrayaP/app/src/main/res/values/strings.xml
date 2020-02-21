@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">3enraya</string>
+    <string name="hint_email">jugador@3enraya.com</string>
+    <string name="hint_pass">contraseña</string>
+    <string name="label_jugar">JUGAR</string>
+
+    <string name="label_turno">Turno jugador </string>
+    <string name="label_ganador">¡¡Gana el jugador </string>
+    <string name="label_empate">Tablas</string>
+</resources>

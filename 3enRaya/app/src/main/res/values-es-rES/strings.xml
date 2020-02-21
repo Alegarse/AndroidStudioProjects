@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="game">3 EN RAYA</string>
-    <string name="init">Iniciar juego</string>
+    <string name="init">¡Pulsa para jugar!</string>
     <string name="player1">Jugador 1</string>
     <string name="player2">Jugador 2</string>
-    <string name="nameR">Escribe el nombre</string>
+    <string name="nameR">Escribe los nombres</string>
     <string name="player">Jugador:</string>
-    <string name="reset">Reiniciar</string>
+    <string name="reset">¡Reiniciar!</string>
     <string name="p1win">¡¡ Gana el jugador 1 !!</string>
     <string name="p2win">¡¡ Gana el jugador 2 !!</string>
     <string name="draw">¡¡ Tablas !!</string>
