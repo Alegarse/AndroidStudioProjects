@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:cardCornerRadius="12dp"
+    android:layout_margin="5dp"
+    android:elevation="90dp">
+
+    <RelativeLayout
+        android:id="@+id/RecolectasViewHolder"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:background="#B5BBAF"
+        android:orientation="vertical">
+
+
+        <Button
+            android:id="@+id/iconoOlivo"
+            android:layout_width="37dp"
+            android:layout_height="34dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="313dp"
+            android:layout_marginRight="313dp"
+            android:layout_marginBottom="106dp"
+            android:background="@drawable/ic_cultivo" />
+
+
+        <TextView
+            android:id="@+id/textoCultivoRecolecta"
+            android:layout_width="149dp"
+            android:layout_height="31dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="42dp"
+            android:layout_marginLeft="42dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="159dp"
+            android:layout_marginRight="159dp"
+            android:layout_marginBottom="107dp"
+            android:text="Cultivo"
+            android:textColor="#000"
+            android:textSize="25dp"
+            android:typeface="serif" />
+
+
+        <Button
+            android:id="@+id/iconoOrdenador"
+            android:layout_width="30dp"
+            android:layout_height="25dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="39dp"
+            android:layout_marginEnd="316dp"
+            android:layout_marginRight="316dp"
+            android:layout_marginBottom="76dp"
+            android:background="@drawable/ic_archivado" />
+
+
+        <TextView
+            android:id="@+id/textoCodigoRecolecta"
+            android:layout_width="309dp"
+            android:layout_height="17dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="37dp"
+            android:layout_marginLeft="37dp"
+            android:layout_marginTop="42dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="81dp"
+            android:text="Codigo" />
+
+        <Button
+            android:id="@+id/iconocalendario"
+            android:layout_width="24dp"
+            android:layout_height="23dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="34dp"
+            android:layout_marginLeft="34dp"
+            android:layout_marginTop="69dp"
+            android:layout_marginEnd="292dp"
+            android:layout_marginRight="292dp"
+            android:layout_marginBottom="48dp"
+            android:background="@drawable/ic_calendario" />
+
+
+        <TextView
+            android:id="@+id/textoFechaRecolecta"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="62dp"
+            android:layout_marginLeft="62dp"
+            android:layout_marginTop="73dp"
+            android:layout_marginEnd="175dp"
+            android:layout_marginRight="175dp"
+            android:layout_marginBottom="51dp"
+            android:text="Fecha"
+            android:textColor="#000" />
+
+        <Button
+            android:id="@+id/iconokilos"
+            android:layout_width="24dp"
+            android:layout_height="23dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="34dp"
+            android:layout_marginLeft="34dp"
+            android:layout_marginTop="102dp"
+            android:layout_marginEnd="292dp"
+            android:layout_marginRight="292dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/ic_balanza" />
+
+        <TextView
+            android:id="@+id/textoKilosRecolecta"
+            android:layout_width="32dp"
+            android:layout_height="18dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="62dp"
+            android:layout_marginLeft="62dp"
+            android:layout_marginTop="103dp"
+            android:layout_marginEnd="256dp"
+            android:layout_marginRight="256dp"
+            android:layout_marginBottom="19dp"
+            android:text="kg"
+            android:textColor="#000" />
+
+        <TextView
+            android:layout_width="78dp"
+            android:layout_height="18dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="96dp"
+            android:layout_marginLeft="96dp"
+            android:layout_marginTop="103dp"
+            android:layout_marginEnd="176dp"
+            android:layout_marginRight="176dp"
+            android:layout_marginBottom="19dp"
+            android:text="kilogramos"
+            android:textColor="#000" />
+
+        <Button
+            android:id="@+id/iconodat"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="204dp"
+            android:layout_marginLeft="204dp"
+            android:layout_marginTop="70dp"
+            android:layout_marginEnd="124dp"
+            android:layout_marginRight="124dp"
+            android:layout_marginBottom="48dp"
+            android:background="@drawable/ic_dat" />
+
+        <TextView
+            android:id="@+id/textoDatRecolecta"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="229dp"
+            android:layout_marginLeft="229dp"
+            android:layout_marginTop="73dp"
+            android:layout_marginEnd="13dp"
+            android:layout_marginRight="13dp"
+            android:layout_marginBottom="51dp"
+            android:text="DAT"
+            android:textColor="#000" />
+
+        <Button
+            android:id="@+id/botonmatricula"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="205dp"
+            android:layout_marginLeft="205dp"
+            android:layout_marginTop="101dp"
+            android:layout_marginEnd="122dp"
+            android:layout_marginRight="122dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/ic_coche" />
+
+        <TextView
+            android:id="@+id/textoMatriculaRecolecta"
+            android:layout_width="106dp"
+            android:layout_height="16dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="231dp"
+            android:layout_marginLeft="231dp"
+            android:layout_marginTop="104dp"
+            android:layout_marginEnd="13dp"
+            android:layout_marginRight="13dp"
+            android:layout_marginBottom="20dp"
+            android:text="Matricula"
+            android:textColor="#000"/>
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

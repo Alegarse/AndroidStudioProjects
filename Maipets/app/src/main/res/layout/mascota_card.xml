@@ -18,6 +18,7 @@
 
         <ImageView
             android:id="@+id/aniImg"
+            app:srcCompat="@drawable/mascotas"
             android:layout_width="110dp"
             android:layout_height="150dp"
             android:layout_margin="5dp"

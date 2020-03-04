@@ -1,15 +1,15 @@
 <resources>
     <string name="app_name" translatable="false">Maipets</string>
-    <string name="start">Start</string>
+    <string name="start">START</string>
     <string name="login_email" translatable="false">Email</string>
     <string name="login_password">Password</string>
-    <string name="loginLabel">Login</string>
-    <string name="RegisterLabel">Register</string>
+    <string name="loginLabel">LOGIN</string>
+    <string name="RegisterLabel">REGISTER</string>
     <string name="userName">Name</string>
     <string name="userApe">Surname</string>
     <string name="regPass">Password</string>
     <string name="regConfPass">Password again</string>
-    <string name="cancel">Cancel</string>
+    <string name="cancel">CANCEL</string>
     <string name="RegText">Please, fill all the fields</string>
     <string name="e_empty">Error. Please fill al the fields</string>
     <string name="e_pass">Error. Passwords is not equals</string>
@@ -24,7 +24,7 @@
     <string name="mascRaza">Pet\'s Race</string>
     <string name="mascCol">Pet\'s Color</string>
     <string name="mascFec">Pet\'s birthdate</string>
-    <string name="add">Add</string>
+    <string name="add">ADD</string>
     <string name="ok_addMasc">Pet added!</string>
     <string name="noAddMasc">Adding pet cancelled!</string>
     <string name="action_c">Share</string>
@@ -43,4 +43,13 @@
     <string name="vetCiu">City</string>
     <string name="vetTel">Telephone</string>
     <string name="vetCart">Veterinary</string>
+    <string name="editMasc">Edit Pet Values</string>
+    <string name="editName">Name</string>
+    <string name="editType">Type</string>
+    <string name="editRace">Specie</string>
+    <string name="editColor" translatable="false">Color</string>
+    <string name="editDate">Birthdate</string>
+    <string name="UpdateBoton">UPDATE</string>
+    <string name="cancelUpdate">CANCEL</string>
+    <string name="addM">ADD PET</string>
 </resources>

@@ -40,11 +40,13 @@ import java.util.UUID;
 public class UserActivity extends AppCompatActivity {
 
     private Button btnAdd;
+    private Intent tempo;
     public final int COD_REGISTRO=000;
 
     private FirebaseAuth fbauth ;
     private FirebaseDatabase fbdatabase;
     DatabaseReference reference,ref;
+
 
     // Colección de mascotas
     ArrayList<mascota> mascotas;
@@ -60,6 +62,8 @@ public class UserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user);
 
         btnAdd = findViewById(R.id.addMasc);
+
+        tempo = new Intent(this, miTempo.class);
 
 
         //Obtenemos la instancia de FirebaseAuth
@@ -192,7 +196,17 @@ public class UserActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.secEdd:
 
-                Toast.makeText(this, "Editado ", Toast.LENGTH_LONG).show();
+                mascota pet = mascotas.get(mascotaAdapter.getIndex());
+
+                Toast.makeText(this, "Editando mascota", Toast.LENGTH_LONG).show();
+                Intent irAEditar = new Intent(UserActivity.this, ModiMascota.class);
+                irAEditar.putExtra("nombreMascota",pet.getNombre());
+                irAEditar.putExtra("especieMascota",pet.getTipo());
+                irAEditar.putExtra("razaMascota",pet.getRaza());
+                irAEditar.putExtra("colorMascota",pet.getColor());
+                irAEditar.putExtra("fechaMascota",pet.getFechaNac());
+
+                startActivity(irAEditar);
                 break;
 
             case R.id.secDel:
@@ -216,7 +230,8 @@ public class UserActivity extends AppCompatActivity {
         if (requestCode==COD_REGISTRO)
         {
             if (resultCode == RESULT_OK)
-                Toast.makeText(getApplicationContext(), R.string.ok_addMasc, Toast.LENGTH_LONG).show();
+                startService(tempo);
+                //Toast.makeText(getApplicationContext(), R.string.ok_addMasc, Toast.LENGTH_LONG).show();
             else
                 Toast.makeText(getApplicationContext(), R.string.noAddMasc, Toast.LENGTH_LONG).show();
         }

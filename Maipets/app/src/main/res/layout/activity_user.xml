@@ -10,7 +10,7 @@
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:paddingTop="10dp"
-    android:background="#fea532"
+
     tools:context=".UserActivity">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -30,8 +30,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:backgroundTint="#1F6821"
-        android:text="@string/add"
+        android:backgroundTint="#000000"
+        android:text="@string/addM"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

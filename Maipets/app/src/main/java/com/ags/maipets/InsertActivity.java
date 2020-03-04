@@ -8,6 +8,7 @@ package com.ags.maipets;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -36,7 +37,6 @@ public class InsertActivity extends AppCompatActivity {
     private EditText fecha;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +47,6 @@ public class InsertActivity extends AppCompatActivity {
 
         //Obtenemos la instancia de FirebaseDatabase
         fbdatabase =  FirebaseDatabase.getInstance() ;
-
 
         String uid = fbauth.getCurrentUser().getUid();
 
@@ -101,6 +100,7 @@ public class InsertActivity extends AppCompatActivity {
 
                     fbauth.signOut();
                     setResult(RESULT_OK);
+
                     finish();
                     return;
 

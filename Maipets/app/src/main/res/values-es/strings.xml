@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="start">Inicio</string>
+    <string name="start">INICIO</string>
     <string name="login_password">Contraseña</string>
-    <string name="loginLabel">Entrar</string>
-    <string name="RegisterLabel">Registrarse</string>
+    <string name="loginLabel">ENTRAR</string>
+    <string name="RegisterLabel">REGISTRARSE</string>
     <string name="userName">Nombre</string>
     <string name="userApe">Apellidos</string>
     <string name="regPass">Contraseña</string>
     <string name="regConfPass">Introduzca la contraseña de nuevo</string>
-    <string name="cancel">Cancelar</string>
+    <string name="cancel">CANCELAR</string>
     <string name="RegText">Por favor, rellene todos los campos</string>
     <string name="e_empty">Error. Por favor rellena todos los campos</string>
     <string name="e_pass">Error. Las contraseñas no coinciden</string>
@@ -23,7 +23,7 @@
     <string name="mascRaza">Raza de la mascota</string>
     <string name="mascCol">Color de la mascota</string>
     <string name="mascFec">Fecha de nacimiento de la mascota</string>
-    <string name="add">Añadir</string>
+    <string name="add">AÑADIR</string>
     <string name="ok_addMasc">¡Mascota añadida!</string>
     <string name="noAddMasc">¡Añadir cancelado!</string>
     <string name="action_c">Compartir</string>
@@ -42,4 +42,12 @@
     <string name="vetCiu">Ciudad</string>
     <string name="vetTel">Teléfono</string>
     <string name="vetCart">Veterinario</string>
+    <string name="editMasc">Actualizar datos de mascota</string>
+    <string name="editName">Nombre</string>
+    <string name="editType">Tipo</string>
+    <string name="editRace">Especie</string>
+    <string name="editDate">Fecha</string>
+    <string name="UpdateBoton">ACTUALIZAR</string>
+    <string name="cancelUpdate">CANCELAR</string>
+    <string name="addM">AÑADIR MASCOTA</string>
 </resources>
