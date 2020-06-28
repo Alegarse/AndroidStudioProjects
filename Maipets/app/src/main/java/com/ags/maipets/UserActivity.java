@@ -212,7 +212,7 @@ public class UserActivity extends AppCompatActivity {
             case R.id.secDel:
                 View v;
                 String uid = fbauth.getCurrentUser().getUid();
-                String UUID = ref.child("mascotas").child(uid).push().getKey();
+                String UUID = reference.push().getKey();
 
                 ref.child("mascotas").child(uid).child(UUID).removeValue();
 
