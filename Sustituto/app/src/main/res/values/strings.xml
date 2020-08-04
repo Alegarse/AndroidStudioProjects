@@ -1,0 +1,7 @@
+<resources>
+    <string name="title">Sustituto</string>
+    <string name="email">Correo electrónico</string>
+    <string name="password">Contraseña</string>
+    <string name="login">Logearse</string>
+    <string name="passlose">¿Contraseña olvidada?</string>
+</resources>
