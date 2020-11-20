@@ -1,2 +1,5 @@
 #Archivos comprimidos
 *.rar
+
+#Directorios
+Private/

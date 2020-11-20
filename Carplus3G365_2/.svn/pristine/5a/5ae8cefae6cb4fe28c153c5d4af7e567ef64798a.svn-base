@@ -1,0 +1,655 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/fondodegradado"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Firmar">
+
+    <ImageButton
+        android:id="@+id/salirF"
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/boton_base_rojo"
+        android:gravity="center"
+        android:src="@drawable/exit_session"
+        android:tint="#fff"
+        android:layout_margin="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageButton
+        android:id="@+id/menuPpalF"
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/boton_base_verde"
+        android:gravity="center"
+        android:src="@drawable/go_home"
+        android:tint="#fff"
+        android:layout_margin="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+
+    <ScrollView
+        android:id="@+id/scrollReservar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="55dp"
+        android:layout_marginBottom="70dp"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:id="@+id/contenidoCambioEstado"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- CardView Localizar documento -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardFirma1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="0dp"
+                android:backgroundTint="#FFFFFF"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <!-- Titulo Localizar documento -->
+                    <LinearLayout
+                        android:id="@+id/LinearFirma1"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:layout_marginVertical="5dp"
+                        android:layout_marginHorizontal="5dp"
+                        android:background="@drawable/degradado_azul_linear_layout"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tituloLocConFirma"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dip"
+                            android:fontFamily="sans-serif-black"
+                            android:gravity="center_vertical"
+                            android:text="@string/find_contract"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#fff"
+                            android:textSize="17sp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp">
+
+                        <!-- Datos de selección-->
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/fondo_blanco_borde_gris"
+                            android:padding="3dp"
+                            android:shrinkColumns="0"
+                            android:stretchColumns="0">
+
+                            <TableRow>
+
+                                <TableLayout
+                                    android:shrinkColumns="0,1,2"
+                                    android:stretchColumns="0,1,2">
+
+                                    <TableRow>
+
+                                        <TextView
+                                            android:id="@+id/textView"
+                                            style="@style/textoAzulado"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/number"
+                                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                                    </TableRow>
+
+                                    <TableRow>
+
+                                        <EditText
+                                            android:id="@+id/txtNumeroDocumento"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="bottom"
+                                            android:hint="@string/str_number"
+                                            android:inputType="number"
+                                            android:maxLength="9"
+                                            android:maxLines="1" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical"
+                                            android:orientation="horizontal">
+
+                                            <com.google.android.material.button.MaterialButton
+                                                android:id="@+id/btnLocalizarDocumento"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="40dp"
+                                                android:layout_marginHorizontal="5dp"
+                                                app:backgroundTint="@color/azulClaro"
+                                                android:background="@drawable/boton_base_redondeado"
+                                                android:text="@string/to_find"
+                                                android:textAllCaps="true"
+                                                android:textColor="#fff"/>
+
+                                            <com.google.android.material.button.MaterialButton
+                                                android:id="@+id/btnLimpiarDocumento"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="40dp"
+                                                android:layout_marginEnd="4dp"
+                                                app:backgroundTint="@color/rojoClaro"
+                                                android:background="@drawable/boton_base_redondeado"
+                                                android:text="@string/clean"
+                                                android:textAllCaps="true"
+                                                android:textColor="#fff"/>
+
+                                        </LinearLayout>
+
+
+
+                                    </TableRow>
+                                </TableLayout>
+                            </TableRow>
+                        </TableLayout>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- CardView Resumen -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardFirma2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="0dp"
+                android:backgroundTint="#FFFFFF"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <!-- Titulo Localizar documento -->
+                    <LinearLayout
+                        android:id="@+id/LinearFirma2"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:layout_marginVertical="5dp"
+                        android:layout_marginHorizontal="5dp"
+                        android:background="@drawable/degradado_azul_linear_layout"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tituloResumen"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dip"
+                            android:fontFamily="sans-serif-black"
+                            android:gravity="center_vertical"
+                            android:text="@string/summary"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#fff"
+                            android:textSize="17sp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                        <!-- Datos de resumen-->
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginTop="5dp"
+                            android:shrinkColumns="0"
+                            android:stretchColumns="0">
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/lblNombreCliente"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_horizontal"
+                                    android:text="@string/name_and_surname"
+                                    android:textColor="#000000"
+                                    android:textStyle="italic"
+                                    android:textSize="16sp" />
+
+                            </TableRow>
+
+                        </TableLayout>
+
+
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:shrinkColumns="0"
+                            android:stretchColumns="0">
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/lblOcupacion"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/occupation"
+                                    android:textColor="#000000"
+                                    android:textSize="16sp" />
+
+                                <TextView
+                                    android:id="@+id/txtOcupacion"
+                                    android:layout_width="130dp"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="end"
+                                    android:text="@string/zero_dec"
+                                    android:textColor="#000000"
+                                    android:textSize="16sp" />
+
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/lblKilometros"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/kilometers"
+                                    android:textColor="#000000"
+                                    android:textSize="16sp" />
+
+                                <TextView
+                                    android:id="@+id/txtKilometros"
+                                    android:layout_width="130dp"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="end"
+                                    android:text="@string/zero_dec"
+                                    android:textColor="#000000"
+                                    android:textSize="16sp" />
+
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/lblDescuento"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/discount"
+                                    android:textColor="#000000"
+                                    android:textSize="16sp" />
+
+                                <TextView
+                                    android:id="@+id/txtDescuento"
+                                    android:layout_width="130dp"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="end"
+                                    android:text="@string/zero_dec"
+                                    android:textColor="#000000"
+                                    android:textSize="16sp" />
+
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/lblExtras"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/extras"
+                                    android:textColor="#000000"
+                                    android:textSize="16sp" />
+
+                                <TextView
+                                    android:id="@+id/txtExtras"
+                                    android:layout_width="130dp"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="end"
+                                    android:text="@string/zero_dec"
+                                    android:textColor="#000000"
+                                    android:textSize="16sp" />
+
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/lblCombustible"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/fuel"
+                                    android:textColor="#000000"
+                                    android:textSize="16sp" />
+
+                                <TextView
+                                    android:id="@+id/txtCombustible"
+                                    android:layout_width="130dp"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="end"
+                                    android:text="@string/zero_dec"
+                                    android:textColor="#000000"
+                                    android:textSize="16sp" />
+
+                            </TableRow>
+
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/lblFianza"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/deposit"
+                                    android:textColor="#000000"
+                                    android:textSize="16sp" />
+
+                                <TextView
+                                    android:id="@+id/txtFianza"
+                                    android:layout_width="130dp"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="end"
+                                    android:text="@string/zero_dec"
+                                    android:textColor="#000000"
+                                    android:textSize="16sp" />
+
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/fondodegradado"/>
+
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/lblTotal"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/amount"
+                                    android:textColor="#000000"
+                                    android:textSize="16sp" />
+
+                                <TextView
+                                    android:id="@+id/txtTotal"
+                                    android:layout_width="130dp"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="end"
+                                    android:text="@string/zero_dec"
+                                    android:textColor="#000000"
+                                    android:textSize="16sp" />
+
+                            </TableRow>
+
+                        </TableLayout>
+
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_marginRight="5dp"
+                            android:shrinkColumns="0"
+                            android:stretchColumns="0">
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/lblObservaciones"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_horizontal"
+                                    android:text="@string/observations"
+                                    android:textColor="#000000"
+                                    android:textSize="16sp" />
+
+                            </TableRow>
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/txtObservaciones"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="top|start"
+                                    android:textColor="#000000"
+                                    android:textSize="12sp" />
+
+                            </TableRow>
+
+                        </TableLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- CardView Firma -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardFirma3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="0dp"
+                android:backgroundTint="#FFFFFF"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <!-- Titulo Localizar documento -->
+                    <LinearLayout
+                        android:id="@+id/LinearFirma3"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:layout_marginVertical="5dp"
+                        android:layout_marginHorizontal="5dp"
+                        android:background="@drawable/degradado_azul_linear_layout"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tituloFirma"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dip"
+                            android:fontFamily="sans-serif-black"
+                            android:gravity="center_vertical"
+                            android:text="@string/sign"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#fff"
+                            android:textSize="17sp"/>
+
+                    </LinearLayout>
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="5dp"
+                        android:shrinkColumns="0"
+                        android:stretchColumns="0">
+
+                        <TableRow>
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:background="#E0E1E3">
+
+                                <LinearLayout
+                                    android:id="@+id/firmaCliente"
+                                    android:layout_width="280dp"
+                                    android:layout_height="140dp"
+                                    android:layout_centerInParent="true"
+                                    android:layout_margin="15dp"
+                                    android:background="#FFFFFF"
+                                    android:orientation="vertical"/>
+                            </RelativeLayout>
+                        </TableRow>
+
+                        <TableRow>
+
+                            <TextView
+                                android:id="@+id/lblCondiciones"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="40"
+                                android:gravity="center"
+                                android:text="@string/txt_validate_client_sign"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textColor="#000000"
+                                android:textSize="14sp" />
+
+                        </TableRow>
+
+                    </TableLayout>
+
+
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:id="@+id/linealBtnsOptions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnNoAcepto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="4dp"
+                    app:backgroundTint="@color/rojoClaro"
+                    android:background="@drawable/boton_base_redondeado"
+                    android:text="@string/firma_noaccept"
+                    android:textAllCaps="true"
+                    android:textColor="#fff"
+                    android:elevation="3dp"
+                    android:layout_margin="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAcepto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="4dp"
+                    app:backgroundTint="@color/verdeClaro"
+                    android:background="@drawable/boton_base_redondeado"
+                    android:text="@string/firma_accept"
+                    android:textAllCaps="true"
+                    android:textColor="#fff"
+                    android:layout_margin="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnLimpiarFirma"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="4dp"
+                    app:backgroundTint="@color/colorNaranBtn"
+                    android:background="@drawable/boton_base_redondeado"
+                    android:text="@string/clean"
+                    android:textAllCaps="true"
+                    android:textColor="#fff"
+                    android:layout_margin="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <ImageView
+        android:id="@+id/pieDeApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/info" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

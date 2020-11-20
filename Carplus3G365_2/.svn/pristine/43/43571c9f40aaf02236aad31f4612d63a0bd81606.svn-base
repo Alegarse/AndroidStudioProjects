@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:stretchColumns="1"
+    android:background="@drawable/fondodegradado"
+    android:shrinkColumns="1">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardCheckin1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FFFFFF"
+        app:cardCornerRadius="10dp"
+        android:layout_margin="5dp"
+        app:cardElevation="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:orientation="vertical">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingTop="7dp"
+                android:paddingBottom="7dp">
+
+                <TextView
+                    android:id="@+id/itemDispGp"
+                    android:layout_width="65dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Gp"
+                    android:gravity="start"
+                    android:layout_marginStart="2dp"
+                    android:layout_column="0" />
+
+                <TextView
+                    android:id="@+id/itemDispModelo"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/model"
+                    android:layout_column="1"
+                    android:gravity="start"
+                    android:ellipsize="end"
+                    android:singleLine="true" />
+
+
+                <TextView
+                    android:id="@+id/itemDispUnd"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Und."
+                    android:layout_column="2"
+                    android:gravity="end"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/itemDispImporte"
+                    android:layout_width="55dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/zero_dec"
+                    android:layout_column="3"
+                    android:singleLine="false"
+                    android:gravity="end" />
+
+            </TableRow>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+
+
+</TableLayout>

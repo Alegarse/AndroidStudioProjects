@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondodegradado"
+    tools:context=".CambioEstado">
+
+
+    <ImageButton
+        android:id="@+id/salirCE"
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/boton_base_rojo"
+        android:gravity="center"
+        android:src="@drawable/exit_session"
+        android:tint="#fff"
+        android:layout_margin="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageButton
+        android:id="@+id/menuPpalCE"
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/boton_base_verde"
+        android:gravity="center"
+        android:src="@drawable/go_home"
+        android:tint="#fff"
+        android:layout_margin="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ScrollView
+        android:id="@+id/scrollReservar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="55dp"
+        android:layout_marginBottom="70dp"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:id="@+id/contenidoCambioEstado"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            //CardView cambio estado y situación
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardEntregas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#F3EBE8"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="0dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:id="@+id/linearEntregas"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tit_estado_situacion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:text="@string/tit_change_estate"
+                        android:textStyle="bold"
+                        android:textColor="#000"
+                        android:fontFamily="sans-serif-light"
+                        android:layout_gravity="center"
+                        android:textSize="18sp"/>
+
+                    <TableLayout
+                        android:shrinkColumns="0,1"
+                        android:stretchColumns="0,1"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent">
+
+                        <TableRow>
+                            <TextView
+                                android:id="@+id/matricula_tit"
+                                style="@style/textoAzuladoCard"
+                                android:layout_marginStart="5dp"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/car_plate"/>
+                            <TextView
+                                android:id="@+id/refer_tit"
+                                style="@style/textoAzuladoCard"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/reference"
+                                android:textAppearance="?android:attr/textAppearanceMedium" />
+                        </TableRow>
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <EditText
+                                android:id="@+id/txtMatricula"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:maxLength="9"
+                                android:maxLines="1"
+                                android:hint="@string/common_card_plate"
+                                android:inputType="text"/>
+
+                            <EditText
+                                android:id="@+id/txtReferencia"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:focusable="false"
+                                android:focusableInTouchMode="false"
+                                android:maxLength="10"
+                                android:maxLines="1"
+                                android:inputType="text"
+                                android:textColor="#999999" />
+                        </TableRow>
+                    </TableLayout>
+                    <TableLayout android:shrinkColumns="0"
+                        android:stretchColumns="0"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent">
+                        <TableRow>
+                            <TextView
+                                android:id="@+id/tit_modelo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                style="@style/textoAzuladoCard"
+                                android:text="@string/model"
+                                android:textAppearance="?android:attr/textAppearanceMedium" />
+                        </TableRow>
+                        <TableRow>
+                            <EditText
+                                android:id="@+id/txtModelo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:focusable="false"
+                                android:focusableInTouchMode="false"
+                                android:maxLines="1"
+                                android:inputType="text"
+                                android:textColor="#999999" />
+                        </TableRow>
+                    </TableLayout>
+                    <TableLayout android:shrinkColumns="0"
+                        android:stretchColumns="0"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent">
+
+                        <TableRow>
+                            <TextView
+                                android:id="@+id/tit_color"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/textoAzuladoCard"
+                                android:textColor="#0B273E"
+                                android:text="@string/color"
+                                android:textAppearance="?android:attr/textAppearanceMedium" />
+                        </TableRow>
+                        <TableRow>
+                            <EditText
+                                android:id="@+id/txtColor"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:focusable="false"
+                                android:focusableInTouchMode="false"
+                                android:maxLines="1"
+                                android:inputType="text"
+                                android:textColor="#999999" />
+                        </TableRow>
+                        <TableRow>
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnLocalizarMatricula"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_marginEnd="4dp"
+                                app:backgroundTint="@color/colorNaranBtn"
+                                android:background="@drawable/boton_base_redondeado"
+                                android:text="@string/locate_enrollment"
+                                android:textAllCaps="true"
+                                android:textColor="#fff"
+                                android:layout_margin="5dp"
+                                app:icon="@drawable/search"
+                                app:iconTint="#fff"
+                                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"/>
+                        </TableRow>
+                    </TableLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            //CardView estado actual
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardEstadoActual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#E4DDF1"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="0dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="5dp">
+                <LinearLayout
+                    android:id="@+id/linearEstaActual"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="5dp"
+                    android:orientation="vertical">
+
+                    <TableLayout
+                        android:shrinkColumns="0,1"
+                        android:stretchColumns="0,1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TableRow>
+                            <TextView
+                                android:id="@+id/tit_est_act"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/actual_state"
+                                android:layout_marginStart="5dp"
+                                style="@style/textoAzuladoCard"
+                                android:textAppearance="?android:attr/textAppearanceMedium" />
+                            <TextView
+                                android:id="@+id/tit_ofi_act"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/office"
+                                style="@style/textoAzuladoCard"
+                                android:textAppearance="?android:attr/textAppearanceMedium" />
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <Spinner
+                                android:id="@+id/estadoActual"
+                                android:layout_height="wrap_content"
+                                android:layout_width="100dp"
+                                android:entries="@array/oldestados"/>
+
+                            <Spinner
+                                android:id="@+id/oficinaActual"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content" />
+                        </TableRow>
+                        <TableRow>
+                            <TextView
+                                android:id="@+id/titNuevoEstado"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                style="@style/textoAzuladoCard"
+                                android:text="@string/new_state"
+                                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                            <TextView
+                                android:id="@+id/titZonaSitua"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/textoAzuladoCard"
+                                android:text="@string/situation_zone"
+                                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <Spinner
+                                android:id="@+id/nuevoEstado"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content" />
+
+                            <Spinner
+                                android:id="@+id/zonaSituacion"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content" />
+                        </TableRow>
+
+
+                    </TableLayout>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            //CardView desde - hasta
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardDesdeHasta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#fff"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="0dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:id="@+id/linearDesdeHasta"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="5dp"
+                    android:orientation="vertical">
+
+                    <TableLayout
+                        android:shrinkColumns="1"
+                        android:stretchColumns="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TableRow
+                            android:id="@+id/DesdeHastaContainer1">
+                            <TextView
+                                android:id="@+id/tit_desde"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                style="@style/textoAzuladoCard"
+                                android:text="@string/from"
+                                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                            <TextView
+                                android:id="@+id/tit_hasta"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                style="@style/textoAzuladoCard"
+                                android:text="@string/str_to"
+                                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:id="@+id/DesdeHastaContainer2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <EditText
+                                android:id="@+id/txtDesde"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:focusable="false"
+                                android:focusableInTouchMode="false"
+                                android:maxLength="10"
+                                android:maxLines="1"
+                                android:hint="@string/date_format"
+                                android:textSize="16dp"
+                                android:inputType="text"/>
+
+                            <EditText
+                                android:id="@+id/txtHasta"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:focusable="false"
+                                android:focusableInTouchMode="false"
+                                android:maxLength="10"
+                                android:maxLines="1"
+                                android:hint="@string/date_format"
+                                android:inputType="text"
+                                android:textSize="16sp"
+                                android:layout_width="match_parent" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:id="@+id/DesaparicionContainer">
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    android:id="@+id/tit_fec_des"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="5dp"
+                                    style="@style/textoAzuladoCard"
+                                    android:text="@string/disappear_date"
+                                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                            </LinearLayout>
+                            <EditText
+                                android:id="@+id/txtFDes"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:focusable="false"
+                                android:focusableInTouchMode="false"
+                                android:maxLength="10"
+                                android:maxLines="1"
+                                android:hint="@string/date_format"
+                                android:textSize="16sp"
+                                android:inputType="text"/>
+                        </TableRow>
+
+                        <TableRow
+                            android:id="@+id/RecuperacionContainer">
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    android:id="@+id/tit_fec_recu"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="5dp"
+                                    style="@style/textoAzuladoCard"
+                                    android:text="@string/recu_date"
+                                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                            </LinearLayout>
+
+                            <EditText
+                                android:id="@+id/txtFRec"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:focusable="false"
+                                android:focusableInTouchMode="false"
+                                android:maxLength="10"
+                                android:maxLines="1"
+                                android:hint="@string/date_format"
+                                android:textSize="16sp"
+                                android:inputType="text"/>
+                        </TableRow>
+                    </TableLayout>
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            //CardView Checkbox
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardCheckBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#fff"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="0dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:id="@+id/linearCheckbox"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="5dp"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/chkCambioEstado"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/only_one_change_situation"
+                        android:textSize="14sp"
+                        android:textStyle="bold|italic"
+                        android:textColor="#0B273E"
+                        />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            // Botones final Actividad
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="10dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/limpiarCE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    app:backgroundTint="@color/rojoClaro"
+                    android:background="@drawable/boton_base_redondeado"
+                    android:text="@string/clean"
+                    android:textAllCaps="true"
+                    android:textColor="#fff"
+                    android:layout_margin="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/confirmarCE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    app:backgroundTint="@color/azulClaro"
+                    android:background="@drawable/boton_base_redondeado"
+                    android:text="@string/confirm"
+                    android:textAllCaps="true"
+                    android:textColor="#fff"
+                    android:layout_margin="5dp"
+                    android:layout_alignParentEnd="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <ImageView
+        android:id="@+id/pieDeApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/info" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,838 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondodegradado"
+    tools:context=".Estado">
+
+
+    <ImageButton
+        android:id="@+id/salirE"
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/boton_base_rojo"
+        android:gravity="center"
+        android:src="@drawable/exit_session"
+        android:tint="#fff"
+        android:layout_margin="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+        android:id="@+id/btnNuevoVehiculoEstado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/colorAzulBtn"
+        android:onClick="btnNuevoVehiculoEstadoClick"
+        android:text="@string/new_veh"
+        app:layout_constraintEnd_toStartOf="@+id/salirE"
+        app:layout_constraintStart_toEndOf="@+id/menuPpalE"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/menuPpalE"
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/boton_base_verde"
+        android:gravity="center"
+        android:src="@drawable/go_home"
+        android:tint="#fff"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/content_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="65dp"
+        android:visibility="visible"
+        tools:ignore="MissingConstraints">
+
+        <ScrollView
+            android:id="@+id/scrollEstado"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- CardView Ficha del vehículo -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardEstado1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="0dp"
+                    android:backgroundTint="#FFFFFF"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <!-- Titulo ficha vehiculo -->
+                        <LinearLayout
+                            android:id="@+id/LinearCabeceraFicVeh"
+                            android:layout_width="match_parent"
+                            android:layout_height="40sp"
+                            android:layout_weight="1"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/degradado_azul_linear_layout"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tituloFicVeh"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:fontFamily="sans-serif-black"
+                                android:gravity="center_vertical"
+                                android:text="@string/title_card_vehicle"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:textColor="#fff"
+                                android:textSize="17sp"/>
+
+                            <LinearLayout
+                                android:id="@+id/linearDentroMatricula"
+                                android:layout_width="200dip"
+                                android:layout_height="fill_parent"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="2dip"
+                                android:layout_marginBottom="2dip"
+                                android:background="@drawable/matricula"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/txtMatriculaEstado"
+                                    style="@style/texto_negro"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/common_card_plate"
+                                    android:textSize="22sp"/>
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <!-- Situación actual vehiculo -->
+                        <LinearLayout
+                            android:id="@+id/linealSub1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical" >
+
+                            <TextView
+                                android:id="@+id/tituloSitActVeh"
+                                style="@style/textoAzulado"
+                                android:textSize="16sp"
+                                android:layout_marginStart="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/actual_sit_vehicle" >
+                            </TextView>
+
+                            <LinearLayout
+                                android:id="@+id/linealBotSitVeh"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:padding="5dp">
+
+                                <Button
+                                    android:id="@+id/btnLibreEstado"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="5dp"
+                                    android:backgroundTint="@color/colorGrisBtn"
+                                    android:textColor="#fff"
+                                    android:text="@string/free"
+                                    style="@style/Widget.MaterialComponents.Button.TextButton"/>
+                                <Button
+                                    android:id="@+id/btnAlquiladoEstado"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="5dp"
+                                    android:backgroundTint="@color/colorGrisBtn"
+                                    android:textColor="#fff"
+                                    android:text="@string/rented"
+                                    style="@style/Widget.MaterialComponents.Button.TextButton"/>
+                                <Button
+                                    android:id="@+id/btnTallerEstado"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="5dp"
+                                    android:backgroundTint="@color/colorGrisBtn"
+                                    android:textColor="#fff"
+                                    android:text="@string/workshop"
+                                    style="@style/Widget.MaterialComponents.Button.TextButton"/>
+                                <Button
+                                    android:id="@+id/btnSustraidoEstado"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="5dp"
+                                    android:backgroundTint="@color/colorGrisBtn"
+                                    android:textColor="#fff"
+                                    android:text="@string/stolen"
+                                    style="@style/Widget.MaterialComponents.Button.TextButton"/>
+                                <Button
+                                    android:id="@+id/btnBloqueadoEstado"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:backgroundTint="@color/colorGrisBtn"
+                                    android:textColor="#fff"
+                                    android:text="@string/blocked"
+                                    style="@style/Widget.MaterialComponents.Button.TextButton"/>
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- Estado actual vehiculo -->
+                        <LinearLayout
+                            android:id="@+id/linealSub2"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_marginBottom="5dp"
+                            android:orientation="vertical" >
+
+                            <TextView
+                                android:id="@+id/txtEstadoEstado"
+                                style="@style/textoAzulado"
+                                android:textSize="16sp"
+                                android:layout_marginStart="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/actual_state_veh" />
+                            <TextView
+                                android:id="@+id/txtEstadoDescEstado"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/state_veh"
+                                android:layout_marginStart="10dp"
+                                android:shadowColor="#000000"
+                                android:shadowDx="1"
+                                android:shadowDy="1"
+                                android:textColor="#333333" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <!-- CardView Datos vehiculo -->
+                <androidx.cardview.widget.CardView
+                android:id="@+id/cardEstado2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="0dp"
+                android:backgroundTint="#FFFFFF"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                        <TableLayout
+                            android:id="@+id/tableLayout1"
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:padding="5dip" >
+
+                            <TableRow >
+
+                                <LinearLayout
+                                    android:id="@+id/LinearLayout04"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_weight="0.25">
+
+                                    <TextView
+                                        android:id="@+id/TextView07"
+                                        style="@style/textoAzulado"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/brand" >
+                                    </TextView>
+
+                                    <TextView
+                                        android:id="@+id/txtMarcaEstado"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="#333333" >
+                                    </TextView>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/LinearLayout07"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_weight="0.25">
+
+                                    <TextView
+                                        android:id="@+id/TextView10"
+                                        style="@style/textoAzulado"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/model" >
+                                    </TextView>
+
+                                    <TextView
+                                        android:id="@+id/txtModeloEstado"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="#333333" >
+                                    </TextView>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/LinearLayout06"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_weight="0.25">
+
+                                    <TextView
+                                        android:id="@+id/TextView12"
+                                        style="@style/textoAzulado"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/group" >
+                                    </TextView>
+
+                                    <TextView
+                                        android:id="@+id/txtGrupoEstado"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="#333333" >
+                                    </TextView>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/LinearLayout05"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_weight="0.25">
+
+                                    <TextView
+                                        android:id="@+id/TextView13"
+                                        style="@style/textoAzulado"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/color" >
+                                    </TextView>
+
+                                    <TextView
+                                        android:id="@+id/txtColorEstado"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="#333333" >
+                                    </TextView>
+                                </LinearLayout>
+                            </TableRow>
+                        </TableLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+                <!-- CardView Datos contrato vehiculo -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardEstado3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="0dp"
+                    android:backgroundTint="#FFFFFF"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TableLayout
+                            android:id="@+id/TableLayout01"
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:padding="5dip" >
+
+                            <TableRow >
+
+                                <LinearLayout
+                                    android:id="@+id/LinearLayout08"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_weight="0.25">
+
+                                    <TextView
+                                        android:id="@+id/TextView03"
+                                        style="@style/textoAzulado"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/document" >
+                                    </TextView>
+
+                                    <TextView
+                                        android:id="@+id/txtDocumentoEstado"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="#333333" >
+                                    </TextView>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/LinearLayout01"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_weight="0.25">
+
+                                    <TextView
+                                        android:id="@+id/TextView15"
+                                        style="@style/textoAzulado"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/depositary" >
+                                    </TextView>
+
+                                    <TextView
+                                        android:id="@+id/txtDepositarioEstado"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="#333333" >
+                                    </TextView>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/LinearLayout02"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_weight="0.25">
+
+                                    <TextView
+                                        android:id="@+id/TextView05"
+                                        style="@style/textoAzulado"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/exit_date" >
+                                    </TextView>
+
+                                    <TextView
+                                        android:id="@+id/txtF1Estado"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="#333333" >
+                                    </TextView>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/LinearLayout03"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_weight="0.25">
+
+                                    <TextView
+                                        android:id="@+id/TextView06"
+                                        style="@style/textoAzulado"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/enter_date" >
+                                    </TextView>
+
+                                    <TextView
+                                        android:id="@+id/txtF2Estado"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="#333333" >
+                                    </TextView>
+                                </LinearLayout>
+                            </TableRow>
+                        </TableLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <!-- CardView Datos oficinas -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardEstado4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="0dp"
+                    android:backgroundTint="#FFFFFF"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TableLayout
+                            android:id="@+id/TableLayout04"
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:padding="5dip" >
+
+                            <TableRow>
+
+                                <LinearLayout
+                                    android:id="@+id/LinearLayout12"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_weight="0.5">
+
+                                    <TextView
+                                        android:id="@+id/TextView18"
+                                        style="@style/textoAzulado"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/collect_office" />
+
+
+                                    <TextView
+                                        android:id="@+id/txtOfiEnt"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="#333333" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/LinearLayout17"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_weight="0.5">
+
+                                    <TextView
+                                        android:id="@+id/TextView16"
+                                        style="@style/textoAzulado"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/recollect_office" />
+
+
+                                    <TextView
+                                        android:id="@+id/txtOfiRec"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="#333333" />
+
+                                </LinearLayout>
+                            </TableRow>
+                        </TableLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <!-- CardView Datos contacto -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardEstado5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="0dp"
+                    android:backgroundTint="#FFFFFF"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TableLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1"
+                            android:padding="5dip" >
+
+                            <TableRow>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_weight="0.5">
+
+                                    <TextView
+                                        style="@style/textoAzulado"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/phone" />
+
+
+                                    <TextView
+                                        android:id="@+id/txtTelefono"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="#333333" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_weight="0.5">
+
+                                    <TextView
+                                        style="@style/textoAzulado"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/mail" />
+
+
+                                    <TextView
+                                        android:id="@+id/txtEmail"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="#333333" />
+
+                                </LinearLayout>
+                            </TableRow>
+
+                            <TableRow >
+
+                                <LinearLayout
+                                    android:id="@+id/LinearLayout09"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical" >
+
+                                    <TextView
+                                        android:id="@+id/TextView24"
+                                        android:textStyle="bold"
+                                        android:textColor="#0B273E"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/address" >
+                                    </TextView>
+
+                                    <TextView
+                                        android:id="@+id/txtDireccionEstado"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="#333333" >
+                                    </TextView>
+                                </LinearLayout>
+                            </TableRow>
+                        </TableLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <!-- CardView de extras de vehículo -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardEstado6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="0dp"
+                    android:backgroundTint="#FFFFFF"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="5dp">
+
+                    <LinearLayout
+                        android:id="@+id/linearExtrasVeh"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/LinearCabeceraExtVeh"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/degradado_azul_linear_layout"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/extras"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:text="@string/extras"
+                                android:textStyle="bold"
+                                android:textColor="#fff"
+                                android:textSize="17sp"
+                                android:fontFamily="sans-serif-light"/>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/contExtrasEstado"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="5dp"
+                            android:focusableInTouchMode="true"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_weight="1">
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <LinearLayout
+                    android:id="@+id/linealBtnsOptions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnLibreSucio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="4dp"
+                    app:backgroundTint="@color/colorNaranBtn"
+                    android:background="@drawable/boton_base_redondeado"
+                    android:text="@string/free_dirty"
+                    android:textAllCaps="true"
+                    android:textColor="#fff"
+                    android:layout_margin="5dp"
+                    android:onClick="btnLibreSucioClick"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnLibreSucioDes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="4dp"
+                        app:backgroundTint="@color/colorGrisBtn"
+                        android:enabled="false"
+                        android:background="@drawable/boton_base_redondeado"
+                        android:text="@string/free_dirty"
+                        android:textAllCaps="true"
+                        android:textColor="#fff"
+                        android:layout_margin="5dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnPreparacion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="4dp"
+                        app:backgroundTint="@color/colorNaranBtn"
+                        android:background="@drawable/boton_base_redondeado"
+                        android:text="@string/preparation"
+                        android:textAllCaps="true"
+                        android:textColor="#fff"
+                        android:layout_margin="5dp"
+                        android:onClick="btnPreparacionClick"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnPreparacionDes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="4dp"
+                        app:backgroundTint="@color/colorGrisBtn"
+                        android:enabled="false"
+                        android:background="@drawable/boton_base_redondeado"
+                        android:text="@string/preparation"
+                        android:textAllCaps="true"
+                        android:textColor="#fff"
+                        android:layout_margin="5dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnLibreLimpio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="4dp"
+                        app:backgroundTint="@color/colorNaranBtn"
+                        android:background="@drawable/boton_base_redondeado"
+                        android:text="@string/free_clean"
+                        android:textAllCaps="true"
+                        android:textColor="#fff"
+                        android:layout_margin="5dp"
+                        android:onClick="btnLibreLimpioClick"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnLibreLimpioDes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="4dp"
+                        app:backgroundTint="@color/colorGrisBtn"
+                        android:background="@drawable/boton_base_redondeado"
+                        android:text="@string/free_clean"
+                        android:enabled="false"
+                        android:textAllCaps="true"
+                        android:textColor="#fff"
+                        android:layout_margin="5dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+    </LinearLayout>
+
+    <!-- Paramejorar la visibilidad y el manejo, aquí no mostramos el logo corporativo
+   <ImageView
+       android:id="@+id/pieDeApp"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:srcCompat="@drawable/info" />
+       -->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

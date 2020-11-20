@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondodegradado"
+    tools:context=".EscaneoDocumentos">
+
+    <ImageButton
+        android:id="@+id/salirED"
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/boton_base_rojo"
+        android:gravity="center"
+        android:src="@drawable/exit_session"
+        android:tint="#fff"
+        android:layout_margin="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageButton
+        android:id="@+id/menuPpalED"
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/boton_base_verde"
+        android:gravity="center"
+        android:src="@drawable/go_home"
+        android:tint="#fff"
+        android:layout_margin="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/content_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="65dp"
+        android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- CardView Localizar documento -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardScanDoc1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="0dp"
+                    android:backgroundTint="#FFFFFF"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <!-- Titulo Localizar documento -->
+                        <LinearLayout
+                            android:id="@+id/LinearScandoc1"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:layout_marginVertical="5dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@drawable/degradado_azul_linear_layout"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tituloListadosR"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dip"
+                                android:fontFamily="sans-serif-black"
+                                android:gravity="center_vertical"
+                                android:text="@string/find_document"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:textColor="#fff"
+                                android:textSize="17sp"/>
+
+                        </LinearLayout>
+
+                        <!-- Datos de selección-->
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/fondo_blanco_borde_gris"
+                            android:padding="3dp"
+                            android:shrinkColumns="0"
+                            android:stretchColumns="0">
+
+                            <TableRow>
+
+                                <TextView
+                                    android:id="@+id/textView4"
+                                    style="@style/textoAzulado"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/type"
+                                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                            </TableRow>
+
+                            <TableRow>
+
+                                <LinearLayout android:orientation="horizontal">
+
+                                    <TableRow
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <LinearLayout
+                                            android:orientation="horizontal"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content" >
+
+                                            <Spinner
+                                                android:id="@+id/spinTipoDocumentos"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:entries="@array/tipo_documentos"/>
+
+                                        </LinearLayout>
+                                    </TableRow>
+                                </LinearLayout>
+
+                            </TableRow>
+
+                            <TableRow>
+
+                                <TableLayout
+                                    android:shrinkColumns="0,1,2"
+                                    android:stretchColumns="0,1,2">
+
+                                    <TableRow>
+
+                                        <TextView
+                                            android:id="@+id/textView"
+                                            style="@style/textoAzulado"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/number"
+                                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                                    </TableRow>
+
+                                    <TableRow>
+
+                                        <EditText
+                                            android:id="@+id/txtNumeroDocumento"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="bottom"
+                                            android:hint="@string/str_number"
+                                            android:inputType="number"
+                                            android:maxLength="9"
+                                            android:maxLines="1" />
+
+                                        <com.google.android.material.button.MaterialButton
+                                            android:id="@+id/btnLocalizarDocumento"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginEnd="4dp"
+                                            app:backgroundTint="@color/azulClaro"
+                                            android:background="@drawable/boton_base_redondeado"
+                                            android:text="@string/to_find"
+                                            android:textAllCaps="true"
+                                            android:textColor="#fff"
+                                            android:layout_margin="5dp"
+                                            app:layout_constraintStart_toStartOf="parent"
+                                            app:layout_constraintTop_toTopOf="parent" />
+
+                                        <com.google.android.material.button.MaterialButton
+                                            android:id="@+id/btnLimpiarDocumento"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginEnd="4dp"
+                                            app:backgroundTint="@color/rojoClaro"
+                                            android:background="@drawable/boton_base_redondeado"
+                                            android:text="@string/clean"
+                                            android:textAllCaps="true"
+                                            android:textColor="#fff"
+                                            android:layout_margin="5dp"
+                                            app:layout_constraintEnd_toEndOf="parent"
+                                            app:layout_constraintTop_toTopOf="parent"/>
+
+                                    </TableRow>
+                                </TableLayout>
+                            </TableRow>
+                        </TableLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- CardView Imágenes documento -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardFotosDoc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#F4F6DF"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="0dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="5dp">
+
+                    <LinearLayout
+                        android:id="@+id/linearScanDoc2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:id="@+id/imagenes"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="5dp"
+                                android:text="@string/images"
+                                style="@style/textoAzulado"
+                                android:fontFamily="sans-serif-light"
+                                android:textSize="18sp"/>
+
+                            <Button
+                                android:id="@+id/btnHacerFotos"
+                                android:layout_width="wrap_content"
+                                android:layout_height="35dp"
+                                android:layout_centerVertical="true"
+                                android:layout_alignParentEnd="true"
+                                android:paddingVertical="1dp"
+                                android:background="@drawable/boton_base_redondeado"
+                                app:backgroundTint="@color/amarilloPalido"
+                                android:text="@string/take_photo" />
+
+                        </RelativeLayout>
+
+                        <TableLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="3dp"
+                            android:shrinkColumns="0,1"
+                            android:stretchColumns="0,1">
+
+                            <TableRow
+                                android:id="@+id/cntFotosBody"
+                                android:padding="5dp">
+
+                                <LinearLayout
+                                    android:focusableInTouchMode="true"
+                                    android:orientation="horizontal"
+                                    android:weightSum="10">
+
+                                    <HorizontalScrollView
+                                        android:id="@+id/horizontalScrollView1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="start"
+                                        android:layout_weight="7">
+
+                                        <LinearLayout
+                                            android:id="@+id/thumbnailsDocumentos"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:layout_gravity="center_vertical"
+                                            android:orientation="horizontal">
+
+                                            <TextView
+                                                android:id="@+id/txtSinFotos"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:gravity="center|end"
+                                                android:text="@string/fotos_empty"
+                                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                                style="@style/texto_negro"
+                                                android:textSize="12sp"
+                                                android:textColor="#9A9494" />
+
+                                        </LinearLayout>
+                                    </HorizontalScrollView>
+                                </LinearLayout>
+                            </TableRow>
+                        </TableLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/pieDeApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/info" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

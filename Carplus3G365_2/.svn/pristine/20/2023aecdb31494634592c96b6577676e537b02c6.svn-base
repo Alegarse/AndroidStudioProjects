@@ -1,0 +1,2302 @@
+package com.example.carplus3g365v2;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.FileProvider;
+import androidx.core.content.res.ResourcesCompat;
+
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BlurMaskFilter;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.EmbossMaskFilter;
+import android.graphics.MaskFilter;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.text.InputType;
+import android.util.DisplayMetrics;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.carplus3g365v2.Adapters.AdapterItemEquipamientos;
+import com.example.carplus3g365v2.Adapters.AdapterItemExtrasFisicos;
+import com.example.carplus3g365v2.Modelos.BitmapUtils;
+import com.example.carplus3g365v2.Modelos.Methods;
+import com.example.carplus3g365v2.Modelos.Utils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+
+public class Inspect extends AppCompatActivity {
+
+    // Variables para la actividad
+    public final static int MOSTRAR_AUTOMATICO = 0;
+    public final static int MOSTRAR_ENTREGA = 1;
+    public final static int MOSTRAR_RECOGIDA = 2;
+    public static int EN_ENTREGA = 0;
+    public static int EN_RECOGIDA = 0;
+    public static int CONF_RECOGIDA = 0;
+    public static int CONF_ENTREGA = 0;
+    public static int ALL_VERIFIED = 0;
+    private static int QUEST_LOAD;
+    static final int REQUEST_TAKE_PHOTO = 1;
+    static final int RESULT_LOAD_IMAGE = 2;
+    public RestClient conexionHTTP;
+    public Carplus3G CF;
+    public String JSONDATA;
+    public int CONTADOR_DANOS = 0;
+    public int DONDE_ESTOY = 0;
+    public ProgressDialog miDialog;
+    public EditText txtNumDocumento, txtKms, txtObservaciones;
+    public ImageView imgCroquis;
+    public RelativeLayout relDanos;
+    public ScrollView scroll;
+    public LinearLayout firmaCliente;
+    public LinearLayout firmaOperario;
+    public Button btnLimpiarFirmaCliente;
+    public Button btnLimpiarFirmaOperario;
+    public Button btnLocalizar, btnLimpiar;
+    public Button btnEntrega, btnRecogida;
+    public Button btnConfirmarEntrega, btnConfirmarRecogida;
+    public Spinner spinOctavos;
+    public ListView listExtras;
+    public ListView listEquipamientos;
+    public TextView txtMatricula, txtModelo, txtColor, txtCliente, txtOev, txtFecha;
+    public CheckBox chkInspeccion;
+    public ArrayList<HashMap<String, String>> listadoExtras = new ArrayList<HashMap<String, String>>();
+    public ArrayList<String> listadoChecksE = new ArrayList<>();
+    public ArrayList<String> listadoChecksA = new ArrayList<>();
+    public AdapterItemExtrasFisicos extrasAdapter;
+    public ArrayList<HashMap<String, String>> listadoEquipamientos = new ArrayList<HashMap<String, String>>();
+    public AdapterItemEquipamientos equipamientosAdapter;
+    public JSONObject datosVehiculo, datosEntrega, datosRecogida = null;
+    public JSONArray datosEquipamientos, datosExtras, datosDanosEntrega, datosDanosRecogida, datosExtrasEntrega, datosExtrasRecogida = null;
+    public asyncGetInspeccion tareaGetInspeccion;
+    public asyncSaveInspeccionEntrega tareaSaveInspeccionEntrega;
+    public asyncSaveInspeccionRecogida tareaSaveInspeccionRecogida;
+    public InputMethodManager imm;
+    CharSequence option1, option2;
+    protected CharSequence[] _options;
+    int itemSeleccionado = 0;
+    private String ruta_imagen;
+    private CardView cardFinal;
+    private boolean toastFinalMostrado = false;
+    private boolean toastEntregaRealizada = false;
+
+    //Variables globales
+    int ANCHO_ORG = 840;
+    int ALTO_ORG = 610;
+    int ALTO_PANTALLA = 0;
+    int ANCHO_PANTALLA = 0;
+    int ANCHO_IMAGEN = 0;
+    int ALTO_IMAGEN = 0;
+    float touchInitialTime = 0;
+    float touchCurrentTime = 0;
+    private Paint mmPaint;
+    private MaskFilter mmEmboss;
+    private MaskFilter mmBlur;
+    boolean HA_FIRMADO_CLIENTE = false;
+    boolean HA_FIRMADO_OPERARIO = false;
+    private String[] octavos = {"0/8", "1/8", "2/8", "3/8", "4/8", "5/8", "6/8", "7/8", "8/8"};
+    private int tipoDano = 0;
+
+    Dialog dialogDano = null;
+    private Methods metodo;
+
+    @SuppressLint("ClickableViewAccessibility")
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_inspect);
+
+        // Instanciamos elementos
+        // Botones superiores
+        ImageButton menu_ppal = findViewById(R.id.menuPpalI);
+        ImageButton salir = findViewById(R.id.salirI);
+        txtNumDocumento = findViewById(R.id.txtNumeroDocumento);
+        btnLocalizar = findViewById(R.id.btnLocalizarDocumento);
+        btnLimpiar = findViewById(R.id.btnLimpiarDocumento);
+
+        txtMatricula = findViewById(R.id.txtMatriculaInspeccion);
+        txtModelo = findViewById(R.id.txtModeloInspeccion);
+        txtColor = findViewById(R.id.txtColorInspeccion);
+        txtCliente = findViewById(R.id.txtClienteInspeccion);
+        txtOev = findViewById(R.id.txtOevInspeccion);
+        txtFecha = findViewById(R.id.txtOevFecha);
+        spinOctavos = findViewById(R.id.spinFuelInspeccion);
+        txtKms = findViewById(R.id.txtKmsInspeccion);
+        btnEntrega = findViewById(R.id.btnEntrega);
+        btnRecogida = findViewById(R.id.btnRecogida);
+
+        imgCroquis = findViewById(R.id.imgAlfaRomeo);
+
+        listExtras = findViewById(R.id.listExtrasFisicos);
+        listEquipamientos = findViewById(R.id.listEquipamientos);
+        relDanos = findViewById(R.id.relDanos);
+        scroll = findViewById(R.id.scrollDanos);
+
+        txtObservaciones = findViewById(R.id.txtObservaciones);
+
+        firmaCliente = findViewById(R.id.firmaCliente);
+        firmaCliente.bringToFront();
+        firmaOperario = findViewById(R.id.firmaOperario);
+        firmaOperario.bringToFront();
+        btnLimpiarFirmaCliente = findViewById(R.id.btnLimpiarFirmaCliente);
+        btnLimpiarFirmaOperario = findViewById(R.id.btnLimpiarFirmaOperario);
+
+        chkInspeccion = findViewById(R.id.chkInspeccion);
+
+        cardFinal = findViewById(R.id.cardBotonesI);
+        btnConfirmarEntrega = findViewById(R.id.btnConfirmarEntrega);
+        btnConfirmarRecogida = findViewById(R.id.btnConfirmarRecogida);
+
+        // Inicializamos variables que intervienen
+        conexionHTTP = new RestClient(Carplus3G.URL);
+        metodo = new Methods(Inspect.this);
+        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        // Escuchador EditText de numero contrato
+        txtNumDocumento.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.KEYCODE_ENTER || event.getAction() == KeyEvent.KEYCODE_TAB) {
+                    if (txtNumDocumento.getText().toString().trim().equals("")) {
+                        Toast.makeText(getApplicationContext(), R.string.doc_number_required, Toast.LENGTH_SHORT).show();
+                    } else {
+                        btnLocalizar.performClick();
+                    }
+                }
+                return false;
+            }
+        });
+
+        // Dialogo de fotografía
+        option1 = getString(R.string.fromCamera);
+        option2 = getString(R.string.from_gal);
+        _options = new CharSequence[]{option1, option2};
+
+        //Adapter de los listviews
+        extrasAdapter = new AdapterItemExtrasFisicos(Inspect.this, listadoExtras);
+        equipamientosAdapter = new AdapterItemEquipamientos(Inspect.this, listadoEquipamientos);
+
+        // Cargamos los datos para el spinner del combustible
+        ArrayAdapter<CharSequence> octavosAdapter = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item);
+        for (int i = 0; i < octavos.length; i++) {
+            octavosAdapter.add(String.valueOf(octavos[i]));
+        }
+        octavosAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinOctavos.setAdapter(octavosAdapter);
+
+        // Ajustamos el croquis e inicializamos campos de firmas
+        ajustarCroquis();
+        inicializarFirma(firmaCliente);
+        inicializarFirma(firmaOperario);
+
+        // Para permitir hacer Scroll dentro de los ListView sin que se desplace la pantalla
+        listExtras.setOnTouchListener((v, event) -> {
+            v.getParent().requestDisallowInterceptTouchEvent(true);
+            return false;
+        });
+        listEquipamientos.setOnTouchListener((v, event) -> {
+            v.getParent().requestDisallowInterceptTouchEvent(true);
+            return false;
+        });
+        txtObservaciones.setOnTouchListener((v, event) -> {
+            v.getParent().requestDisallowInterceptTouchEvent(true);
+            return false;
+        });
+
+        // Ocultamos botones que se activarán según opción
+        btnConfirmarRecogida.setVisibility(View.GONE);
+
+        // Escuchadores
+        menu_ppal.setOnClickListener(v -> metodo.iraMenuPpal());
+        salir.setOnClickListener(v -> metodo.cerrarSesion());
+
+        //Click del boton localizar
+        btnLocalizar.setOnClickListener(view -> {
+            if (txtNumDocumento.getText().toString().trim().equals("")) {
+                Toast.makeText(getApplicationContext(), R.string.doc_number_required, Toast.LENGTH_SHORT).show();
+                return;
+            }
+            tareaGetInspeccion = new asyncGetInspeccion();
+            tareaGetInspeccion.execute(null, null, null);
+        });
+
+        //Click del boton limpiar
+        btnLimpiar.setOnClickListener(view -> fn_Limpiar());
+
+        // Botones de entrega y recogida (Deshabilitados)
+        btnEntrega.setOnClickListener(view -> {
+            EN_RECOGIDA = 0;
+            if (btnEntrega.getText().toString().equals(getString(R.string.arrival_inspect))) {
+                //Si cambio de pestaña actualizo lo que ya tenga
+                if (DONDE_ESTOY == MOSTRAR_ENTREGA) {
+                fn_Save_Local_Data(MOSTRAR_ENTREGA); }
+            }
+            try {
+                fn_Muestro_datos(MOSTRAR_ENTREGA);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //fn_MostrarDatos(MOSTRAR_ENTREGA);
+            DONDE_ESTOY = MOSTRAR_ENTREGA;
+
+        });
+
+        btnRecogida.setOnClickListener(view -> {
+
+            //Si cambio de pestaña actualizo lo que ya tenga
+            if (btnRecogida.getText().toString().equals(getString(R.string.inspect_return))) {
+                //Si cambio de pestaña actualizo lo que ya tenga
+                if (DONDE_ESTOY == MOSTRAR_RECOGIDA) {
+                fn_Save_Local_Data(MOSTRAR_RECOGIDA);
+                }
+            }
+            try {
+                fn_Muestro_datos(MOSTRAR_RECOGIDA);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //fn_MostrarDatos(MOSTRAR_RECOGIDA);
+            DONDE_ESTOY = MOSTRAR_RECOGIDA;
+        });
+
+
+        // Zona croquis
+        QUEST_LOAD = 0;
+        // Clic largo en el croquis
+        imgCroquis.setOnTouchListener((view, motionEvent) -> {
+            fn_LongClickCroquis(view, motionEvent);
+            return true;
+        });
+
+        // Zona firmas
+        btnLimpiarFirmaCliente.setOnClickListener(view -> inicializarFirma(firmaCliente));
+        btnLimpiarFirmaOperario.setOnClickListener(view -> inicializarFirma(firmaOperario));
+
+        // Botones de guardar el estado
+        // Para la emntrega
+        btnConfirmarEntrega.setOnClickListener(view -> {
+            CONF_ENTREGA = 1;
+
+            if (!fn_ComprobacionesEntrega()) {
+                return;
+            }
+            AlertDialog.Builder builder = new AlertDialog.Builder(Inspect.this);
+            builder.setCancelable(false);
+            builder.setMessage(getString(R.string.save_data_ent_quest)).setPositiveButton(getString(R.string.yes), (dialogInterface, i) -> {
+
+                try {
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(Inspect.this);
+                    builder1.setTitle(getString(R.string.chk_mail_to_send));
+
+                    final EditText input = new EditText(Inspect.this);
+                    input.setText(datosEntrega.get("ema").toString());
+                    input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                    builder1.setView(input);
+                    builder1.setPositiveButton(getString(R.string.to_finalice), (dialog, which) -> {
+
+                        try {
+                            datosEntrega.put("ema", input.getText().toString());
+                        } catch (Exception e) {
+                            // Captura de excepción
+                        }
+                        dialog.cancel();
+                        tareaSaveInspeccionEntrega = new asyncSaveInspeccionEntrega();
+                        tareaSaveInspeccionEntrega.execute(null, null, null);
+                    });
+                    builder1.setNegativeButton(getString(R.string.cancel), (dialog, which) -> dialog.cancel());
+                    builder1.show();
+                } catch (Exception e) {
+                    //Captura de excepción
+                }
+            }).setNegativeButton(getString(R.string.not), (dialogInterface, i) -> { }).show();
+
+        });
+
+        //Click del boton guardar estado entrega
+        btnConfirmarRecogida.setOnClickListener(view -> {
+            CONF_RECOGIDA = 1;
+
+            if (!fn_ComprobacionesRecogida()) {
+                return;
+            }
+            AlertDialog.Builder builder = new AlertDialog.Builder(Inspect.this);
+            builder.setCancelable(false);
+            builder.setMessage(getString(R.string.save_data_rec_quest)).setPositiveButton(getString(R.string.yes), (dialogInterface, i) -> {
+
+                try {
+                    AlertDialog.Builder builder12 = new AlertDialog.Builder(Inspect.this);
+                    builder12.setTitle(getString(R.string.chk_mail_to_send));
+
+                    final EditText input = new EditText(Inspect.this);
+                    input.setText(datosRecogida.get("ema").toString());
+                    input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                    builder12.setView(input);
+
+                    builder12.setPositiveButton(getString(R.string.to_finalice), (dialog, which) -> {
+
+                        try {
+                            datosRecogida.put("ema", input.getText().toString());
+                        } catch (Exception e) {
+                            // Controlamos la excepción
+                        }
+                        dialog.cancel();
+                        tareaSaveInspeccionRecogida = new asyncSaveInspeccionRecogida();
+                        tareaSaveInspeccionRecogida.execute(null, null, null);
+                    });
+                    builder12.setNegativeButton(getString(R.string.cancel), (dialog, which) -> dialog.cancel());
+                    builder12.show();
+                } catch (Exception e) {
+                    // Controlamos la excepción
+                }
+            }).setNegativeButton(getString(R.string.not), (dialogInterface, i) -> { }).show();
+
+        });
+    }
+
+    private void fn_Muestro_datos(int m) throws JSONException {
+        if (Integer.parseInt(datosEntrega.getString("check")) == 1) {
+            fn_MostrarDatos(m);
+        }
+        if (m == MOSTRAR_RECOGIDA) {
+            fn_MostrarDatos(m);
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            return false;
+        }
+        return false;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();  // Always call the superclass method first
+    }
+
+    private void fn_LongClickCroquis(View v, MotionEvent m) {
+        //Aqui controlamos que pueda pintar sobre la imagen
+        try {
+            if (txtNumDocumento.getText().toString().trim().equals("")){
+                return;
+            }
+
+            if (Integer.parseInt(datosEntrega.getString("check")) == 1 && DONDE_ESTOY == MOSTRAR_ENTREGA) {
+                return;
+            }
+
+            if (Integer.parseInt(datosRecogida.getString("check")) == 1 && DONDE_ESTOY == MOSTRAR_RECOGIDA) {
+                return;
+            }
+        } catch (Exception e) {
+            // Controlamos la excepción
+        }
+
+        float x = 0;
+        float y = 0;
+        float valorScroll = scroll.getScrollY() - 20;
+        if (valorScroll < 0) {
+            valorScroll = 0;
+        }
+
+        // Convert the dips to pixels
+        final float scale = getBaseContext().getResources().getDisplayMetrics().density;
+
+        //Se que la imagen tiene 16px entonces convierto eso DIP
+        final int imgSize = (int) (24 * scale + 0.5f) / 2;
+
+
+        switch (m.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                touchInitialTime = m.getDownTime();
+
+                break;
+            case MotionEvent.ACTION_UP:
+                touchCurrentTime = m.getEventTime();
+
+                x = m.getX();
+                y = m.getY();
+
+                final float x1 = x;
+                final float y1 = y;
+
+
+                if ((touchCurrentTime - touchInitialTime) > 350) //SI HA PULSADO DURANTE MEDIO SEGUNDO...
+                {
+                    dialogDano = new Dialog(Inspect.this, R.style.FullHeightDialog);
+                    dialogDano.setContentView(R.layout.add_danos_inspeccion);
+
+                    final LinearLayout roce = dialogDano.findViewById(R.id.l_roce);
+                    final LinearLayout golpe = dialogDano.findViewById(R.id.l_golpe);
+                    final LinearLayout aranazo = dialogDano.findViewById(R.id.l_aranazo);
+                    final LinearLayout quemado = dialogDano.findViewById(R.id.l_quemado);
+                    final LinearLayout roto = dialogDano.findViewById(R.id.l_roto);
+                    final EditText txtDescDano = dialogDano.findViewById(R.id.txtDescripcionDano);
+                    final ImageView img = dialogDano.findViewById(R.id.imagen);
+                    final Button btnSeleccionarFoto = dialogDano.findViewById(R.id.btnSeleccionarFoto);
+                    final Button btnLimpiarFoto = dialogDano.findViewById(R.id.btnLimpiarFoto);
+                    final Button btnGuardarDano = dialogDano.findViewById(R.id.btnGuardarDanoMarbesol);
+                    final Button btnCancelarDano = dialogDano.findViewById(R.id.btnCancelarDanoMarbesol);
+                    final Button btnEliminarDano = dialogDano.findViewById(R.id.btnEliminarDanoMarbesol);
+
+                    btnEliminarDano.setVisibility(View.GONE);
+
+                    // Escuchadores de los tipos de daños
+                    roce.setOnClickListener(v1 -> {
+                        if (tipoDano == 0) {
+                            tipoDano = 1;
+                            roce.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.fondo_blanco_borde_rojo,null));
+                        }
+                    });
+                    golpe.setOnClickListener(v12 -> {
+                        if (tipoDano == 0) {
+                            tipoDano = 2;
+                            golpe.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.fondo_blanco_borde_rojo,null));
+                        }
+                    });
+                    aranazo.setOnClickListener(v13 -> {
+                        if (tipoDano == 0) {
+                            tipoDano = 3;
+                            aranazo.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.fondo_blanco_borde_rojo,null));
+                        }
+                    });
+                    quemado.setOnClickListener(v14 -> {
+                        if (tipoDano == 0) {
+                            tipoDano = 4;
+                            quemado.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.fondo_blanco_borde_rojo,null));
+                        }
+                    });
+                    roto.setOnClickListener(v15 -> {
+                        if (tipoDano == 0) {
+                            tipoDano = 5;
+                            roto.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.fondo_blanco_borde_rojo,null));
+                        }
+                    });
+
+                    btnSeleccionarFoto.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            itemSeleccionado = 0;
+
+                            new AlertDialog.Builder(Inspect.this)
+                                    .setTitle(getString(R.string.add_photo))
+                                    .setCancelable(false)
+                                    .setSingleChoiceItems(_options, 0, new DialogInterface.OnClickListener() {
+
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            itemSeleccionado = which;
+                                        }
+                                    })
+                                    .setPositiveButton(getString(R.string.accept), new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            // TODO Auto-generated method stub
+
+                                            if (itemSeleccionado == 0) {
+                                                if (Carplus3G.hasBackFacingCamera()) {
+                                                    intentImg();
+                                                } else {
+                                                    Toast.makeText(Inspect.this, R.string.no_back_camera, Toast.LENGTH_LONG).show();
+                                                }
+                                            } else {
+                                                intentImg();
+                                            }
+                                        }
+                                    })
+                                    .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    }).create().show();
+                        }
+                    });
+
+                    btnLimpiarFoto.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            img.setImageBitmap(null);
+                        }
+                    });
+
+                    btnGuardarDano.setOnClickListener(v16 -> {
+                        if (tipoDano == 0) {
+                            Toast.makeText(getApplicationContext(), R.string.damage_not_selected, Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        fn_PintaDanoUsuario(x1, y1, tipoDano, txtDescDano.getText().toString(), BitmapUtils.bitmapToBase64JPG(img.getDrawable() == null ? null : ((BitmapDrawable)img.getDrawable()).getBitmap()));
+                        imm.hideSoftInputFromWindow(txtDescDano.getWindowToken(), 0);
+                        dialogDano.dismiss();
+                        tipoDano = 0;
+                    });
+
+                    btnCancelarDano.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View btn) {
+                            // TODO Auto-generated method stub
+                            dialogDano.dismiss();
+                            tipoDano = 0;
+                        }
+                    });
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    Window window = dialogDano.getWindow();
+                    lp.copyFrom(window.getAttributes());
+                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                    window.setAttributes(lp);
+                    dialogDano.show();
+                }
+                break;
+        }
+    }
+
+    public void fn_LongClickDanos(final View danoActual) {
+        try {
+            if (DONDE_ESTOY == MOSTRAR_ENTREGA && datosEntrega.getString("check").equals("1")) {
+                //return;
+            }
+            if (DONDE_ESTOY == MOSTRAR_RECOGIDA && datosRecogida.getString("check").equals("1")) {
+                //return;
+            }
+        } catch (Exception e) {
+            // Usado solo para capturar la excepción
+        }
+
+        JSONObject dano = null;
+        String[] tag = (String[]) danoActual.getTag();
+        try {
+            for (int z = 0; z < datosDanosEntrega.length(); z++) {
+                JSONObject row = datosDanosEntrega.getJSONObject(z);
+                if (row.getString("id").equals(tag[0])) {
+                    dano = row;
+                    break;
+                }
+            }
+            for (int z = 0; z < datosDanosRecogida.length(); z++) {
+                JSONObject row = datosDanosRecogida.getJSONObject(z);
+                if (row.getString("id").equals(tag[0])) {
+                    dano = row;
+                    break;
+                }
+            }
+
+            if (dano != null){
+                final String danoId = dano.getString("id");
+
+                dialogDano = new Dialog(Inspect.this, R.style.FullHeightDialog);
+                dialogDano.setContentView(R.layout.add_danos_inspeccion);
+
+                final LinearLayout roce = dialogDano.findViewById(R.id.l_roce);
+                final LinearLayout golpe = dialogDano.findViewById(R.id.l_golpe);
+                final LinearLayout aranazo = dialogDano.findViewById(R.id.l_aranazo);
+                final LinearLayout quemado = dialogDano.findViewById(R.id.l_quemado);
+                final LinearLayout roto = dialogDano.findViewById(R.id.l_roto);
+                final EditText txtDescDano = dialogDano.findViewById(R.id.txtDescripcionDano);
+                final ImageView img = dialogDano.findViewById(R.id.imagen);
+
+                final Button btnSeleccionarFoto = dialogDano.findViewById(R.id.btnSeleccionarFoto);
+                final Button btnLimpiarFoto = dialogDano.findViewById(R.id.btnLimpiarFoto);
+                final Button btnGuardarDano = dialogDano.findViewById(R.id.btnGuardarDanoMarbesol);
+                final Button btnCancelarDano = dialogDano.findViewById(R.id.btnCancelarDanoMarbesol);
+                final Button btnEliminarDano = dialogDano.findViewById(R.id.btnEliminarDanoMarbesol);
+
+                roce.setVisibility(View.GONE);
+                golpe.setVisibility(View.GONE);
+                aranazo.setVisibility(View.GONE);
+                quemado.setVisibility(View.GONE);
+                roto.setVisibility(View.GONE);
+
+                final int tipoDamage = dano.getInt("tp");
+                switch (tipoDamage) {
+                    case 1:
+                        roce.setVisibility(View.VISIBLE);
+                        break;
+                    case 2:
+                        golpe.setVisibility(View.VISIBLE);
+                        break;
+                    case 3:
+                        aranazo.setVisibility(View.VISIBLE);
+                        break;
+                    case 4:
+                        quemado.setVisibility(View.VISIBLE);
+                        break;
+                    case 5:
+                        roto.setVisibility(View.VISIBLE);
+                        break;
+                }
+
+                txtDescDano.setText(dano.getString("desc"));
+                img.setImageBitmap(BitmapUtils.base64StringToBitmap(dano.getString("picture")));
+
+                if (DONDE_ESTOY == MOSTRAR_ENTREGA && datosEntrega.getString("check").equals("1")) {
+                    btnSeleccionarFoto.setVisibility(View.INVISIBLE);
+                    btnLimpiarFoto.setVisibility(View.INVISIBLE);
+                    btnGuardarDano.setVisibility(View.INVISIBLE);
+                    btnEliminarDano.setVisibility(View.INVISIBLE);
+                    Utils.enableDisableEditText(false,txtDescDano);
+                }
+
+                if (DONDE_ESTOY == MOSTRAR_RECOGIDA && datosRecogida.getString("check").equals("1")) {
+                    btnSeleccionarFoto.setVisibility(View.INVISIBLE);
+                    btnLimpiarFoto.setVisibility(View.INVISIBLE);
+                    btnGuardarDano.setVisibility(View.INVISIBLE);
+                    btnEliminarDano.setVisibility(View.INVISIBLE);
+                    Utils.enableDisableEditText(false,txtDescDano);
+                }
+
+                btnSeleccionarFoto.setOnClickListener(view -> {
+                    itemSeleccionado = 0;
+
+                    new AlertDialog.Builder(Inspect.this)
+                            .setTitle(getString(R.string.add_photo))
+                            .setCancelable(false)
+                            .setSingleChoiceItems(_options, 0, (dialog, which) -> itemSeleccionado = which)
+                            .setPositiveButton(getString(R.string.accept), (dialog, which) -> {
+
+                                if (itemSeleccionado == 0) {
+                                    if (Carplus3G.hasBackFacingCamera()) {
+                                        intentImg();
+                                    } else {
+                                        Toast.makeText(Inspect.this, R.string.no_back_camera, Toast.LENGTH_LONG).show();
+                                    }
+                                } else {
+                                    intentImg();
+                                }
+                            })
+                            .setNegativeButton(getString(R.string.cancel), (dialog, which) -> dialog.dismiss()).create().show();
+                });
+
+
+                btnLimpiarFoto.setOnClickListener(view -> img.setImageBitmap(null));
+
+                btnGuardarDano.setOnClickListener(btn -> {
+
+                    try {
+                        for (int z = 0; z < datosDanosEntrega.length(); z++) {
+                            JSONObject row = datosDanosEntrega.getJSONObject(z);
+                            if (row.getString("id").equals(danoId)) {
+                                row.put("desc",txtDescDano.getText().toString());
+                                row.put("picture",BitmapUtils.bitmapToBase64JPG(img.getDrawable() == null ? null : ((BitmapDrawable)img.getDrawable()).getBitmap()));
+                                break;
+                            }
+                        }
+                        for (int z = 0; z < datosDanosRecogida.length(); z++) {
+                            JSONObject row = datosDanosRecogida.getJSONObject(z);
+                            if (row.getString("id").equals(danoId)) {
+                                row.put("desc",txtDescDano.getText().toString());
+                                row.put("picture",BitmapUtils.bitmapToBase64JPG(img.getDrawable() == null ? null : ((BitmapDrawable)img.getDrawable()).getBitmap()));
+                                break;
+                            }
+                        }
+                    } catch (Exception e){
+                        // Usado solo para capturar la excepción
+                    }
+                    dialogDano.dismiss();
+                });
+
+                btnCancelarDano.setOnClickListener(btn -> dialogDano.dismiss());
+
+                btnEliminarDano.setOnClickListener(btn -> {
+                    //Como es un daño agregado en este momento no se metera en la bbdd hasta pulsar guardar
+                    if (Integer.parseInt(danoId) < 0) {
+                        relDanos.removeView(danoActual);
+
+                        //Busco daño y lo borro
+                        try {
+                            for (int z = 0; z < datosDanosEntrega.length(); z++) {
+                                JSONObject row = datosDanosEntrega.getJSONObject(z);
+                                if (row.getString("id").equals(danoId)) {
+                                    datosDanosEntrega.remove(z);
+                                    //Salgo del for
+                                    break;
+                                }
+                            }
+                            for (int z = 0; z < datosDanosRecogida.length(); z++) {
+                                JSONObject row = datosDanosRecogida.getJSONObject(z);
+                                if (row.getString("id").equals(danoId)) {
+                                    datosDanosRecogida.remove(z);
+                                    //Salgo del for
+                                    break;
+                                }
+                            }
+                        } catch (Exception e) {
+                            return;
+                        }
+                    }
+
+                    //Daño que ya esta en la bbdd, debemos borrarlo de la BBDD
+                    if (Integer.parseInt(danoId) > 0) {
+                        relDanos.removeView(danoActual);
+
+                        //Busco daño y lo borro
+                        try {
+                            for (int z = 0; z < datosDanosEntrega.length(); z++) {
+                                JSONObject row = datosDanosEntrega.getJSONObject(z);
+                                if (row.getString("id").equals(danoId)) {
+                                    row.put("del", "1");
+                                    datosDanosEntrega.put(z, row);
+                                    //Salgo del for
+                                    break;
+                                }
+                            }
+                            for (int z = 0; z < datosDanosRecogida.length(); z++) {
+                                JSONObject row = datosDanosRecogida.getJSONObject(z);
+                                if (row.getString("id").equals(danoId)) {
+                                    row.put("del", "1");
+                                    datosDanosRecogida.put(z, row);
+                                    //Salgo del for
+                                    break;
+                                }
+                            }
+                        } catch (Exception e) {
+                            return;
+                        }
+                    }
+                    dialogDano.dismiss();
+                });
+
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                Window window = dialogDano.getWindow();
+                lp.copyFrom(window.getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                window.setAttributes(lp);
+                dialogDano.show();
+            }
+        } catch (Exception e) {
+            // Usado solo para capturar la excepción
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+
+            ImageView img = dialogDano.findViewById(R.id.imagen);
+            Bitmap bitmap = null;
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            String date = df.format(Calendar.getInstance().getTime());
+
+            int MAX_PICTURE_WIDTH = 1280;
+            int MAX_PICTURE_HEIGHT = 720;
+            switch (requestCode) {
+                case REQUEST_TAKE_PHOTO:
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inPreferredConfig = Bitmap.Config.RGB_565;
+                    bitmap = BitmapFactory.decodeFile(ruta_imagen, options);
+                    bitmap = BitmapUtils.redim(bitmap, MAX_PICTURE_HEIGHT, MAX_PICTURE_WIDTH);
+                    bitmap = BitmapUtils.addWaterMark(bitmap, date);
+                    img.setImageBitmap(bitmap);
+                    break;
+                case RESULT_LOAD_IMAGE:
+                    if (data != null) {
+                        if (data.getData() != null) {
+
+                            Uri uri = data.getData();
+                            try {
+                                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                                bitmap = BitmapUtils.redim(bitmap, MAX_PICTURE_HEIGHT, MAX_PICTURE_WIDTH);
+                                bitmap = BitmapUtils.addWaterMark(bitmap, date);
+                                img.setImageBitmap(bitmap);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
+    public void ajustarCroquis() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+        ALTO_PANTALLA = metrics.heightPixels;
+        ANCHO_PANTALLA = metrics.widthPixels;
+
+        ALTO_IMAGEN = ALTO_PANTALLA - 120;
+        ANCHO_IMAGEN = (ALTO_IMAGEN * ANCHO_ORG) / ALTO_ORG;
+
+        imgCroquis.getLayoutParams().height = ALTO_IMAGEN;
+        imgCroquis.getLayoutParams().width = ANCHO_IMAGEN;
+    }
+
+    public void inicializarFirma(LinearLayout l) {
+        if (l == firmaCliente) {
+            HA_FIRMADO_CLIENTE = false;
+        }
+
+        if (l == firmaOperario) {
+            HA_FIRMADO_OPERARIO = false;
+        }
+
+        l.removeAllViews();
+
+        Paint mmPaint = new Paint();
+        mmPaint.setAntiAlias(true);
+        mmPaint.setDither(true);
+        mmPaint.setColor(Color.BLUE);
+        mmPaint.setStyle(Paint.Style.STROKE);
+        mmPaint.setStrokeJoin(Paint.Join.BEVEL);
+        mmPaint.setStrokeCap(Paint.Cap.BUTT);
+        mmPaint.setStrokeWidth(2.5f);
+
+        mmEmboss = new EmbossMaskFilter(new float[]{1, 1, 1}, 0.4f, 6, 3.5f);
+
+        mmBlur = new BlurMaskFilter(8, BlurMaskFilter.Blur.NORMAL);
+
+        FingerPaint s = new FingerPaint(getApplicationContext(), mmPaint, l);
+        s.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        s.setBackgroundColor(Color.TRANSPARENT);
+        l.addView(s);
+
+        l.setBackground(null);
+    }
+
+    public void fn_PintaDanoUsuario(float x, float y, int tipo, String descDano, String pictureBase64) {
+
+        Drawable d = null;
+
+        CONTADOR_DANOS -= 1;
+
+        ImageView img = new ImageView(getApplicationContext());
+
+        String[] tag = new String[3];
+        tag[0] = String.valueOf(CONTADOR_DANOS);
+        tag[1] = descDano;
+
+        try {
+            JSONObject j = new JSONObject();
+            j.put("id", String.valueOf(CONTADOR_DANOS));
+            j.put("tp", String.valueOf(tipo));
+            j.put("posx", String.valueOf((int) x));
+            j.put("posy", String.valueOf((int) y));
+            j.put("desc", descDano);
+            j.put("picture", pictureBase64);
+            j.put("del", "0");
+
+            switch (DONDE_ESTOY) {
+                case MOSTRAR_ENTREGA:
+                    datosDanosEntrega.put(j);
+                    break;
+                case MOSTRAR_RECOGIDA:
+                    datosDanosRecogida.put(j);
+                    break;
+            }
+        } catch (Exception e) {
+            return;
+        }
+
+        img.setId(CONTADOR_DANOS);
+        img.setTag(tag);
+        img.setAdjustViewBounds(true);
+        img.setScaleType(ImageView.ScaleType.FIT_XY);
+
+        switch (tipo) {
+            case 1:
+                img.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.dano1, null));
+                d = ResourcesCompat.getDrawable(getResources(), R.drawable.dano1, null);
+                break;
+            case 2:
+                img.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.dano2, null));
+                d = ResourcesCompat.getDrawable(getResources(), R.drawable.dano2, null);
+                break;
+            case 3:
+                img.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.dano3, null));
+                d = ResourcesCompat.getDrawable(getResources(), R.drawable.dano3, null);
+                break;
+            case 4:
+                img.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.dano4, null));
+                d = ResourcesCompat.getDrawable(getResources(), R.drawable.dano4, null);
+                break;
+            case 5:
+                img.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.dano5, null));
+                d = ResourcesCompat.getDrawable(getResources(), R.drawable.dano5, null);
+                break;
+        }
+
+        int medidaImagen = d.getIntrinsicWidth();
+        img.setMaxHeight(medidaImagen);
+        img.setMaxWidth(medidaImagen);
+
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        lp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        lp.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        lp.setMargins((int) (x) - (medidaImagen / 2), (int) (y) - (medidaImagen / 2), 0, 0);
+        img.setLayoutParams(lp);
+
+        img.setOnLongClickListener(v -> {
+            fn_LongClickDanos(v);
+            return false;
+        });
+
+        relDanos.addView(img);
+    }
+
+    private void fn_MostrarDatos(Integer queVoyAMostrar) {
+
+        try {
+            inicializarFirma(firmaCliente);
+            inicializarFirma(firmaOperario);
+
+            fn_ClearDanos();
+
+            chkInspeccion.setChecked(false);
+
+            //Limpio los datos de los listview de extras y equipamientos
+            listadoExtras.clear();
+            listadoEquipamientos.clear();
+
+            // Verificamos si no existe el croquis del vehículo
+            if (datosVehiculo.getString("cro").equals("99")) {
+                Toast.makeText(getApplicationContext(), R.string.cant_show_croquis, Toast.LENGTH_SHORT).show();
+                fn_Limpiar();
+                return;
+            }
+            txtNumDocumento.setText(datosVehiculo.getString("cnt"));
+            txtNumDocumento.setEnabled(false);
+
+            // Obtenemos plano acorde al vehículo
+            int resID = getResources().getIdentifier("plano" + datosVehiculo.getString("cro"), "drawable", Inspect.this.getPackageName());
+            imgCroquis.setBackground(ResourcesCompat.getDrawable(getResources(),resID,null));
+
+            // Obtenemos y mostramos los datos
+            txtMatricula.setText(datosVehiculo.getString("mtr"));
+            txtModelo.setText(datosVehiculo.getString("mod"));
+            txtColor.setText(datosVehiculo.getString("col"));
+            txtCliente.setText(datosVehiculo.getString("cli"));
+
+            //Opciones para mostrar la firma
+            BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+            bitmapOptions.inJustDecodeBounds = false;
+            bitmapOptions.inSampleSize = 1;
+            bitmapOptions.inPreferredConfig = Bitmap.Config.RGB_565;
+
+            // Cribamos según los datos que nos indica en la BBDD
+            if (queVoyAMostrar == MOSTRAR_AUTOMATICO) {
+                queVoyAMostrar = MOSTRAR_ENTREGA;
+
+                if (Integer.parseInt(datosEntrega.getString("check")) == 1) {
+                    queVoyAMostrar = MOSTRAR_RECOGIDA;
+                }
+                DONDE_ESTOY = queVoyAMostrar;
+            }
+
+            switch (queVoyAMostrar) {
+                case MOSTRAR_ENTREGA:
+
+                    EN_ENTREGA = 1;
+
+                    btnConfirmarEntrega.setVisibility(View.VISIBLE);
+                    btnConfirmarRecogida.setVisibility(View.GONE);
+
+                    txtOev.setText(datosEntrega.getString("oev"));
+                    txtFecha.setText(datosEntrega.getString("f1"));
+                    spinOctavos.setSelection(Integer.parseInt(datosEntrega.getString("otv")));
+                    txtKms.setText(datosEntrega.getString("kms"));
+                    txtObservaciones.setText(datosEntrega.getString("obs"));
+
+                    for (int i = 0; i < datosDanosEntrega.length(); i++) {
+                        JSONObject row = datosDanosEntrega.getJSONObject(i);
+                        fn_PintaDanoInicio(row);
+                    }
+
+                    //Ya tiene marcado como entregado
+                    if (Integer.parseInt(datosEntrega.getString("check")) == 1) {
+                        cardFinal.setVisibility(View.GONE);
+                        btnConfirmarEntrega.setVisibility(View.GONE);
+
+                        // Deshabilitadmos el boton chech
+                        chkInspeccion.setChecked(true);
+                        chkInspeccion.setEnabled(false);
+
+                        spinOctavos.setEnabled(false);
+                        txtKms.setEnabled(false);
+                        btnEntrega.setEnabled(false);
+                        btnEntrega.setText(getString(R.string.arrival_data));
+                        btnEntrega.setBackgroundTintList(ResourcesCompat.getColorStateList(getResources(),R.color.verdeDesactivado,null));
+                        btnEntrega.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.boton_base_redondeado,null));
+
+                        //Habilito boton recogida
+                        btnRecogida.setEnabled(true);
+                        if (Integer.parseInt(datosRecogida.getString("check")) == 1) {
+                            btnRecogida.setText(getString(R.string.ver_data_rec));
+                            btnRecogida.setBackgroundTintList(ResourcesCompat.getColorStateList(getResources(),R.color.verdeDesactivado,null));
+                        } else {
+                            if (btnEntrega.getText().equals(getString(R.string.arrival_data))) {
+                                btnRecogida.setText(getString(R.string.ir_a_rec));
+                            }
+                            btnRecogida.setBackgroundTintList(ResourcesCompat.getColorStateList(getResources(),R.color.colorNaranBtn,null));
+                        }
+                        btnRecogida.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.boton_base_redondeado,null));
+
+                        btnLimpiarFirmaCliente.setEnabled(false);
+                        btnLimpiarFirmaOperario.setEnabled(false);
+
+                    } else {
+
+                        btnRecogida.setEnabled(false);
+                        btnRecogida.setBackgroundTintList(ResourcesCompat.getColorStateList(getResources(),R.color.grisDesactivado,null));
+                        btnRecogida.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.boton_base_redondeado,null));
+
+                        spinOctavos.setEnabled(true);
+                        txtKms.setEnabled(true);
+
+                        btnLimpiarFirmaCliente.setEnabled(true);
+                        btnLimpiarFirmaOperario.setEnabled(true);
+                    }
+                    /*
+                    Tanto si esta entregado como si hay inspección de entregas, extras y accesorios se marcan como presentes siempre
+                    Indicado con el parámetro "yesno" en 1.
+                    */
+                    for (int i = 0; i < datosExtrasEntrega.length(); i++) {
+                        JSONObject row = datosExtrasEntrega.getJSONObject(i);
+                        HashMap<String, String> map = new HashMap<String, String>();
+                        map.put("cod", row.getString("cod"));
+                        map.put("nom", row.getString("nom"));
+                        map.put("und", row.getString("und"));
+                        map.put("pedirserie", row.getString("pedirserie"));
+                        map.put("serie", row.getString("serie"));
+                        map.put("yesno", "1");
+                        listadoExtras.add(map);
+                        fn_ActualizaCheck("E");
+                    }
+
+                    for (int i = 0; i < datosEquipamientos.length(); i++) {
+                        JSONObject row = datosEquipamientos.getJSONObject(i);
+                        HashMap<String, String> map = new HashMap<String, String>();
+                        map.put("nom", row.getString("nom"));
+                        map.put("yesno", "1");
+                        listadoEquipamientos.add(map);
+                        fn_ActualizaCheck("A");
+                    }
+
+                    if (datosEntrega.getString("clisig").trim().equals("")) {
+                        HA_FIRMADO_CLIENTE = false;
+                    } else {
+                        HA_FIRMADO_CLIENTE = true;
+                    }
+                    firmaCliente.setBackground(new BitmapDrawable(getResources(), BitmapUtils.base64StringToBitmap(datosEntrega.getString("clisig"))));
+
+                    if (datosEntrega.getString("oprsig").trim().equals("")) {
+                        HA_FIRMADO_OPERARIO = false;
+                    } else {
+                        HA_FIRMADO_OPERARIO = true;
+                    }
+                    firmaOperario.setBackground(new BitmapDrawable(getResources(), BitmapUtils.base64StringToBitmap(datosEntrega.getString("oprsig"))));
+                    break;
+
+                case MOSTRAR_RECOGIDA:
+
+                    btnConfirmarEntrega.setVisibility(View.GONE);
+                    btnConfirmarRecogida.setVisibility(View.VISIBLE);
+
+                    EN_RECOGIDA = 1;
+
+                    txtOev.setText(datosRecogida.getString("oev"));
+                    txtFecha.setText(datosRecogida.getString("f1"));
+                    spinOctavos.setSelection(Integer.parseInt(datosRecogida.getString("otv")));
+                    txtKms.setText(datosRecogida.getString("kms"));
+                    txtObservaciones.setText(datosRecogida.getString("obs"));
+
+                    if (datosDanosRecogida.length() != 0) {
+                        for (int i = 0; i < datosDanosRecogida.length(); i++) {
+                            JSONObject row = datosDanosRecogida.getJSONObject(i);
+                            fn_PintaDanoInicio(row);
+                        }
+                    } else {
+                        // Cargar daños de entrega a la recogida,  en caso de preexistir
+                        if (QUEST_LOAD != 1) { precargaDnos();}
+
+                    }
+
+                    if (!toastEntregaRealizada && Integer.parseInt(datosRecogida.getString("check")) != 1) {
+                        Toast.makeText(getApplicationContext(), R.string.ent_already_checked, Toast.LENGTH_LONG).show();
+                        toastEntregaRealizada = true;
+                    }
+
+                    //Ya tiene marcado como entregado en recogida
+                    if (Integer.parseInt(datosRecogida.getString("check")) == 1) {
+
+                        cardFinal.setVisibility(View.GONE);
+                        btnConfirmarRecogida.setVisibility(View.GONE);
+
+                        ALL_VERIFIED = 1;
+
+                        // Mostramos Toast informativo
+                        if (!toastFinalMostrado){
+                            Toast.makeText(getApplicationContext(), R.string.already_2_checked, Toast.LENGTH_LONG).show();
+                            toastFinalMostrado = true;
+                        }
+
+                        //Habilito botón entrega y recogida para visualizacion de datos
+                        btnEntrega.setEnabled(true);
+
+                        btnEntrega.setText(getString(R.string.ver_data_ent));
+                        btnEntrega.setBackgroundTintList(ResourcesCompat.getColorStateList(getResources(),R.color.verdeDesactivado,null));
+                        btnEntrega.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.boton_base_redondeado,null));
+                        btnRecogida.setEnabled(true);
+                        btnRecogida.setText(R.string.return_data);
+                        btnRecogida.setBackgroundTintList(ResourcesCompat.getColorStateList(getResources(),R.color.verdeDesactivado,null));
+                        btnRecogida.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.boton_base_redondeado,null));
+
+                        spinOctavos.setEnabled(false);
+                        txtKms.setEnabled(false);
+                        btnLimpiarFirmaCliente.setEnabled(false);
+                        btnLimpiarFirmaOperario.setEnabled(false);
+
+                        // Fijado así ya que para realizar ambas inpecciones y guardarlas, debe haberse checkeado en ambos casos
+                        chkInspeccion.setChecked(true);
+                        chkInspeccion.setEnabled(false);
+
+                        for (int i = 0; i < datosExtrasRecogida.length(); i++) {
+                            JSONObject row = datosExtrasRecogida.getJSONObject(i);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("cod", row.getString("cod"));
+                            map.put("nom", row.getString("nom"));
+                            map.put("und", row.getString("und"));
+                            map.put("pedirserie", row.getString("pedirserie"));
+                            map.put("serie", row.getString("serie"));
+                            // Prueba para saber si tiene el dato
+                            //String idExtraRec = row.getString("yesno");
+                            map.put("yesno", "0");
+                            listadoExtras.add(map);
+                        }
+
+                        for (int i = 0; i < datosEquipamientos.length(); i++) {
+                            JSONObject row = datosEquipamientos.getJSONObject(i);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("nom", row.getString("nom"));
+                            // Prueba para saber si tiene el dato
+                            //String idEquipRec = row.getString("yesno");
+                            map.put("yesno", "0");
+                            listadoEquipamientos.add(map);
+                        }
+                    } else {
+
+                        chkInspeccion.setChecked(false);
+                        chkInspeccion.setEnabled(true);
+
+                        cardFinal.setVisibility(View.VISIBLE);
+                        btnEntrega.setEnabled(true);
+                        btnEntrega.setText(getString(R.string.ver_data_ent));
+                        btnEntrega.setBackgroundTintList(ResourcesCompat.getColorStateList(getResources(),R.color.verdeDesactivado,null));
+                        btnEntrega.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.boton_base_redondeado,null));
+
+                        btnRecogida.setEnabled(true);
+                        btnRecogida.setText(getString(R.string.inspect_return));
+                        btnRecogida.setBackgroundTintList(ResourcesCompat.getColorStateList(getResources(),R.color.colorNaranBtn,null));
+                        btnRecogida.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.boton_base_redondeado,null));
+
+                        spinOctavos.setEnabled(true);
+                        txtKms.setEnabled(true);
+                        btnLimpiarFirmaCliente.setEnabled(true);
+                        btnLimpiarFirmaOperario.setEnabled(true);
+
+                        for (int i = 0; i < datosExtrasRecogida.length(); i++) {
+                            JSONObject row = datosExtrasRecogida.getJSONObject(i);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("cod", row.getString("cod"));
+                            map.put("nom", row.getString("nom"));
+                            map.put("und", row.getString("und"));
+                            map.put("pedirserie", row.getString("pedirserie"));
+                            map.put("serie", row.getString("serie"));
+                            // Prueba para saber si tiene el dato
+                            //String idExtraRec = row.getString("yesno");
+                            map.put("yesno", "0");
+                            listadoExtras.add(map);
+                        }
+
+                        for (int i = 0; i < datosEquipamientos.length(); i++) {
+                            JSONObject row = datosEquipamientos.getJSONObject(i);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("nom", row.getString("nom"));
+                            // Prueba para saber si tiene el dato
+                            //String idEquipRec = row.getString("yesno");
+                            map.put("yesno", "0");
+                            listadoEquipamientos.add(map);
+                        }
+                    }
+
+                    if (datosRecogida.getString("clisig").trim().equals("")) {
+                        HA_FIRMADO_CLIENTE = false;
+                    } else {
+                        HA_FIRMADO_CLIENTE = true;
+                    }
+                    firmaCliente.setBackground(new BitmapDrawable(getResources(), BitmapUtils.base64StringToBitmap(datosRecogida.getString("clisig"))));
+
+                    if (datosRecogida.getString("oprsig").trim().equals("")) {
+                        HA_FIRMADO_OPERARIO = false;
+                    } else {
+                        HA_FIRMADO_OPERARIO = true;
+                    }
+                    firmaOperario.setBackground(new BitmapDrawable(getResources(), BitmapUtils.base64StringToBitmap(datosRecogida.getString("oprsig"))));
+                    break;
+            }
+            listExtras.setAdapter(extrasAdapter);
+            listEquipamientos.setAdapter(equipamientosAdapter);
+        } catch (Exception e) {
+            fn_Limpiar();
+        }
+    }
+
+    // Función para importar los daños de la entrega a la inspección de recogida
+    private void precargaDnos() throws JSONException {
+        QUEST_LOAD = 1;
+        if (Integer.parseInt(datosRecogida.getString("check")) != 1) {
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.import_damage_ent_title))
+                    .setMessage(getString(R.string.import_damage_ent))
+                    .setCancelable(false)
+                    .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int which) {
+                            for (int i = 0; i < datosDanosEntrega.length(); i++) {
+                                JSONObject row = null;
+                                try {
+                                    row = datosDanosEntrega.getJSONObject(i);
+                                    int idDano = row.getInt("id") +30;
+                                    row.put("id",idDano);
+                                    datosDanosRecogida.put(row);
+                                    fn_PintaDanoInicio(row);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    })
+                    .setNegativeButton(getString(R.string.not), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).create().show();
+        }
+    }
+
+    private void fn_Limpiar() {
+        DONDE_ESTOY = 0;
+        QUEST_LOAD = 0;
+        EN_ENTREGA = 0;
+        EN_RECOGIDA = 0;
+        CONF_RECOGIDA = 0;
+        CONF_ENTREGA = 0;
+        ALL_VERIFIED = 0;
+
+        btnLocalizar.setEnabled(true);
+        btnLocalizar.setBackgroundTintList(ResourcesCompat.getColorStateList(getResources(),R.color.colorAzulBtn,null));
+        btnLocalizar.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.boton_base_redondeado,null));
+
+        toastEntregaRealizada = false;
+        toastFinalMostrado = false;
+
+        btnEntrega.setText(getString(R.string.arrival_inspect));
+        btnRecogida.setText(getString(R.string.inspect_return));
+
+        txtNumDocumento.setText("");
+        txtNumDocumento.setEnabled(true);
+
+        txtMatricula.setText("");
+        txtModelo.setText("");
+        txtColor.setText("");
+        txtCliente.setText("");
+
+        txtOev.setText("");
+        txtFecha.setText("");
+        spinOctavos.setSelection(0);
+        txtKms.setText("");
+
+        spinOctavos.setEnabled(true);
+        txtKms.setEnabled(true);
+
+        btnEntrega.setEnabled(true);
+        btnEntrega.setBackgroundTintList(ResourcesCompat.getColorStateList(getResources(),R.color.colorNaranBtn,null));
+        btnEntrega.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.boton_base_redondeado,null));
+
+        btnRecogida.setEnabled(false);
+        btnRecogida.setBackgroundTintList(ResourcesCompat.getColorStateList(getResources(),R.color.grisDesactivado,null));
+        btnRecogida.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.boton_base_redondeado,null));
+
+        cardFinal.setVisibility(View.VISIBLE);
+        btnConfirmarEntrega.setVisibility(View.VISIBLE);
+        btnConfirmarRecogida.setVisibility(View.GONE);
+
+        txtObservaciones.setText("");
+
+        btnLimpiarFirmaCliente.performClick();
+        btnLimpiarFirmaOperario.performClick();
+        listExtras.setAdapter(null);
+        listEquipamientos.setAdapter(null);
+
+        datosVehiculo = null;
+        datosEntrega = null;
+        datosRecogida = null;
+        datosEquipamientos = null;
+        datosExtras = null;
+        datosDanosEntrega = null;
+        datosDanosRecogida = null;
+        listadoChecksE.clear();
+        listadoChecksA.clear();
+
+        //Borramos todos los daños menos la imagen del coche que es la posicion cero
+        fn_ClearDanos();
+
+        inicializarFirma(firmaCliente);
+        inicializarFirma(firmaOperario);
+
+        listadoExtras.clear();
+        listExtras.setAdapter(extrasAdapter);
+
+        listadoEquipamientos.clear();
+        listEquipamientos.setAdapter(equipamientosAdapter);
+
+        imgCroquis.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.plano5, null));
+
+        chkInspeccion.setChecked(false);
+    }
+
+    private void fn_PintaDanoInicio(JSONObject row) {
+        try {
+            if (row.getString("del").equals("1")) {
+                // Ese daño está marcado para borrado y no se dibuja
+                return;
+            }
+
+            Drawable d = null;
+
+            String[] tag = new String[3];
+            tag[0] = row.getString("id");
+            tag[1] = row.getString("desc");
+
+            ImageView img = new ImageView(Inspect.this);
+            img.setId(Integer.parseInt(row.getString("id")));
+            img.setTag(tag);
+            img.setAdjustViewBounds(true);
+            img.setScaleType(ImageView.ScaleType.FIT_XY);
+
+            switch (Integer.parseInt(row.getString("tp"))) {
+                case 1:
+                    img.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.dano1, null));
+                    d = ResourcesCompat.getDrawable(getResources(), R.drawable.dano1, null);
+                    break;
+                case 2:
+                    img.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.dano2, null));
+                    d = ResourcesCompat.getDrawable(getResources(), R.drawable.dano2, null);
+                    break;
+                case 3:
+                    img.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.dano3, null));
+                    d = ResourcesCompat.getDrawable(getResources(), R.drawable.dano3, null);
+                    break;
+                case 4:
+                    img.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.dano4, null));
+                    d = ResourcesCompat.getDrawable(getResources(), R.drawable.dano4, null);
+                    break;
+                case 5:
+                    img.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.dano5, null));
+                    d = ResourcesCompat.getDrawable(getResources(), R.drawable.dano5, null);
+                    break;
+            }
+
+
+            int medidaImagen = d.getIntrinsicWidth();
+            img.setMaxHeight(medidaImagen);
+            img.setMaxWidth(medidaImagen);
+
+            float x = Integer.parseInt(row.getString("posx"));
+            float y = Integer.parseInt(row.getString("posy"));
+
+            //ESCALAMOS POSICION DE LA X e Y
+            float xf = 0;
+            float yf = 0;
+
+            // Distinguimos entre daños precargado o introducido en la inspección
+            if (Integer.parseInt(row.getString("id")) < 0){
+                xf = x;
+                yf = y;
+            } else {
+                xf = (ANCHO_IMAGEN * x) / ANCHO_ORG;
+                yf = (ALTO_IMAGEN * y) / ALTO_ORG;
+            }
+
+
+            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            lp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+            lp.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+            lp.setMargins((int) (xf) - (medidaImagen / 2), (int) (yf) - (medidaImagen / 2), 0, 0);
+            img.setLayoutParams(lp);
+
+            img.setOnLongClickListener(v -> {
+                fn_LongClickDanos(v);
+                return false;
+            });
+
+            relDanos.addView(img);
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), getString(R.string.error_2p) + " " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            fn_Limpiar();
+        }
+
+    }
+
+    private void fn_ClearDanos() {
+        //Borramos todos los daños menos la imagen del coche que es la posicion cero
+        int count = (relDanos).getChildCount() - 1;
+        for (int i = count; i > 0; i--) {
+            (relDanos).removeViewAt(i);
+        }
+    }
+
+    private void fn_Save_Local_Data(Integer QueGuardo) {
+        try {
+            Bitmap bmpFirmaCliente, bmpFirmaOperario;
+            Bitmap bgCli, bgOpr;
+            String base64Cliente, base64Operario = "";
+
+            // Verificamos que se hayan cargado primero lo datos iniciales para entrega o recogida
+            if (datosEntrega == null) {
+                Toast.makeText(getApplicationContext(), R.string.need_find_contract, Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            switch (QueGuardo) {
+
+                case MOSTRAR_ENTREGA:
+                    datosEntrega.put("otv", String.valueOf(spinOctavos.getSelectedItemPosition()));
+                    datosEntrega.put("kms", String.valueOf(txtKms.getText()));
+                    datosEntrega.put("obs", String.valueOf(txtObservaciones.getText()));
+
+                    //Guardo los datos que haya introducido en los extras
+                    datosExtrasEntrega = new JSONArray();
+
+                    for (int i = 0; i < listadoExtras.size(); i++) {
+                        HashMap<String, String> map = null;
+                        map = new HashMap<>();
+                        map = listadoExtras.get(i);
+
+                        JSONObject obj = new JSONObject();
+
+                        obj.put("cod", String.valueOf(map.get("cod")));
+                        obj.put("nom", String.valueOf(map.get("nom")));
+                        obj.put("und", String.valueOf(map.get("und")));
+                        obj.put("pedirserie", String.valueOf(map.get("pedirserie")));
+                        obj.put("serie", String.valueOf(map.get("serie")));
+                        obj.put("yesno", String.valueOf(map.get("yesno")));
+
+                        datosExtrasEntrega.put(obj);
+                    }
+
+                    //Aqui convertimos la firma a base64 para guardarlo
+                    if (HA_FIRMADO_CLIENTE) {
+                        firmaCliente.setDrawingCacheEnabled(true);
+                        firmaCliente.buildDrawingCache();
+                        bmpFirmaCliente = firmaCliente.getDrawingCache();
+                        bgCli = Bitmap.createBitmap(bmpFirmaCliente.getWidth(), bmpFirmaCliente.getHeight(), bmpFirmaCliente.getConfig());  // Create another image the same size
+                        bgCli.eraseColor(Color.WHITE);
+                        bmpFirmaCliente = BitmapUtils.overlayBitmaps(bgCli, bmpFirmaCliente);
+                        base64Cliente = BitmapUtils.bitmapToBase64PNG(bmpFirmaCliente);
+                        datosEntrega.put("clisig", base64Cliente);
+                        firmaCliente.destroyDrawingCache();
+                        firmaCliente.setDrawingCacheEnabled(false);
+                    } else {
+                        datosEntrega.put("clisig", "");
+                    }
+
+                    if (HA_FIRMADO_OPERARIO) {
+                        firmaOperario.setDrawingCacheEnabled(true);
+                        firmaOperario.buildDrawingCache();
+                        bmpFirmaOperario = firmaOperario.getDrawingCache();
+                        bgOpr = Bitmap.createBitmap(bmpFirmaOperario.getWidth(), bmpFirmaOperario.getHeight(), bmpFirmaOperario.getConfig());  // Create another image the same size
+                        bgOpr.eraseColor(Color.WHITE);
+                        bmpFirmaOperario = BitmapUtils.overlayBitmaps(bgOpr, bmpFirmaOperario);
+                        base64Operario = BitmapUtils.bitmapToBase64PNG(bmpFirmaOperario);
+                        datosEntrega.put("oprsig", base64Operario);
+                        firmaOperario.destroyDrawingCache();
+                        firmaOperario.setDrawingCacheEnabled(false);
+                    } else {
+                        datosEntrega.put("oprsig", "");
+                    }
+                    if (btnEntrega.getText().toString().equals(getString(R.string.arrival_inspect)) && CONF_ENTREGA == 0) {
+                        Toast.makeText(Inspect.this,R.string.data_saved,Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+
+
+                case MOSTRAR_RECOGIDA:
+                    datosRecogida.put("otv", String.valueOf(spinOctavos.getSelectedItemPosition()));
+                    datosRecogida.put("kms", String.valueOf(txtKms.getText()));
+                    datosRecogida.put("obs", String.valueOf(txtObservaciones.getText()));
+
+                    //Guardo los datos que haya introducido en los extras
+                    datosExtrasRecogida = new JSONArray();
+
+                    for (int i = 0; i < listadoExtras.size(); i++) {
+                        HashMap<String, String> map = null;
+                        map = new HashMap<String, String>();
+                        map = listadoExtras.get(i);
+
+                        JSONObject obj = new JSONObject();
+
+                        obj.put("cod", String.valueOf(map.get("cod")));
+                        obj.put("nom", String.valueOf(map.get("nom")));
+                        obj.put("und", String.valueOf(map.get("und")));
+                        obj.put("pedirserie", String.valueOf(map.get("pedirserie")));
+                        obj.put("serie", String.valueOf(map.get("serie")));
+                        obj.put("yesno", String.valueOf(map.get("yesno")));
+
+                        datosExtrasRecogida.put(obj);
+                    }
+                    if (HA_FIRMADO_CLIENTE) {
+                        //Aqui lo convertimos a base64 para guardarlo
+                        firmaCliente.setDrawingCacheEnabled(true);
+                        firmaCliente.buildDrawingCache();
+                        bmpFirmaCliente = firmaCliente.getDrawingCache();
+                        bgCli = Bitmap.createBitmap(bmpFirmaCliente.getWidth(), bmpFirmaCliente.getHeight(), bmpFirmaCliente.getConfig());  // Create another image the same size
+                        bgCli.eraseColor(Color.WHITE);
+                        bmpFirmaCliente = BitmapUtils.overlayBitmaps(bgCli, bmpFirmaCliente);
+                        base64Cliente = BitmapUtils.bitmapToBase64PNG(bmpFirmaCliente);
+                        datosRecogida.put("clisig", base64Cliente);
+                        firmaCliente.destroyDrawingCache();
+                        firmaCliente.setDrawingCacheEnabled(false);
+                    } else {
+                        datosRecogida.put("clisig", "");
+                    }
+                    if (HA_FIRMADO_OPERARIO) {
+                        firmaOperario.setDrawingCacheEnabled(true);
+                        firmaOperario.buildDrawingCache();
+                        bmpFirmaOperario = firmaOperario.getDrawingCache();
+                        bgOpr = Bitmap.createBitmap(bmpFirmaOperario.getWidth(), bmpFirmaOperario.getHeight(), bmpFirmaOperario.getConfig());  // Create another image the same size
+                        bgOpr.eraseColor(Color.WHITE);
+                        bmpFirmaOperario = BitmapUtils.overlayBitmaps(bgOpr, bmpFirmaOperario);
+                        base64Operario = BitmapUtils.bitmapToBase64PNG(bmpFirmaOperario);
+                        datosRecogida.put("oprsig", base64Operario);
+                        firmaOperario.destroyDrawingCache();
+                        firmaOperario.setDrawingCacheEnabled(false);
+                    } else {
+                        datosRecogida.put("oprsig", "");
+                    }
+                    if (btnRecogida.getText().toString().equals(getString(R.string.inspect_return)) && CONF_RECOGIDA == 0) {
+                        Toast.makeText(Inspect.this,R.string.data_saved,Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+            }
+
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), getString(R.string.error_2p) + " " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            fn_Limpiar();
+        }
+    }
+
+    private boolean fn_ComprobacionesEntrega() {
+        try {
+
+            //Guardamos los datos actuales
+            fn_Save_Local_Data(MOSTRAR_ENTREGA);
+
+            // Verificamos que se hayan cargado primero lo datos iniciales para entrega o recogida
+            if (datosEntrega == null) {
+                Toast.makeText(getApplicationContext(), R.string.need_find_contract, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            // Comprobamos que se hayan realizado todos los check de extras
+            if (listadoExtras.size() != listadoChecksE.size()) {
+                Toast.makeText(getApplicationContext(), R.string.mark_all_extras_needed, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            // Comporbamos que se hayan realizado todos los check de equipamientos
+            if (listadoEquipamientos.size() != listadoChecksA.size()) {
+                Toast.makeText(getApplicationContext(), R.string.equipment_mark_all_needed, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            //Compruebo que haya firmado el cliente
+            if (!HA_FIRMADO_CLIENTE) {
+                Toast.makeText(getApplicationContext(), R.string.client_sign_needed, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            //Compruebo que haya firmado el operario
+            if (!HA_FIRMADO_OPERARIO) {
+                Toast.makeText(getApplicationContext(), R.string.ope_sign_needed, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            //Compruebo que ha marcado el check de acepto
+            if (!chkInspeccion.isChecked()) {
+                Toast.makeText(getApplicationContext(), R.string.client_mark_info_agree, Toast.LENGTH_SHORT).show();
+                return false;
+
+            }
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean fn_ComprobacionesRecogida() {
+        try {
+            //Primero guardo los datos actuales
+            fn_Save_Local_Data(MOSTRAR_RECOGIDA);
+
+            int km1 = Integer.parseInt(datosEntrega.getString("kms"));
+            int km2 = Integer.parseInt(datosRecogida.getString("kms"));
+
+            if (km1 >= km2) {
+                Toast.makeText(getApplicationContext(), R.string.kmR_minus_KmE, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+
+            HashMap<String, String> map = null;
+
+            // Comprobamos que se hayan realizado todos los check de extras
+            if (listadoExtras.size() != listadoChecksE.size()) {
+                Toast.makeText(getApplicationContext(), R.string.mark_all_extras_needed, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            // Comporbamos que se hayan realizado todos los check de equipamientos
+            if (listadoEquipamientos.size() != listadoChecksA.size()) {
+                Toast.makeText(getApplicationContext(), R.string.equipment_mark_all_needed, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            //Compruebo que haya firmado el cliente
+            if (!HA_FIRMADO_CLIENTE) {
+                Toast.makeText(getApplicationContext(), R.string.client_sign_needed, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            //Compruebo que haya firmado el operario
+            if (!HA_FIRMADO_OPERARIO) {
+                Toast.makeText(getApplicationContext(), R.string.ope_sign_needed, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            //Compruebo que ha marcado el check de acepto
+            if (!chkInspeccion.isChecked()) {
+                Toast.makeText(getApplicationContext(), R.string.client_mark_info_agree, Toast.LENGTH_SHORT).show();
+                return false;
+
+            }
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    // Función para actualizar la observaciones en caso de merma de extra/accesorio
+    public void fn_ActualizaObs(String nombreExtra, String serieExtra, int codigo) {
+        String contenido = txtObservaciones.getText().toString();
+        String tipo = "";
+        switch (codigo){
+            case 0:
+                tipo = getString(R.string.xtra);
+                break;
+            case 1:
+                tipo = getString(R.string.equipment);
+                break;
+        }
+        if (!txtObservaciones.getText().toString().equals("")) {
+            contenido += "\n";
+        }
+        if (serieExtra.equals("")) {
+            contenido += getString(R.string.ausent) + " " + tipo + " " + nombreExtra+"";
+        } else {
+            contenido += getString(R.string.ausent) + " " + tipo + " " + nombreExtra + ", "+ getString(R.string.n_serie) + " " + serieExtra;
+        }
+        txtObservaciones.setText(contenido);
+    }
+
+    // función para actualizar checks realizados
+    public void fn_ActualizaCheck (String check) {
+        try {
+            switch (check) {
+                case "E":
+                    listadoChecksE.add(check);
+                    break;
+                case "A":
+                    listadoChecksA.add(check);
+                    break;
+            }
+
+        } catch (Exception e) {
+            // Usado solamente para capturar la excepción
+        }
+    }
+
+    public void fn_ActualizaSeleccionEquipamientos(String valor, Integer position) {
+        try {
+            HashMap<String, String> map = null;
+            map = listadoEquipamientos.get(position);
+            map.put("yesno", valor);
+            listadoEquipamientos.set(position, map);
+
+            equipamientosAdapter.notifyDataSetChanged();
+        } catch (Exception e) {
+            // Usado solamente para capturar la excepción
+        }
+    }
+
+    public void fn_ActualizaSeleccionExtras(String valor, String serie, Integer position, Boolean hacerFocus) {
+        try {
+            //Si la serie que me envio es distinto de vacio
+            if (!serie.trim().equals("")) {
+                for (int i = 0; i < listadoExtras.size(); i++) {
+                    HashMap<String, String> map = null;
+                    map = new HashMap<String, String>();
+                    map = listadoExtras.get(i);
+
+                    if (serie.equalsIgnoreCase(map.get("serie"))) {
+                        Toast.makeText(getApplicationContext(), R.string.num_serie_already_exists, Toast.LENGTH_SHORT).show();
+
+                        if (hacerFocus) {
+                            listExtras.requestFocus();
+                            listExtras.setSelection(position);
+                        }
+                        return;
+                    }
+                }
+            }
+
+            HashMap<String, String> map = null;
+            map = listadoExtras.get(position);
+            map.put("yesno", valor);
+            map.put("serie", serie);
+            listadoExtras.set(position, map);
+            extrasAdapter.notifyDataSetChanged();
+
+            if (hacerFocus) {
+                listExtras.requestFocus();
+                listExtras.setSelection(position);
+            }
+        } catch (Exception e) {
+            // Usado solamente para capturar la excepción
+        }
+    }
+
+    // Función para la firma digital de cliente y operario
+    public class FingerPaint extends View {
+
+        private static final float TOUCH_TOLERANCE = 1;
+        private Bitmap mBitmap;
+        private Canvas mCanvas;
+        private Path mPath;
+        private Paint mBitmapPaint;
+        private Paint mPaint;
+        private LinearLayout contenedor;
+        private float mX, mY;
+
+        public FingerPaint(Context c, Paint mPaint, LinearLayout l) {
+            super(c);
+            this.mPaint = mPaint;
+            this.contenedor = l;
+            mPath = new Path();
+            mBitmapPaint = new Paint(Paint.DITHER_FLAG);
+
+        }
+
+        @Override
+        protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+            super.onSizeChanged(w, h, oldw, oldh);
+            mBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+            mCanvas = new Canvas(mBitmap);
+        }
+
+        @Override
+        protected void onDraw(Canvas canvas) {
+            canvas.drawColor(Color.TRANSPARENT);
+            canvas.drawBitmap(mBitmap, 0, 0, mBitmapPaint);
+            canvas.drawPath(mPath, mPaint);
+        }
+
+        private void touch_start(float x, float y) {
+            getParent().requestDisallowInterceptTouchEvent(true);
+            mPath.reset();
+            mPath.moveTo(x, y);
+            mX = x;
+            mY = y;
+            mPath.quadTo(mX, mY, mX - 0.2f, mY - 0.2f);
+        }
+
+        private void touch_move(float x, float y) {
+            float dx = Math.abs(x - mX);
+            float dy = Math.abs(y - mY);
+            if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
+                mPath.quadTo(mX, mY, (x + mX) / 2, (y + mY) / 2);
+                mX = x;
+                mY = y;
+            }
+        }
+
+        private void touch_up() {
+            mPath.lineTo(mX, mY);
+            // commit the path to our offscreen
+            mCanvas.drawPath(mPath, mPaint);
+            // kill this so we don't double draw
+            mPath.reset();
+
+
+            getParent().requestDisallowInterceptTouchEvent(false);
+        }
+
+        @Override
+        public boolean onTouchEvent(MotionEvent event) {
+            float x = event.getX();
+            float y = event.getY();
+
+            //Aqui controlamos que pueda pintar sobre la firma
+            try {
+
+                if (this.contenedor == firmaCliente && Integer.parseInt(datosEntrega.getString("check")) == 1 && DONDE_ESTOY == MOSTRAR_ENTREGA) {
+                    return false;
+                }
+
+                if (this.contenedor == firmaOperario && Integer.parseInt(datosEntrega.getString("check")) == 1 && DONDE_ESTOY == MOSTRAR_ENTREGA) {
+                    return false;
+                }
+
+                if (this.contenedor == firmaCliente && Integer.parseInt(datosRecogida.getString("check")) == 1 && DONDE_ESTOY == MOSTRAR_RECOGIDA) {
+                    return false;
+                }
+
+                if (this.contenedor == firmaOperario && Integer.parseInt(datosRecogida.getString("check")) == 1 && DONDE_ESTOY == MOSTRAR_RECOGIDA) {
+                    return false;
+                }
+            } catch (Exception e) {
+                //Usado solamente para capturar la excepción
+            }
+
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    if (this.contenedor == firmaCliente) {
+                        HA_FIRMADO_CLIENTE = true;
+                    }
+                    if (this.contenedor == firmaOperario) {
+                        HA_FIRMADO_OPERARIO = true;
+                    }
+                    touch_start(x, y);
+                    invalidate();
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    if (this.contenedor == firmaCliente) {
+                        HA_FIRMADO_CLIENTE = true;
+                    }
+                    if (this.contenedor == firmaOperario) {
+                        HA_FIRMADO_OPERARIO = true;
+                    }
+                    touch_move(x, y);
+                    invalidate();
+                    break;
+                case MotionEvent.ACTION_UP:
+                    if (this.contenedor == firmaCliente) {
+                        HA_FIRMADO_CLIENTE = true;
+                    }
+                    if (this.contenedor == firmaOperario) {
+                        HA_FIRMADO_OPERARIO = true;
+                    }
+                    touch_up();
+                    invalidate();
+                    break;
+            }
+            return true;
+        }
+    }
+
+    private class asyncGetInspeccion extends AsyncTask<Void, Object, Boolean> {
+
+        String documento = "0";
+
+        @Override
+        protected void onPreExecute() {
+            miDialog = new ProgressDialog(Inspect.this);
+            miDialog.setMessage(getString(R.string.checkin_contract));
+            miDialog.setCancelable(false);
+            miDialog.show();
+
+            documento = txtNumDocumento.getText().toString();
+            fn_Limpiar();
+        }
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+            CF = ((Carplus3G) getApplicationContext());
+
+            try {
+                conexionHTTP.AddParam("accion", "get_inspeccion");
+                conexionHTTP.AddParam("empresa", CF.getEmpresa());
+                conexionHTTP.AddParam("id", CF.getTerminalId());
+                conexionHTTP.AddParam("documento", documento);
+                conexionHTTP.AddParam("firma", Carplus3G.SHA256("gin" + documento));
+                conexionHTTP.Execute(RestClient.RequestMethod.POST);
+            } catch (Exception e) {
+                // Usado solamente para capturar la excepción
+            }
+            JSONDATA = conexionHTTP.getResponse();
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+            if (!JSONDATA.equals("error")) {
+
+                try {
+                    JSONObject json = new JSONObject(JSONDATA);
+
+                    int estado = json.getInt("status");
+                    String mensaje = json.getString("statusMsg");
+
+                    if (estado == 1) {
+                        JSONObject content = json.getJSONObject("content");
+                        int existe = Integer.parseInt(content.getString("existe"));
+
+                        if (existe == 1) {
+                            datosVehiculo = content.getJSONObject("veh");
+                            datosEntrega = content.getJSONObject("ent");
+                            datosRecogida = content.getJSONObject("rec");
+                            datosEquipamientos = content.getJSONArray("equ");
+                            datosExtrasEntrega = content.getJSONArray("ente");
+                            datosExtrasRecogida = content.getJSONArray("rece");
+                            datosDanosEntrega = content.getJSONArray("entd");
+                            datosDanosRecogida = content.getJSONArray("recd");
+
+                            btnLocalizar.setEnabled(false);
+                            btnLocalizar.setBackgroundTintList(ResourcesCompat.getColorStateList(getResources(),R.color.grisDesactivado,null));
+                            btnLocalizar.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.boton_base_redondeado,null));
+
+
+                            fn_MostrarDatos(MOSTRAR_AUTOMATICO);
+                        } else {
+                            Toast.makeText(getApplicationContext(), R.string.cant_find_doc, Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(getApplicationContext(), getString(R.string.error_happened) + " " + mensaje, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.error_2p)+" " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    metodo.iraMenuPpal();
+                }
+            } else {
+                Carplus3G.dialogConexion(Inspect.this);
+                metodo.iraMenuPpal();
+            }
+            miDialog.dismiss();
+            tareaGetInspeccion = null;
+            JSONDATA = "";
+        }
+        @Override
+        protected void onCancelled() {
+        }
+    }
+
+    private class asyncSaveInspeccionEntrega extends AsyncTask<Void, Object, Boolean> {
+
+        String documento = "0";
+        String info = "";
+        String danos = "";
+        String extras = "";
+
+        @Override
+        protected void onPreExecute() {
+
+            miDialog = new ProgressDialog(Inspect.this);
+            miDialog.setMessage(getString(R.string.saving_inspect_ent));
+            miDialog.setCancelable(false);
+            miDialog.show();
+
+            documento = txtNumDocumento.getText().toString();
+
+            try {
+                String img1 = BitmapUtils.base64PNGToJPEG(datosEntrega.getString("clisig"));
+                String img2 = BitmapUtils.base64PNGToJPEG(datosEntrega.getString("oprsig"));
+                datosEntrega.put("clisig", img1);
+                datosEntrega.put("oprsig", img2);
+
+                info = datosEntrega.toString();
+                danos = datosDanosEntrega.toString();
+                extras = datosExtrasEntrega.toString();
+            } catch (Exception e) {
+                // Usado solamente para capturar la excepción
+            }
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+            CF = ((Carplus3G) getApplicationContext());
+            try {
+                conexionHTTP.AddParam("accion", "save_inspeccion_entrega");
+                conexionHTTP.AddParam("empresa", CF.getEmpresa());
+                conexionHTTP.AddParam("id", CF.getTerminalId());
+                conexionHTTP.AddParam("documento", documento);
+                conexionHTTP.AddParam("usuario", String.valueOf(CF.getCodUsuario()));
+                conexionHTTP.AddParam("datosEntrega", info);
+                conexionHTTP.AddParam("danosEntrega", danos);
+                conexionHTTP.AddParam("extrasEntrega", extras);
+                conexionHTTP.AddParam("ancho", String.valueOf(ANCHO_IMAGEN));
+                conexionHTTP.AddParam("alto", String.valueOf(ALTO_IMAGEN));
+                conexionHTTP.AddParam("firma", Carplus3G.SHA256("savin" + documento));
+                conexionHTTP.Execute(RestClient.RequestMethod.POST);
+            } catch (Exception e) {
+                // Usado solo para capturar la excepción
+            }
+            JSONDATA = conexionHTTP.getResponse();
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+            if (!JSONDATA.equals("error")) {
+
+                try {
+                    JSONObject json = new JSONObject(JSONDATA);
+
+                    int estado = json.getInt("status");
+                    String mensaje = json.getString("statusMsg");
+                    JSONObject content = json.getJSONObject("content");
+
+                    if (estado == 1) {
+
+                        String err = String.valueOf(content.getString("err"));
+                        String comodin1 = String.valueOf(content.getString("com1"));
+                        String comodin2 = String.valueOf(content.getString("com2"));
+
+                        switch (err) {
+                            case "si01":
+                                Toast.makeText(getApplicationContext(), getString(R.string.txt_serie_1)+ comodin1 + getString(R.string.txt_serie_2), Toast.LENGTH_SHORT).show();
+                                break;
+                            case "si02":
+                                Toast.makeText(getApplicationContext(), getString(R.string.txt_serie1) + comodin1 + getString(R.string.txt_serie2) + comodin2 + getString(R.string.txt_serie_2), Toast.LENGTH_SHORT).show();
+                                break;
+                            default:
+                                Toast.makeText(getApplicationContext(), R.string.inspect_ent_correct, Toast.LENGTH_SHORT).show();
+                                fn_Limpiar();
+                                break;
+                        }
+                    } else {
+                        Toast.makeText(getApplicationContext(), getString(R.string.error_happened) + " " + mensaje, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.error_2p)+" " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    metodo.iraMenuPpal();
+                }
+            } else {
+                Carplus3G.dialogConexion(Inspect.this);
+                metodo.iraMenuPpal();
+            }
+            miDialog.dismiss();
+            tareaSaveInspeccionEntrega = null;
+            JSONDATA = "";
+        }
+        @Override
+        protected void onCancelled() {
+        }
+    }
+
+    private class asyncSaveInspeccionRecogida extends AsyncTask<Void, Object, Boolean> {
+
+        String documento = "0";
+        String info = "";
+        String danos = "";
+        String extras = "";
+
+        @Override
+        protected void onPreExecute() {
+            miDialog = new ProgressDialog(Inspect.this);
+            miDialog.setMessage(getString(R.string.saving_inspect_rec));
+            miDialog.setCancelable(false);
+            miDialog.show();
+
+            documento = txtNumDocumento.getText().toString();
+
+            try {
+                String img1 = BitmapUtils.base64PNGToJPEG(datosRecogida.getString("clisig"));
+                String img2 = BitmapUtils.base64PNGToJPEG(datosRecogida.getString("oprsig"));
+                datosRecogida.put("clisig", img1);
+                datosRecogida.put("oprsig", img2);
+
+                info = datosRecogida.toString();
+                danos = datosDanosRecogida.toString();
+                extras = datosExtrasRecogida.toString();
+            } catch (Exception e) {
+                // Usado solo para capturar la excepción
+            }
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+            CF = ((Carplus3G) getApplicationContext());
+
+            try {
+                conexionHTTP.AddParam("accion", "save_inspeccion_recogida");
+                conexionHTTP.AddParam("empresa", CF.getEmpresa());
+                conexionHTTP.AddParam("id", CF.getTerminalId());
+                conexionHTTP.AddParam("documento", documento);
+                conexionHTTP.AddParam("usuario", String.valueOf(CF.getCodUsuario()));
+                conexionHTTP.AddParam("datosRecogida", info);
+                conexionHTTP.AddParam("extrasRecogida", extras);
+                conexionHTTP.AddParam("danosRecogida", danos);
+                conexionHTTP.AddParam("ancho", String.valueOf(ANCHO_IMAGEN));
+                conexionHTTP.AddParam("alto", String.valueOf(ALTO_IMAGEN));
+                conexionHTTP.AddParam("firma", Carplus3G.SHA256("savin2" + documento));
+                conexionHTTP.Execute(RestClient.RequestMethod.POST);
+            } catch (Exception e) {
+                // Usado solo para capturar la excepción
+            }
+
+            JSONDATA = conexionHTTP.getResponse();
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+            if (!JSONDATA.equals("error")) {
+
+                try {
+                    JSONObject json = new JSONObject(JSONDATA);
+
+                    int estado = json.getInt("status");
+                    String mensaje = json.getString("statusMsg");
+                    JSONObject content = json.getJSONObject("content");
+
+                    if (estado == 1) {
+
+                        String err = String.valueOf(content.getString("err"));
+                        String comodin1 = String.valueOf(content.getString("com1"));
+                        String comodin2 = String.valueOf(content.getString("com2"));
+
+                        switch (err) {
+                            case "si01":
+                                Toast.makeText(getApplicationContext(), getString(R.string.txt_serie_1) + comodin1 + getString(R.string.txt_serie_2), Toast.LENGTH_SHORT).show();
+                                break;
+                            case "si02":
+                                Toast.makeText(getApplicationContext(), getString(R.string.txt_serie1) + comodin1 + getString(R.string.txt_serie2) + comodin2 + getString(R.string.txt_serie_2), Toast.LENGTH_SHORT).show();
+                                break;
+                            default:
+                                Toast.makeText(getApplicationContext(), R.string.inspect_rec_correct, Toast.LENGTH_SHORT).show();
+                                fn_Limpiar();
+                                break;
+                        }
+                    } else {
+                        Toast.makeText(getApplicationContext(), getString(R.string.error_happened)+" " + mensaje, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.error_2p)+" " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    metodo.iraMenuPpal();
+                }
+            } else {
+                Carplus3G.dialogConexion(Inspect.this);
+                metodo.iraMenuPpal();
+            }
+            miDialog.dismiss();
+            tareaSaveInspeccionRecogida = null;
+            JSONDATA = "";
+        }
+
+        @Override
+        protected void onCancelled() {
+        }
+    }
+
+    private File createImageFile() throws IOException {
+        // Creamos el nombre del archivo de imagen
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,
+                ".jpg",
+                storageDir
+        );
+
+        // Guardamos el archivo: ruta para usar en intents
+        ruta_imagen = image.getAbsolutePath();
+        return image;
+    }
+
+    private void intentImg() {
+
+        if (itemSeleccionado == 0) {
+            // Venimos desde opción de hacer fotografía
+            Intent cameraImgIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (cameraImgIntent.resolveActivity(getPackageManager()) != null) {
+                // Creamos archivo donde se meterá la fotografía
+                File photoFile = null;
+                try {
+                    photoFile = createImageFile();
+                } catch (IOException ex) {
+                    // No se ha podido crear al archivo de imagen
+                }
+                // Continuamos si el archivo se ha creado correctamente
+                if (photoFile != null) {
+                    Uri photoURI = FileProvider.getUriForFile(getApplicationContext(),
+                            BuildConfig.APPLICATION_ID +".provider",
+                            photoFile);
+                    cameraImgIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                    // Lanzamos el intent de la cámara
+                    startActivityForResult(cameraImgIntent, REQUEST_TAKE_PHOTO);
+                }
+            }
+        } else {
+            // Venimos desde la opción de seleccionar de galería
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), RESULT_LOAD_IMAGE);
+        }
+    }
+
+}

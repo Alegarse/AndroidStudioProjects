@@ -1,0 +1,107 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:id="@+id/linearLayout1"
+    android:weightSum="1"
+    android:background="@drawable/fondodegradado"
+    android:layout_width="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardCheckin1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FFFFFF"
+        app:cardCornerRadius="10dp"
+        android:layout_margin="5dp"
+        app:cardElevation="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/damage_cat"
+            style="@style/textoAzulado"
+            android:textSize="16sp"/>
+
+        <Spinner
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinCat"/>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/detail_damage"
+            style="@style/textoAzulado"
+            android:textSize="16sp"/>
+
+        <Spinner
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinDet"/>
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/description"
+            style="@style/textoAzulado"
+            android:textSize="16sp"/>
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:maxLength="30"
+            android:id="@+id/txtDano"
+            android:lines="1"
+            android:maxLines="1"
+            android:inputType="textNoSuggestions|textShortMessage"/>
+
+    <LinearLayout
+        android:id="@+id/linealBtnsOptions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCancelarDano"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:backgroundTint="@color/rojoClaro"
+                android:background="@drawable/boton_base_redondeado"
+                android:text="@string/cancel"
+                android:layout_marginEnd="25dp"
+                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:onClick="btnCancelarCheckinClick" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/BtnAddDano"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                app:backgroundTint="@color/colorNaranBtn"
+                android:background="@drawable/boton_base_redondeado"
+                android:text="@string/add_damage"
+                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:onClick="btnCerrarContratoClick"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        </LinearLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+    </LinearLayout>

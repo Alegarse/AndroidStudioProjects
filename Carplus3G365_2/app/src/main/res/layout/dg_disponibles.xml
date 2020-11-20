@@ -1,0 +1,189 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/fondo_blanco_borde_gris"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:paddingVertical="10dp"
+    android:paddingHorizontal="2dp">
+
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:gravity="center"
+        android:id="@+id/pie">
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/btnDgDisponiblesCancelar"
+                app:backgroundTint="@color/rojoClaro"
+                android:background="@drawable/boton_base_redondeado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:text="@string/cancel"/>
+
+            <Button
+                android:id="@+id/btnDgDisponiblesAdd"
+                app:backgroundTint="@color/azulClaro"
+                android:background="@drawable/boton_base_redondeado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="@string/select"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:layout_above="@+id/pie">
+
+        <TextView
+            android:id="@+id/textView1"
+            style="@style/textoAzulado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sel_veh_to_book"
+            android:textSize="16sp"
+            android:layout_margin="2dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"/>
+
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:padding="2dp"
+            android:shrinkColumns="1"
+            android:stretchColumns="1">
+
+            <TableRow
+                android:background="@drawable/degradado_azul_linear_layout">
+
+                <LinearLayout
+                    android:id="@+id/linearLayout4"
+                    android:layout_width="65dp"
+                    android:layout_height="fill_parent"
+                    android:layout_column="0"
+                    android:background="@drawable/borde_blanco"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="2dp"
+                    android:paddingBottom="7dp"
+                    android:paddingTop="7dp"
+                    android:scrollbars="none">
+
+                    <TextView
+                        android:id="@+id/TextView06"
+                        style="@style/texto_blanco_sombra"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="Gp"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_column="1"
+                    android:background="@drawable/borde_blanco"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="2dp"
+                    android:paddingTop="7dp"
+                    android:paddingBottom="7dp">
+
+                    <TextView
+                        style="@style/texto_blanco_sombra"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/vehicles"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+
+                    android:layout_width="50dp"
+                    android:layout_height="fill_parent"
+                    android:layout_column="2"
+                    android:background="@drawable/borde_blanco"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="2dp"
+                    android:paddingTop="7dp"
+                    android:paddingBottom="7dp">
+
+                    <TextView
+                        style="@style/texto_blanco_sombra"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Unds."
+                        android:textSize="14sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="70dp"
+                    android:layout_height="fill_parent"
+                    android:layout_column="3"
+                    android:background="@drawable/borde_blanco"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingStart="2dp"
+                    android:paddingTop="7dp"
+                    android:paddingBottom="7dp"
+                    tools:ignore="RtlSymmetry">
+
+                    <TextView
+
+                        style="@style/texto_blanco_sombra"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/amount"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <ListView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/listView"
+                    android:layout_span="4" />
+            </TableRow>
+
+        </TableLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/cant_find_ava_veh"
+        android:id="@+id/txtVehiculosNoDispobles"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        style="@style/textoAzulado"
+        android:textSize="22sp" />
+
+</RelativeLayout>

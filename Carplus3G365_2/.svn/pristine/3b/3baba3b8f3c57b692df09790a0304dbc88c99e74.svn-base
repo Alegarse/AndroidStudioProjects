@@ -1,0 +1,716 @@
+package com.example.carplus3g365v2;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Handler;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Iterator;
+
+import com.example.carplus3g365v2.Adapters.SpecialAdapter;
+import com.example.carplus3g365v2.Modelos.Methods;
+import com.example.carplus3g365v2.RestClient.RequestMethod;
+
+public class ListadoRecogidas extends AppCompatActivity {
+
+    private CardView cabecera1, cabecera2, listadoRecogidas;
+    private TextView sucRedR, fecRedR, totRedR;
+    public Button limpiarListado;
+
+    private Methods metodo;
+
+    private ListView list;
+
+    public RestClient rest;
+    public String respuesta = "";
+    public ProgressDialog miDialog;
+    public DatePickerDialog dialogFecha;
+
+    public Spinner spinSuc;
+    public EditText txtF1;
+    public int d;
+    public int m;
+    public int y;
+
+    public String diaSel = "";
+    public String mesSel = "";
+    public String anioSel = "";
+
+    public Button btnMostrarEntregas;
+    public Button btnBuscarMtr;
+
+    private buscarMatricula tareaBuscar = null;
+    public ArrayList<String[]> sucursales = new ArrayList<String[]>();
+
+    public ArrayList<HashMap<String, String>> resultadoRecogidas = new ArrayList<HashMap<String, String>>();
+    public View itemSeleccionado;
+    public String matriculaSeleccionada = "";
+
+    private String mtr_a_buscar = "";
+
+    public InputMethodManager imm;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_listado_recogidas);
+
+        // Instanciamos elementos
+        spinSuc = (Spinner) findViewById(R.id.spinSucRec);
+        txtF1 = (EditText) findViewById(R.id.txtF1);
+
+        limpiarListado = findViewById(R.id.btnLimpiarListadoR);
+        sucRedR = findViewById(R.id.txtSucR);
+        fecRedR = findViewById(R.id.txtFecR);
+        totRedR = findViewById(R.id.txtTotR);
+        cabecera1 = findViewById(R.id.cardListadoRecogidas1);
+        cabecera2 = findViewById(R.id.cardListadoRecogidas22);
+        cabecera2.setVisibility(View.GONE);
+        listadoRecogidas = findViewById(R.id.cardListadoRecogidas2);
+        listadoRecogidas.setVisibility(View.GONE);
+
+        txtF1.setOnClickListener(v -> txtF1Click(v));
+
+        Calendar cal = new GregorianCalendar();
+        m = cal.get(Calendar.MONTH);
+        m++;
+        y = cal.get(Calendar.YEAR);
+        d = cal.get(Calendar.DAY_OF_MONTH);
+
+        String mes = "";
+        if (m < 10) {
+            mes = "0" + String.valueOf(m);
+        } else {
+            mes = String.valueOf(m);
+        }
+
+        String dia = "";
+        if (d < 10) {
+            dia = "0" + String.valueOf(d);
+        } else {
+            dia = String.valueOf(d);
+        }
+
+        txtF1.setText(dia+"/"+mes+"/"+y);
+        fecRedR.setText(dia+"/"+mes+"/"+y);
+
+        btnBuscarMtr = findViewById(R.id.btnBuscarMtr);
+        btnBuscarMtr.setOnClickListener(v -> {
+            final Dialog d = new Dialog(ListadoRecogidas.this, R.style.FullHeightDialog);
+            d.setCancelable(true);
+            d.setContentView(R.layout.matricula_find);
+
+            final EditText t = d.findViewById(R.id.txtFindMtr);
+            final Button b1 = d.findViewById(R.id.btnFindMtrOk);
+            Button b2 = d.findViewById(R.id.btnFindMtrCancel);
+
+            imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
+            // Cuando realizamos la opción del EditText
+            t.setOnKeyListener((v1, keyCode, event) -> {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN)
+                        && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    // Oculto el teclado en la pantalla
+                    imm.hideSoftInputFromWindow(t.getWindowToken(), 0);
+                    // Realizo automáticamente el boton aceptar
+                    b1.performClick();
+                    d.dismiss();
+                    return true;
+                }
+                return false;
+            });
+
+
+            b1.setOnClickListener(new View.OnClickListener() {
+
+                public void onClick(View v) {
+                    EditText t = d.findViewById(R.id.txtFindMtr);
+                    String mtr = t.getText().toString();
+
+                    if (mtr.length() == 0) {
+                        Toast.makeText(ListadoRecogidas.this, R.string.enter_car_plate_num, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    mtr_a_buscar = mtr;
+
+                    tareaBuscar = new buscarMatricula();
+                    tareaBuscar.execute(null, null, null);
+                    d.dismiss();
+                }
+            });
+
+            b2.setOnClickListener(v12 -> d.dismiss());
+            d.show();
+        });
+
+        // Instanciamos los botones superiores
+        ImageButton menu_ppal = findViewById(R.id.menuPpalLR);
+        ImageButton salir = findViewById(R.id.salirLR);
+
+        metodo = new Methods(ListadoRecogidas.this);
+
+        // Escuchadores para ambos botones
+        menu_ppal.setOnClickListener(v -> metodo.iraMenuPpal());
+        salir.setOnClickListener(v -> metodo.cerrarSesion());
+        limpiarListado.setOnClickListener(v -> limpiarListado());
+    }
+
+    private void limpiarListado() {
+        cabecera1.setVisibility(View.VISIBLE);
+        cabecera2.setVisibility(View.GONE);
+
+        list.setAdapter(null);
+        listadoRecogidas.setVisibility(View.GONE);
+
+    }
+
+    public void onStart() {
+        super.onStart();
+
+        Carplus3G constantes = ((Carplus3G) getApplicationContext());
+        if (!constantes.cmpLastDate()) {
+            constantes.setLastDate();
+            constantes.setcargadoVersion(0);
+            Intent i = new Intent();
+            i.setClass(ListadoRecogidas.this, Login.class);
+            startActivity(i);
+            ListadoRecogidas.this.finish();
+            return;
+        }
+
+        // Comprobamos permisos a la hora de mostrar el menú
+        // Realizamos conexión al servidor a travñes de un hilo
+        if (!Carplus3G.cmpConexion(this)) {
+            Carplus3G.dialogInternet(this);
+        } else {
+            miDialog = new ProgressDialog(this);
+            miDialog.setMessage(getString(R.string.msgserv));
+            miDialog.setTitle(getString(R.string.getting_list_suc));
+            miDialog.setCancelable(false);
+            miDialog.show();
+
+            Thread hilo = new Thread() {
+                public void run() {
+                    Carplus3G constantes = ((Carplus3G) getApplicationContext());
+                    rest = new RestClient(Carplus3G.URL);
+                    rest.AddParam("empresa", constantes.getEmpresa());
+                    rest.AddParam("id", constantes.getTerminalId());
+                    rest.AddParam("accion", "listado_oficinas");
+                    rest.AddParam("firma", Carplus3G.SHA256("lofc"+constantes.getEmpresa()));
+
+                    try {
+                        rest.Execute(RequestMethod.POST);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    respuesta = rest.getResponse();
+                    handlerHiloInicio.post(btnEnviarBack);
+                    miDialog.dismiss();
+                }
+
+            };
+            hilo.start();
+        }
+    }
+
+    final Handler handlerHiloInicio = new Handler();
+    final Runnable btnEnviarBack = new Runnable() {
+        public void run() {
+            ProcesarHilo();
+        }
+    };
+
+    private void ProcesarHilo() {
+        String estado = "";
+        String mensaje = "";
+
+        if (!respuesta.equals("error")) {
+            try {
+
+                JSONObject json = new JSONObject(respuesta);
+                estado = json.getString("status");
+                mensaje = json.getString("statusMsg");
+
+                if (estado.equals("1")) {
+
+                    JSONObject contenido = json.getJSONObject("content");
+                    JSONArray array = new JSONArray(
+                            contenido.getString("sucursales"));
+
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject row = array.getJSONObject(i);
+                        String[] fila = new String[2];
+                        fila[0] = row.getString("cod");
+                        fila[1] = row.getString("tit");
+                        sucursales.add(fila);
+                    }
+                    ArrayAdapter<CharSequence> sucAdapter = new ArrayAdapter<CharSequence>(
+                            this, android.R.layout.simple_spinner_item);
+
+                    for (Iterator<String[]> it = sucursales.iterator(); it
+                            .hasNext(); ) {
+                        String[] fila = it.next();
+                        sucAdapter.add(String.valueOf(fila[1]));
+                    }
+                    sucAdapter
+                            .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinSuc.setAdapter(sucAdapter);
+
+                } else {
+                    Toast.makeText(this, getString(R.string.error_happened)+" " + mensaje,
+                            Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        } else {
+            Carplus3G.dialogConexion(this);
+        }
+        miDialog.hide();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(1, R.id.menuMenu, 1, getString(R.string.mnu_ppal))
+                .setIcon(R.drawable.menu);
+        menu.add(2, R.id.menuLogout, 2, getString(R.string.change_user)).setIcon(
+                R.drawable.user);
+        menu.add(3, R.id.menuSalir, 3, getString(R.string.exit)).setIcon(R.drawable.exit);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent i = new Intent();
+        getApplicationContext();
+
+        switch (item.getItemId()) {
+
+            case R.id.menuSalir:
+
+                System.exit(0);
+                break;
+            case R.id.menuLogout:
+
+                Carplus3G constantes = ((Carplus3G) getApplicationContext());
+                constantes.setIniciadoSesion(false);
+
+                i.setClass(this, Login.class);
+                startActivity(i);
+                this.finish();
+                break;
+            case R.id.menuMenu:
+                i.setClass(this, MenuPrincipal.class);
+                startActivity(i);
+                this.finish();
+                break;
+
+        }
+        return false;
+    }
+
+    // Deshabilito el botón de volver atrás
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        /* DESACTIVAMOS EL BOTON VOLVER DEL DISPOSITIVO */
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            return false;
+        }
+        return false;
+    }
+
+    public void btnMostrarRecogidasClick(View btn) {
+        getApplicationContext();
+
+        if (!Carplus3G.cmpConexion(this)) {
+            Carplus3G.dialogInternet(this);
+        } else {
+
+            miDialog = new ProgressDialog(this);
+            miDialog.setMessage(getString(R.string.getting_list_ent));
+            miDialog.setTitle(getString(R.string.receiving_data));
+            miDialog.setCancelable(false);
+            miDialog.show();
+
+            /* COMPROBAMOS LOS PERMISOS PARA MOSTRAR LAS OPCIONES DEL MENU */
+            /* LANZO UN HILO PARA LLAMAR AL SERVIDOR */
+
+            String f1 = txtF1.getText().toString().trim();
+
+            final String dia = f1.substring(0, 2);
+            diaSel = dia;
+            final String mes = f1.substring(3, 5);
+            mesSel = mes;
+            final String anio = f1.substring(6, 10);
+            anioSel = anio;
+            final String suc = spinSuc.getSelectedItem().toString();
+            String cod = "";
+
+            for (Iterator<String[]> it = sucursales.iterator(); it.hasNext(); ) {
+                String[] fila = it.next();
+                if (suc.equals(fila[1])) {
+                    cod = fila[0];
+                }
+            }
+            final String codSuc = cod;
+
+            Thread hilo = new Thread() {
+                public void run() {
+                    Carplus3G constantes = ((Carplus3G) getApplicationContext());
+                    rest = new RestClient(Carplus3G.URL);
+                    rest.AddParam("empresa", constantes.getEmpresa());
+                    rest.AddParam("id", constantes.getTerminalId());
+                    rest.AddParam("accion", "listado_recogidas");
+                    rest.AddParam("firma", Carplus3G.SHA256("lre"+anio));
+                    rest.AddParam("dia", dia);
+                    rest.AddParam("mes", mes);
+                    rest.AddParam("anio", anio);
+                    rest.AddParam("suc", codSuc);
+                    try {
+                        rest.Execute(RequestMethod.POST);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    respuesta = rest.getResponse();
+                    handlerEntregas.post(entregasBack);
+                    miDialog.dismiss();
+                }
+
+            };
+            hilo.start();
+        }
+    }
+
+    final Handler handlerEntregas = new Handler();
+    final Runnable entregasBack = new Runnable() {
+        public void run() {
+            añadirFilas();
+        }
+    };
+
+    private void añadirFilas() {
+
+        String estado = "";
+        String mensaje = "";
+
+        if (!respuesta.equals("error")) {
+
+            try {
+                JSONObject json = new JSONObject(respuesta);
+
+                estado = json.getString("status");
+                mensaje = json.getString("statusMsg");
+
+                list = findViewById(R.id.contRecogidas);
+
+                if (estado.equals("1")) {
+
+                    resultadoRecogidas.clear();
+                    String content = json.getString("content");
+
+                    if (!content.equals("")) {
+
+                        JSONArray datos = json.getJSONArray("content");
+                        for (int i = 0; i < datos.length(); i++) {
+
+                            JSONObject row = datos.getJSONObject(i);
+                            String doc = row.getString("doc");
+                            String mat = row.getString("mat");
+                            String gp = row.getString("gp");
+                            String fecha = row.getString("fec");
+                            String nombre = row.getString("nom");
+                            String lrec = row.getString("lug");
+                            String obs = row.getString("obs");
+                            String debe = row.getString("deb");
+
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("doc", doc);
+                            map.put("mat", mat);
+                            map.put("gp", gp);
+                            map.put("fecha", fecha);
+                            map.put("nombre", nombre);
+                            map.put("lrec", lrec);
+                            map.put("obs", obs);
+                            map.put("debe", debe);
+                            resultadoRecogidas.add(map);
+                        }
+                    } else {
+                        Toast.makeText(this, R.string.veh_not_found, Toast.LENGTH_LONG).show();
+                    }
+                    TextView t = findViewById(R.id.txtRecogidasTotal);
+                    t.setText(String.valueOf(resultadoRecogidas.size()));
+                    totRedR.setText(String.valueOf(resultadoRecogidas.size()));
+
+                    if (resultadoRecogidas.size() > 0) {
+                        SpecialAdapter listAdapter = new SpecialAdapter(this, resultadoRecogidas, R.layout.fila_list_view_recogidas,
+                                new String[]{"doc", "mat", "gp", "fecha",
+                                        "nombre", "lrec", "obs", "debe"}, new int[]{
+                                R.id.txtDocumentoFilaRecogidas,
+                                R.id.txtMatriculaFilaRecogidas,
+                                R.id.txtGpFilaRecogidas,
+                                R.id.txtFechaFilaRecogidas,
+                                R.id.txtNombreFilaRecogidas,
+                                R.id.txtLugarFilaRecogidas,
+                                R.id.txtObsFilaRecogidas,
+                                R.id.txtRecogidasDebe});
+
+                        list.setAdapter(listAdapter);
+
+                        //Cambiamos la visualización para mejor manejo
+                        listadoRecogidas.setVisibility(View.VISIBLE);
+                        cabecera1.setVisibility(View.GONE);
+                        cabecera2.setVisibility(View.VISIBLE);
+                    } else {
+                        list.setAdapter(null);
+                    }
+                } else {
+                    Toast.makeText(this, getString(R.string.error_happened)+" " + mensaje,
+                            Toast.LENGTH_LONG).show();
+                    list.setAdapter(null);
+                }
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        } else {
+            Carplus3G.dialogConexion(this);
+        }
+        miDialog.hide();
+    }
+
+    public void btnMostrarRecepcionesClick(View view) {
+    }
+
+    private class buscarMatricula extends AsyncTask<String, String, String> {
+
+        String f1 = "";
+        String suc = "";
+
+        protected void onPreExecute() {
+            miDialog = new ProgressDialog(ListadoRecogidas.this);
+            miDialog.setTitle(getString(R.string.procesing_search));
+            miDialog.setMessage(getString(R.string.sending_data_serv));
+            miDialog.setCancelable(false);
+            miDialog.show();
+
+            f1 = txtF1.getText().toString().trim();
+            suc = spinSuc.getSelectedItem().toString();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            final String dia = f1.substring(0, 2);
+            diaSel = dia;
+            final String mes = f1.substring(3, 5);
+            mesSel = mes;
+            final String anio = f1.substring(6, 10);
+            anioSel = anio;
+
+            String cod = "";
+            for (Iterator<String[]> it = sucursales.iterator(); it.hasNext(); ) {
+                String[] fila = it.next();
+                if (suc.equals(fila[1])) {
+                    cod = fila[0];
+                }
+            }
+            final String codSuc = cod;
+
+            Carplus3G constantes = ((Carplus3G) getApplicationContext());
+            rest = new RestClient(Carplus3G.URL);
+            rest.AddParam("empresa", constantes.getEmpresa());
+            rest.AddParam("id", constantes.getTerminalId());
+            rest.AddParam("accion", "listado_recogidas");
+            rest.AddParam("firma", Carplus3G.SHA256("lre"+anio));
+            rest.AddParam("dia", dia);
+            rest.AddParam("mes", mes);
+            rest.AddParam("anio", anio);
+            rest.AddParam("suc", codSuc);
+            rest.AddParam("mtr", mtr_a_buscar);
+
+            try {
+                rest.Execute(RequestMethod.POST);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            respuesta = rest.getResponse();
+            return null;
+        }
+
+        protected void onPostExecute(String resultado) {
+            String estado = "";
+            String mensaje = "";
+
+            if (!respuesta.equals("error")) {
+                try {
+                    JSONObject json = new JSONObject(respuesta);
+
+                    estado = json.getString("status");
+                    mensaje = json.getString("statusMsg");
+
+                    ListView list = findViewById(R.id.contRecogidas);
+
+                    if (estado.equals("1")) {
+
+                        resultadoRecogidas.clear();
+                        String content = json.getString("content");
+
+                        if (!content.equals("")) {
+
+                            JSONArray datos = json.getJSONArray("content");
+
+                            for (int i = 0; i < datos.length(); i++) {
+
+                                JSONObject row = datos.getJSONObject(i);
+                                String doc = row.getString("doc");
+                                String mat = row.getString("mat");
+                                String gp = row.getString("gp");
+                                String fecha = row.getString("fec");
+                                String nombre = row.getString("nom");
+                                String lrec = row.getString("lug");
+                                String obs = row.getString("obs");
+                                String debe = row.getString("deb");
+
+                                HashMap<String, String> map = new HashMap<String, String>();
+                                map.put("doc", doc);
+                                map.put("mat", mat);
+                                map.put("gp", gp);
+                                map.put("fecha", fecha);
+                                map.put("nombre", nombre);
+                                map.put("lrec", lrec);
+                                map.put("obs", obs);
+                                map.put("debe", debe);
+                                resultadoRecogidas.add(map);
+                            }
+                        } else {
+                            Toast.makeText(ListadoRecogidas.this, R.string.veh_not_found,
+                                    Toast.LENGTH_LONG).show();
+                        }
+                        TextView t = findViewById(R.id.txtRecogidasTotal);
+                        t.setText(String.valueOf(resultadoRecogidas.size()));
+
+                        if (resultadoRecogidas.size() > 0) {
+                            SpecialAdapter listAdapter = new SpecialAdapter(ListadoRecogidas.this, resultadoRecogidas, R.layout.fila_list_view_recogidas,
+                                    new String[]{"doc", "mat", "gp", "fecha",
+                                            "nombre", "lrec", "obs", "debe"}, new int[]{
+                                    R.id.txtDocumentoFilaRecogidas,
+                                    R.id.txtMatriculaFilaRecogidas,
+                                    R.id.txtGpFilaRecogidas,
+                                    R.id.txtFechaFilaRecogidas,
+                                    R.id.txtNombreFilaRecogidas,
+                                    R.id.txtLugarFilaRecogidas,
+                                    R.id.txtObsFilaRecogidas,
+                                    R.id.txtRecogidasDebe});
+
+                            list.setAdapter(listAdapter);
+                        } else {
+                            list.setAdapter(null);
+                        }
+                    } else {
+                        Toast.makeText(ListadoRecogidas.this, getString(R.string.error_happened)+" " + mensaje,
+                                Toast.LENGTH_LONG).show();
+                        list.setAdapter(null);
+                    }
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            } else {
+                Carplus3G.dialogConexion(ListadoRecogidas.this);
+            }
+            miDialog.hide();
+            tareaBuscar = null;
+        }
+    }
+
+    private void txtF1Click(View v) {
+
+        int mYear = 0;
+        int mMonth = 0;
+        int mDay = 0;
+
+        String f1 = txtF1.getText().toString().trim();
+
+        if (f1.equals("")) {
+            Calendar c = Calendar.getInstance();
+            mYear = c.get(Calendar.YEAR);
+            mMonth = c.get(Calendar.MONTH);
+            mDay = c.get(Calendar.DAY_OF_MONTH);
+        } else {
+            mYear = Integer.parseInt(f1.substring(6, 10));
+            mMonth = Integer.parseInt(f1.substring(3, 5)) - 1;
+            mDay = Integer.parseInt(f1.substring(0, 2));
+        }
+
+        dialogFecha = new DatePickerDialog(ListadoRecogidas.this, datePickerListener, mYear, mMonth, mDay);
+        dialogFecha.setTitle(getString(R.string.select_date_e));
+        dialogFecha.show();
+    }
+
+    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
+
+        // when dialog box is closed, below method will be called.
+        public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
+
+            int dia = selectedDay;
+            int mes = selectedMonth + 1;
+            int anio = selectedYear;
+
+            String sdia = "";
+            String smes = "";
+            String sanio = "";
+
+            if (dia <= 9) { sdia = "0" + dia;
+            } else { sdia = "" + dia; }
+
+            if (mes <= 9) { smes = "0" + mes;
+            } else { smes = "" + mes; }
+
+            sanio = "" + anio;
+
+            String fecha = sdia + "/" + smes + "/" + sanio;
+
+
+            if (!txtF1.getText().toString().equals(fecha))
+            {
+                ListView list = findViewById(R.id.contRecogidas);
+                list.setAdapter(null);
+                TextView t = findViewById(R.id.txtRecogidasTotal);
+                t.setText("0");
+            }
+            txtF1.setText(fecha);
+            fecRedR.setText(fecha);
+        }
+    };
+}

@@ -1,0 +1,300 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.carplus3g365v2"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="24"
+8-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="28" />
+9-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml
+10    <!-- Permisos para la aplicación -->
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:7:5-67
+11-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:7:22-64
+12    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+12-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:8:5-79
+12-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:8:22-76
+13    <uses-permission android:name="android.permission.VIBRATE" />
+13-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:9:5-66
+13-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:9:22-63
+14    <uses-permission android:name="android.permission.WAKE_LOCK" />
+14-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:10:5-68
+14-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:10:22-65
+15    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+15-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:11:5-13:47
+15-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:12:9-57
+16    <uses-permission android:name="android.permission.CAMERA" />
+16-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:14:5-65
+16-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:14:22-62
+17    <uses-permission
+17-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:15:5-17:38
+18        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+18-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:16:9-65
+19        android:maxSdkVersion="18" />
+19-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:17:9-35
+20    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+20-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:18:5-80
+20-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:18:22-77
+21    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+21-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:19:5-75
+21-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:19:22-72
+22
+23    <application
+23-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:21:5-148:19
+24        android:name="com.example.carplus3g365v2.Carplus3G"
+24-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:22:9-34
+25        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+25-->[androidx.core:core:1.3.1] C:\Users\Antonio\.gradle\caches\transforms-2\files-2.1\ae3468b444d41a56f261ecbb8448fe17\core-1.3.1\AndroidManifest.xml:24:18-86
+26        android:debuggable="true"
+27        android:extractNativeLibs="false"
+28        android:icon="@drawable/iconodano"
+28-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:23:9-43
+29        android:label="@string/app_name"
+29-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:24:9-41
+30        android:testOnly="true"
+31        android:theme="@style/AppTheme.NoActionBar" >
+31-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:25:9-52
+32
+33        <!-- Para que se pueda obtener imágen de la cámara -->
+34        <provider
+35            android:name="androidx.core.content.FileProvider"
+35-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:29:13-62
+36            android:authorities="com.example.carplus3g365v2.provider"
+36-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:30:13-60
+37            android:exported="false"
+37-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:31:13-37
+38            android:grantUriPermissions="true" >
+38-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:32:13-47
+39            <meta-data
+39-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:33:13-35:58
+40                android:name="android.support.FILE_PROVIDER_PATHS"
+40-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:34:17-67
+41                android:resource="@xml/provider_paths" />
+41-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:35:17-55
+42        </provider>
+43
+44        <activity android:name="com.example.carplus3g365v2.CambioVehiculo" />
+44-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:38:9-52
+44-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:38:19-49
+45        <activity
+45-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:39:9-45:63
+46            android:name="com.example.carplus3g365v2.Firmar"
+46-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:40:13-35
+47            android:label="@string/app_name"
+47-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:41:13-45
+48            android:noHistory="true"
+48-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:42:13-37
+49            android:screenOrientation="sensorPortrait"
+49-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:43:13-55
+50            android:theme="@style/AppTheme.NoActionBar"
+50-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:44:13-56
+51            android:windowSoftInputMode="stateAlwaysHidden" />
+51-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:45:13-60
+52        <activity
+52-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:46:9-53:63
+53            android:name="com.example.carplus3g365v2.Inspect"
+53-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:47:13-36
+54            android:configChanges="orientation|keyboardHidden|screenSize"
+54-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:48:13-74
+55            android:label="@string/app_name"
+55-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:49:13-45
+56            android:noHistory="false"
+56-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:50:13-38
+57            android:screenOrientation="sensorLandscape"
+57-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:51:13-56
+58            android:theme="@style/AppTheme.NoActionBar"
+58-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:52:13-56
+59            android:windowSoftInputMode="stateAlwaysHidden" />
+59-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:53:13-60
+60        <activity
+60-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:54:9-58:59
+61            android:name="com.example.carplus3g365v2.Scan"
+61-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:55:13-33
+62            android:label="@string/app_name"
+62-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:56:13-45
+63            android:screenOrientation="sensorPortrait"
+63-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:57:13-55
+64            android:theme="@style/AppTheme.NoActionBar" />
+64-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:58:13-56
+65        <activity
+65-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:59:9-64:59
+66            android:name="com.example.carplus3g365v2.Checkin"
+66-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:60:13-36
+67            android:label="@string/app_name"
+67-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:61:13-45
+68            android:noHistory="true"
+68-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:62:13-37
+69            android:screenOrientation="sensorLandscape"
+69-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:63:13-56
+70            android:theme="@style/AppTheme.NoActionBar" />
+70-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:64:13-56
+71        <activity
+71-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:65:9-70:59
+72            android:name="com.example.carplus3g365v2.Damages"
+72-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:66:13-36
+73            android:label="@string/app_name"
+73-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:67:13-45
+74            android:noHistory="true"
+74-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:68:13-37
+75            android:screenOrientation="sensorLandscape"
+75-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:69:13-56
+76            android:theme="@style/AppTheme.NoActionBar" />
+76-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:70:13-56
+77        <activity
+77-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:71:9-76:59
+78            android:name="com.example.carplus3g365v2.Listados"
+78-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:72:13-37
+79            android:label="@string/app_name"
+79-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:73:13-45
+80            android:noHistory="true"
+80-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:74:13-37
+81            android:screenOrientation="sensorPortrait"
+81-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:75:13-55
+82            android:theme="@style/AppTheme.NoActionBar" />
+82-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:76:13-56
+83        <activity
+83-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:77:9-82:59
+84            android:name="com.example.carplus3g365v2.ListadoRecogidas"
+84-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:78:13-45
+85            android:label="@string/app_name"
+85-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:79:13-45
+86            android:noHistory="true"
+86-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:80:13-37
+87            android:screenOrientation="sensorLandscape"
+87-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:81:13-56
+88            android:theme="@style/AppTheme.NoActionBar" />
+88-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:82:13-56
+89        <activity
+89-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:83:9-88:59
+90            android:name="com.example.carplus3g365v2.ListadoEntregas"
+90-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:84:13-44
+91            android:label="@string/app_name"
+91-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:85:13-45
+92            android:noHistory="true"
+92-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:86:13-37
+93            android:screenOrientation="sensorLandscape"
+93-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:87:13-56
+94            android:theme="@style/AppTheme.NoActionBar" />
+94-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:88:13-56
+95        <activity
+95-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:89:9-94:59
+96            android:name="com.example.carplus3g365v2.ListadoAsignados"
+96-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:90:13-45
+97            android:label="@string/app_name"
+97-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:91:13-45
+98            android:noHistory="true"
+98-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:92:13-37
+99            android:screenOrientation="sensorLandscape"
+99-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:93:13-56
+100            android:theme="@style/AppTheme.NoActionBar" />
+100-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:94:13-56
+101        <activity
+101-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:95:9-100:59
+102            android:name="com.example.carplus3g365v2.ListadoMeeting"
+102-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:96:13-43
+103            android:label="@string/app_name"
+103-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:97:13-45
+104            android:noHistory="true"
+104-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:98:13-37
+105            android:screenOrientation="sensorLandscape"
+105-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:99:13-56
+106            android:theme="@style/AppTheme.NoActionBar" />
+106-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:100:13-56
+107        <activity
+107-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:101:9-106:59
+108            android:name="com.example.carplus3g365v2.Estado"
+108-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:102:13-35
+109            android:label="@string/app_name"
+109-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:103:13-45
+110            android:noHistory="true"
+110-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:104:13-37
+111            android:screenOrientation="sensorLandscape"
+111-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:105:13-56
+112            android:theme="@style/AppTheme.NoActionBar" />
+112-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:106:13-56
+113        <activity
+113-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:107:9-114:63
+114            android:name="com.example.carplus3g365v2.CambioEstado"
+114-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:108:13-41
+115            android:configChanges="keyboardHidden|orientation|screenSize"
+115-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:109:13-74
+116            android:label="@string/app_name"
+116-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:110:13-45
+117            android:noHistory="false"
+117-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:111:13-38
+118            android:screenOrientation="sensorPortrait"
+118-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:112:13-55
+119            android:theme="@style/AppTheme.NoActionBar"
+119-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:113:13-56
+120            android:windowSoftInputMode="stateAlwaysHidden" />
+120-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:114:13-60
+121        <activity
+121-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:115:9-122:63
+122            android:name="com.example.carplus3g365v2.Reservar"
+122-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:116:13-37
+123            android:configChanges="keyboardHidden|orientation|screenSize"
+123-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:117:13-74
+124            android:label="@string/app_name"
+124-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:118:13-45
+125            android:noHistory="false"
+125-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:119:13-38
+126            android:screenOrientation="sensorPortrait"
+126-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:120:13-55
+127            android:theme="@style/AppTheme.NoActionBar"
+127-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:121:13-56
+128            android:windowSoftInputMode="stateAlwaysHidden" />
+128-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:122:13-60
+129        <activity
+129-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:123:9-130:63
+130            android:name="com.example.carplus3g365v2.EscaneoDocumentos"
+130-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:124:13-46
+131            android:configChanges="keyboardHidden|orientation"
+131-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:125:13-63
+132            android:label="@string/app_name"
+132-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:126:13-45
+133            android:noHistory="false"
+133-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:127:13-38
+134            android:screenOrientation="sensorPortrait"
+134-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:128:13-55
+135            android:theme="@style/AppTheme.NoActionBar"
+135-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:129:13-56
+136            android:windowSoftInputMode="stateAlwaysHidden" />
+136-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:130:13-60
+137        <activity
+137-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:131:9-136:59
+138            android:name="com.example.carplus3g365v2.MenuPrincipal"
+138-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:132:13-42
+139            android:label="@string/app_name"
+139-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:133:13-45
+140            android:noHistory="false"
+140-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:134:13-38
+141            android:screenOrientation="sensorPortrait"
+141-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:135:13-55
+142            android:theme="@style/AppTheme.NoActionBar" /> <!-- Actividad inicial de la App -->
+142-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:136:13-56
+143        <activity
+143-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:137:9-147:20
+144            android:name="com.example.carplus3g365v2.Login"
+144-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:138:13-34
+145            android:label="@string/app_name"
+145-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:139:13-45
+146            android:noHistory="true"
+146-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:140:13-37
+147            android:screenOrientation="sensorPortrait" >
+147-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:141:13-55
+148            <intent-filter>
+148-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:142:13-146:29
+149                <action android:name="android.intent.action.MAIN" />
+149-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:143:17-69
+149-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:143:25-66
+150
+151                <category android:name="android.intent.category.LAUNCHER" />
+151-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:145:17-77
+151-->C:\wamp\www\Carplus3G365_2\app\src\main\AndroidManifest.xml:145:27-74
+152            </intent-filter>
+153        </activity>
+154    </application>
+155
+156</manifest>

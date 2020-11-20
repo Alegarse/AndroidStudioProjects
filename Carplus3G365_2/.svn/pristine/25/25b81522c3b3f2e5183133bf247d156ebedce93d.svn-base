@@ -1,0 +1,166 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linearLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/fondodegradado"
+    android:minHeight="45dp"
+    android:orientation="horizontal"
+    android:padding="0dip"
+    android:weightSum="1">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FFFFFF"
+        app:cardCornerRadius="10dp"
+        android:layout_margin="5dp"
+        app:cardElevation="5dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="60dp"
+                android:layout_height="fill_parent"
+                android:background="@drawable/borde_blanco"
+                android:gravity="top|start"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtMatriculaFila"
+                    android:textColor="@color/azulTitulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:text="@string/car_plate"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout5"
+                android:layout_width="30dp"
+                android:layout_height="fill_parent"
+                android:background="@drawable/borde_blanco"
+                android:gravity="top|start"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtGpFila"
+                    android:textColor="@color/azulTitulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:text="Gp"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout6"
+                android:layout_width="90dp"
+                android:layout_height="fill_parent"
+                android:background="@drawable/borde_blanco"
+                android:gravity="top|start"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtColorFila"
+                    android:textColor="@color/azulTitulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:text="@string/color"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout7"
+                android:layout_width="150dp"
+                android:layout_height="fill_parent"
+                android:background="@drawable/borde_blanco"
+                android:gravity="top|start"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtModeloFila"
+                    android:textColor="@color/azulTitulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:text="@string/model"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout8"
+                android:layout_width="45dp"
+                android:layout_height="fill_parent"
+                android:background="@drawable/borde_blanco"
+                android:gravity="top|start"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtHoraFila"
+                    android:textColor="@color/azulTitulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:text="@string/hour"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout9"
+                android:layout_width="75dp"
+                android:layout_height="fill_parent"
+                android:background="@drawable/borde_blanco"
+                android:gravity="top|start"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtContratoFila"
+                    android:textColor="@color/azulTitulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:text="@string/contract"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/txtEstadoFila"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@drawable/borde_blanco"
+                android:gravity="top|start"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtEstadoEntregaFila"
+                    android:textColor="@color/azulTitulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:text="@string/state"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
