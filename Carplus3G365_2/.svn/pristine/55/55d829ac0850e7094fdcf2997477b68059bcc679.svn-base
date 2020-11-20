@@ -1,2 +1,0 @@
-include ':app'
-rootProject.name = "Carplus3G365v2"

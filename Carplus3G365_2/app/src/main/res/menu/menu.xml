@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menuMenu" android:title="@string/mnu_ppal" android:orderInCategory="1" android:icon="@drawable/menu"/>
-    <item android:id="@+id/menuLogout" android:title="@string/change_user" android:orderInCategory="2" android:icon="@drawable/user"/>
-    <item android:title="@string/exit" android:id="@+id/menuSalir" android:orderInCategory="4" android:icon="@drawable/exit"/>
-    <item android:id="@+id/menuScan" android:orderInCategory="3" android:title="@string/to_identify" android:icon="@drawable/qr"/>
-    <item android:id="@+id/menuInfo" android:title="@string/system_info" android:orderInCategory="5" android:icon="@drawable/infobtn"/>
-</menu>
