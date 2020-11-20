@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "190995658817",
+    "firebase_url": "https://check-in-appex.firebaseio.com",
+    "project_id": "check-in-appex",
+    "storage_bucket": "check-in-appex.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190995658817:android:3f1a8555485b4ea59c6ec0",
+        "android_client_info": {
+          "package_name": "com.alegarse.fichando"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190995658817-qt9cc5o1pet52192853eauv6h40kukia.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqCAZrmDwNRygdM5IygsSf4QAkBFOdcUE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190995658817-qt9cc5o1pet52192853eauv6h40kukia.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

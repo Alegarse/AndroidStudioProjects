@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Check In</string>
+    <string name="slogan">Easy checIn for your job</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="recupass">Forgotten password?</string>
+    <string name="resp">Restore password</string>
+    <string name="instreset">Enter the email with which you are registered and you will receive an email with a link to reset your password</string>
+    <string name="intCorreo">Enter your email</string>
+    <string name="needEmail">You must enter an email</string>
+    <string name="mailsend">Email successfully sent</string>
+    <string name="regtext">Please, fill all the fields</string>
+    <string name="name">Complete name</string>
+    <string name="repassword">Enter password again</string>
+    <string name="cancel">Cancel</string>
+    <string name="e_empty">Please fill al the fields</string>
+    <string name="e_pass">Error. Passwords is not equals</string>
+    <string name="ok_register">Registered!</string>
+    <string name="e_register">Register fail!</string>
+    <string name="log_nok">Login error</string>
+    <string name="log_ok">Correct login</string>
+    <string name="logout">Logout</string>
+    <string name="gps_not">" The required permissions have not been defined"</string>
+    <string name="fe_error">An entry for this day already exists. CheckIn NOT overwritten</string>
+    <string name="fs_error">An exit for this day already exists.  CheckOut NOT overwritten.</string>
+    <string name="fe_exist">An entry for this day already exists</string>
+    <string name="fs_exist">An exit for this day already exists</string>
+    <string name="fecha">Date</string>
+    <string name="nextDay">" See you next business day!"</string>
+    <string name="fe_ok">Successful entry CheckIn</string>
+    <string name="fs_ok">Successful exit CheckOut</string>
+    <string name="f_exist">Entries for this day already exists</string>
+    <string name="fe">Please, Check In</string>
+    <string name="closeSes">User session closed</string>
+    <string name="dni">Indentity number</string>
+</resources>
